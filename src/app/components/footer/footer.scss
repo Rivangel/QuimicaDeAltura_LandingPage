@@ -1,0 +1,107 @@
+.footer {
+    background-color: #d5ddd0;
+    /* Very light grey/white background */
+    padding: 1rem 1rem;
+    font-family: 'Outfit', sans-serif;
+    border-top: 1px solid #eee;
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .footer-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+
+        @media (min-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (min-width: 992px) {
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            /* Brand column is wider */
+            gap: 2rem;
+        }
+    }
+
+    /* Brand Column */
+    .brand-column {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .logo-wrapper {
+            margin-bottom: .5rem;
+
+            .logo {
+                height: 160px;
+                /* Adjust based on logo needs */
+                width: auto;
+            }
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: #777;
+            line-height: 1.6;
+            max-width: 250px;
+        }
+    }
+
+    /* Shared Headings */
+    .heading {
+        color: #5E794B;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        margin-top: 0;
+    }
+
+    /* Links Columns */
+    .links-column {
+        .links-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin-bottom: 0.8rem;
+
+                a {
+                    text-decoration: none;
+                    color: #ffffff;
+                    font-size: 0.95rem;
+                    transition: color 0.3s ease;
+
+                    &:hover {
+                        color: #5E794B;
+                    }
+                }
+            }
+        }
+    }
+
+    /* Social Column */
+    .social-column {
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+
+            .icon-circle {
+                display: block;
+                width: 40px;
+                height: 40px;
+                background-color: #5E794B;
+                border-radius: 50%;
+                transition: transform 0.2s ease, background-color 0.2s ease;
+
+                &:hover {
+                    transform: translateY(-3px);
+                    background-color: #4c623d;
+                }
+            }
+        }
+    }
+}
