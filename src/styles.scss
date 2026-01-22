@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #5E794B;
+    --text-color: #333;
+    --bg-color: #fff;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}

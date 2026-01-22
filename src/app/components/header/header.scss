@@ -1,0 +1,38 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 4rem;
+    /* Amplio espaciado lateral como en la imagen */
+    background-color: #fff;
+    /* Asumimos fondo blanco */
+    font-family: 'Inter', sans-serif;
+    /* Fuente moderna por defecto */
+
+    .logo-container {
+        .logo {
+            height: 150px;
+            /* Tamaño aproximado visualmente */
+            width: auto;
+        }
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 3rem;
+        /* Espaciado generoso entre enlaces */
+
+        .nav-link {
+            text-decoration: none;
+            color: #5E794B;
+            font-weight: 600;
+            /* Un poco de grosor */
+            font-size: 1rem;
+            transition: opacity 0.3s ease;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+}
