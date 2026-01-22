@@ -1,0 +1,114 @@
+.problem-mission {
+    padding: 4rem 2rem;
+    background-color: #fff;
+    font-family: 'Outfit', sans-serif;
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .main-title {
+        text-align: center;
+        color: #5E794B;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .main-subtitle {
+        text-align: center;
+        color: #8da37d;
+        /* A lighter, muted version of the primary green for contrast */
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 3rem;
+    }
+
+    .section-block {
+        margin-bottom: 4rem;
+
+        .section-header {
+            text-align: center;
+            color: #5E794B;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card {
+            position: relative;
+            border: 1px solid #5E794B;
+            border-radius: 12px;
+            padding: 1.5rem;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            /* Vertically align icon and text */
+
+            .badge {
+                position: absolute;
+                top: -12px;
+                /* Half of height to hang on border */
+                left: -12px;
+                /* Half of width to hang on border */
+                width: 30px;
+                height: 30px;
+                background-color: #5E794B;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 0.9rem;
+                z-index: 10;
+            }
+
+            .card-body {
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+                width: 100%;
+
+                .icon-container {
+                    flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+
+                    .bot-icon {
+                        width: 50px;
+                        height: auto;
+                    }
+                }
+
+                .text {
+                    margin: 0;
+                    color: #444;
+                    font-size: 1rem;
+                    line-height: 1.5;
+
+                    .highlight {
+                        color: #5E794B;
+                        font-weight: 700;
+                    }
+                }
+            }
+
+            /* Hover effect for cleaner feel */
+            transition: transform 0.2s ease,
+            box-shadow 0.2s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(94, 121, 75, 0.15);
+            }
+        }
+    }
+}
