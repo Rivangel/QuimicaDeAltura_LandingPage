@@ -1,1 +1,42 @@
-<p>carousel-plants works!</p>
+<section class="carousel-plants">
+    <div class="split-layout">
+        <!-- Left Panel: Content -->
+        <div class="content-panel">
+            <div class="content-wrapper">
+                <h2 class="title">
+                    Medicina Tradicional<br>
+                    + IA: Descubrimiento<br>
+                    Terapéutico.
+                </h2>
+                <p class="description">
+                    Sistema LLM para el análisis químico de plantas medicinales de la región de las Altas Montañas de
+                    Córdoba, Veracruz.
+                </p>
+                <button class="cta-button">
+                    <span class="icon">⬇</span>
+                    Descargar aplicación
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Panel: Interactive Carousel -->
+        <div class="carousel-panel">
+            <div class="carousel-container">
+                @for (img of images; track img; let i = $index) {
+                <div class="slide" [class.active]="i === currentIndex">
+                    <img [src]="img" alt="Planta Medicinal" class="slide-image">
+                </div>
+                }
+
+                <!-- Navigation Dots -->
+                <div class="indicators">
+                    @for (img of images; track img; let i = $index) {
+                    <button class="dot" [class.active]="i === currentIndex" (click)="goToSlide(i)"
+                        aria-label="Ir a diapositiva">
+                    </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

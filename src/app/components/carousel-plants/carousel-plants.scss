@@ -1,0 +1,141 @@
+.carousel-plants {
+    width: 100%;
+    font-family: 'Outfit', sans-serif;
+
+    .split-layout {
+        display: flex;
+        flex-direction: column;
+        min-height: 500px;
+        height: auto;
+
+        @media (min-width: 900px) {
+            flex-direction: row;
+            height: 600px;
+            /* Fixed height for desktop to ensure alignment */
+        }
+    }
+
+    /* Left Panel Styles */
+    .content-panel {
+        flex: 1;
+        background-color: #5E794B;
+        /* Muted Green from mockup */
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+        position: relative;
+
+        .content-wrapper {
+            max-width: 500px;
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s ease;
+
+            .icon {
+                font-size: 1.2rem;
+                border: 1px solid white;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+
+    /* Right Panel Styles (Carousel) */
+    .carousel-panel {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        background-color: #000;
+
+        .carousel-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 1;
+
+            &.active {
+                opacity: 1;
+                z-index: 2;
+            }
+
+            .slide-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+
+            .dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.5);
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                transition: background-color 0.3s ease;
+
+                &.active {
+                    background-color: white;
+                    transform: scale(1.2);
+                }
+            }
+        }
+    }
+}
