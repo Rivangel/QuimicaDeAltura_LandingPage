@@ -1,0 +1,72 @@
+.sponsors-section {
+    padding: 6rem 2rem;
+    background: linear-gradient(135deg, #f8faf7 0%, #ffffff 100%);
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .sponsors-title {
+        color: #8da37d;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 4rem;
+        position: relative;
+        display: inline-block;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 1px;
+            background: rgba(141, 163, 125, 0.3);
+        }
+
+        &::before {
+            left: -70px;
+        }
+
+        &::after {
+            right: -70px;
+        }
+    }
+
+    .sponsors-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+
+        .sponsor-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #5E794B;
+            opacity: 0.6;
+            filter: grayscale(1);
+            transition: all 0.4s ease;
+            padding: 1.5rem 2.5rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+
+            &:hover {
+                opacity: 1;
+                filter: grayscale(0);
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(94, 121, 75, 0.1);
+                border-color: rgba(94, 121, 75, 0.2);
+                color: #5E794B;
+            }
+        }
+    }
+}

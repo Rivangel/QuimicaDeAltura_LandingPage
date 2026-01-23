@@ -1,78 +1,115 @@
 .carousel-plants {
     width: 100%;
     font-family: 'Outfit', sans-serif;
+    padding: 5rem 2rem;
+    background-color: #f8f9fa;
+
+    @media (max-width: 900px) {
+        padding: 3rem 1rem;
+    }
 
     .split-layout {
         display: flex;
         flex-direction: column;
-        min-height: 500px;
-        height: auto;
+        max-width: 1400px;
+        width: 95%;
+        margin: 0 auto;
+        gap: 2.5rem;
 
         @media (min-width: 900px) {
             flex-direction: row;
-            height: 600px;
-            /* Fixed height for desktop to ensure alignment */
+            align-items: stretch;
+            min-height: 650px;
         }
     }
 
-    /* Left Panel Styles */
+    /* Left Panel Styles - Card Version */
     .content-panel {
         flex: 1;
-        background-color: #5E794B;
-        /* Muted Green from mockup */
-        color: white;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 3rem;
+        flex-direction: column;
         position: relative;
+        z-index: 5;
 
         .content-wrapper {
-            max-width: 500px;
+            background-color: #5E794B;
+            padding: 4rem 3.5rem;
+            border-radius: 40px;
+            box-shadow: 0 15px 35px -12px rgba(94, 121, 75, 0.2);
+            width: 100%;
+            height: 100%;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            box-sizing: border-box;
+
+            &:hover {
+                transform: translateY(-20px) scale(1.02);
+                box-shadow: 0 40px 80px -15px rgba(94, 121, 75, 0.5);
+                filter: brightness(1.05);
+            }
+
+            @media (max-width: 900px) {
+                padding: 3rem 2.5rem;
+                min-height: 400px;
+            }
+
+            @media (max-width: 600px) {
+                border-radius: 24px;
+                padding: 2.5rem 1.5rem;
+            }
         }
 
         .title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 0 0 1.5rem 0;
+            letter-spacing: -0.02em;
         }
 
         .description {
-            font-size: 1rem;
+            font-size: 1.15rem;
             line-height: 1.6;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
+            margin: 0 0 3rem 0;
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .cta-button {
-            background: transparent;
-            border: 1px solid white;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+            background: white;
+            border: none;
+            color: #5E794B;
+            padding: 1.2rem 2.5rem;
+            border-radius: 100px;
             font-family: 'Outfit', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: background 0.3s ease;
+            align-self: flex-start;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 
             .icon {
-                font-size: 1.2rem;
-                border: 1px solid white;
+                font-size: 1.3rem;
+                background-color: #5E794B;
+                color: white;
                 border-radius: 50%;
-                width: 24px;
-                height: 24px;
+                width: 32px;
+                height: 32px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
 
             &:hover {
-                background: rgba(255, 255, 255, 0.1);
+                background: #fdfdfd;
+                transform: scale(1.1);
+                box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.2);
             }
         }
     }
@@ -83,6 +120,24 @@
         position: relative;
         overflow: hidden;
         background-color: #000;
+        border-radius: 40px;
+        box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.2);
+        min-height: 400px;
+        transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+
+        @media (min-width: 900px) {
+            height: auto;
+        }
+
+        @media (max-width: 600px) {
+            height: 350px;
+            border-radius: 24px;
+        }
+
+        &:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.4);
+        }
 
         .carousel-container {
             width: 100%;
@@ -114,22 +169,22 @@
 
         .indicators {
             position: absolute;
-            bottom: 20px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
+            gap: 12px;
             z-index: 10;
 
             .dot {
-                width: 10px;
-                height: 10px;
+                width: 12px;
+                height: 12px;
                 border-radius: 50%;
-                background-color: rgba(255, 255, 255, 0.5);
+                background-color: rgba(255, 255, 255, 0.4);
                 border: none;
                 cursor: pointer;
                 padding: 0;
-                transition: background-color 0.3s ease;
+                transition: all 0.3s ease;
 
                 &.active {
                     background-color: white;
