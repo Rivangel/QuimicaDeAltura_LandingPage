@@ -122,9 +122,9 @@
             gap: 0.5rem;
 
             .icon-circle {
-                width: 30px;
+                width: 60px;
                 /* More compact icons */
-                height: 30px;
+                height: 60px;
                 border-radius: 50%;
                 background-color: rgba(255, 255, 255, 0.08);
                 border: 1px solid rgba(255, 255, 255, 0.05);
@@ -136,8 +136,8 @@
                 text-decoration: none;
 
                 svg {
-                    width: 15px;
-                    height: 15px;
+                    width: 20px;
+                    height: 20px;
                 }
 
                 &:hover {
