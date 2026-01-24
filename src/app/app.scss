@@ -1,0 +1,178 @@
+.background-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+    background: radial-gradient(circle at 0% 0%, rgba(94, 121, 75, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 100% 100%, rgba(141, 163, 125, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 100% 0%, rgba(219, 230, 210, 0.3) 0%, transparent 30%),
+        radial-gradient(circle at 0% 100%, rgba(240, 245, 235, 0.4) 0%, transparent 30%);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .leaf {
+        position: absolute;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.35;
+        filter: blur(1px) saturate(1.8) contrast(1.1);
+        transition: transform 0.5s ease-out;
+        border-radius: 50%;
+        box-shadow: 0 10px 30px rgba(94, 121, 75, 0.1);
+        will-change: transform;
+    }
+
+    .leaf-1 {
+        width: 450px;
+        height: 450px;
+        top: -8%;
+        left: -8%;
+        background-image: url('/resources/images/menta_1280x960.jpg');
+        animation: float 20s infinite ease-in-out;
+    }
+
+    .leaf-2 {
+        width: 350px;
+        height: 350px;
+        top: 60%;
+        right: -10%;
+        background-image: url('/resources/images/manzanilla_1280x855.jpg');
+        animation: float 25s infinite ease-in-out reverse;
+        animation-delay: -3s;
+    }
+
+    .leaf-3 {
+        width: 500px;
+        height: 500px;
+        bottom: -15%;
+        left: 5%;
+        background-image: url('/resources/images/aloe_1280x853.jpg');
+        animation: float 30s infinite ease-in-out;
+        animation-delay: -7s;
+    }
+
+    .leaf-4 {
+        width: 250px;
+        height: 250px;
+        top: 25%;
+        right: 12%;
+        background-image: url('/resources/images/menta_1280x960.jpg');
+        animation: float 22s infinite ease-in-out;
+        opacity: 0.25;
+    }
+
+    .leaf-5 {
+        width: 380px;
+        height: 380px;
+        top: 10%;
+        right: -5%;
+        background-image: url('/resources/images/manzanilla_1280x855.jpg');
+        animation: float 28s infinite ease-in-out reverse;
+        animation-delay: -12s;
+        opacity: 0.25;
+    }
+
+    .leaf-6 {
+        width: 300px;
+        height: 300px;
+        bottom: 20%;
+        right: 20%;
+        background-image: url('/resources/images/aloe_1280x853.jpg');
+        animation: float 35s infinite ease-in-out;
+        opacity: 0.25;
+        filter: blur(4px) saturate(1.8) contrast(1.1);
+    }
+
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        z-index: -1;
+        opacity: 0.4;
+        animation: pulse 15s infinite ease-in-out alternate, blob 20s infinite ease-in-out;
+    }
+
+    .circle-1 {
+        width: 400px;
+        height: 400px;
+        background: #eef5e9;
+        top: 20%;
+        left: 15%;
+    }
+
+    .circle-2 {
+        width: 500px;
+        height: 500px;
+        background: #f1f8ee;
+        bottom: 15%;
+        right: 10%;
+        animation-delay: -5s;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    33% {
+        transform: translate(40px, 60px) rotate(15deg);
+    }
+
+    66% {
+        transform: translate(-30px, 110px) rotate(-20deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1) translate(0, 0);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scale(1.1) translate(20px, -10px);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.2) translate(50px, -30px);
+        opacity: 0.3;
+    }
+}
+
+@keyframes blob {
+
+    0%,
+    100% {
+        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    }
+
+    33% {
+        border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+    }
+
+    66% {
+        border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;
+    }
+}

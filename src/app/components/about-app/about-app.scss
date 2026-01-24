@@ -1,6 +1,6 @@
 .about-app-section {
     padding: 8rem 2rem;
-    background: linear-gradient(135deg, #ffffff 0%, #f0f7ec 50%, #ffffff 100%);
+    background: transparent;
     font-family: 'Outfit', sans-serif;
     position: relative;
     overflow: hidden;
@@ -222,18 +222,35 @@
         }
 
         .cta-button {
-            background: #5E794B;
-            color: white;
-            padding: 1.4rem 3.5rem;
-            border-radius: 100px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            box-shadow: 0 15px 35px rgba(94, 121, 75, 0.3);
-            align-self: flex-start;
+            display: none; // Hidden in favor of store badges
+        }
 
-            &:hover {
-                background: #4a613a;
-                transform: scale(1.05) translateY(-5px);
+        .download-container {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+
+            .store-badge {
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                display: block;
+                height: 52px;
+
+                img {
+                    height: 100%;
+                    width: auto;
+                    border-radius: 10px;
+                }
+
+                &:hover {
+                    transform: translateY(-8px) scale(1.05);
+                    filter: brightness(1.05);
+                    box-shadow: 0 15px 30px rgba(94, 121, 75, 0.2);
+                }
+
+                &:active {
+                    transform: translateY(-2px) scale(0.98);
+                }
             }
         }
     }
