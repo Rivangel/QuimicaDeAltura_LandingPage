@@ -7,10 +7,11 @@ import { AboutApp } from "./components/about-app/about-app";
 import { Sponsors } from "./components/sponsors/sponsors";
 import { ProblemMission } from "./components/problem-mission/problem-mission";
 import { AppShowcase } from "./components/app-showcase/app-showcase";
+import { ScrollPlant } from "./components/scroll-plant/scroll-plant";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, CarouselPlants, AboutApp, Sponsors, ProblemMission, AppShowcase],
+  imports: [RouterOutlet, Header, Footer, CarouselPlants, AboutApp, Sponsors, ProblemMission, AppShowcase, ScrollPlant],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

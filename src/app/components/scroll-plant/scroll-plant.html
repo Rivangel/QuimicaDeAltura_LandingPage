@@ -1,0 +1,47 @@
+<div class="scroll-plant-system">
+
+    <div class="stem-track">
+        <!-- 1. The Masked Stem (Grows with height) -->
+        <div class="stem-mask" [style.height.%]="growthHeight()">
+            <!-- The static vine image that gets revealed -->
+            <div class="vine-graphic"></div>
+        </div>
+
+        <!-- 2. The Flower (Floats at the top of growth) -->
+        <div class="flower-anchor" [style.bottom.%]="growthHeight()">
+            <div class="premium-flower" [class.bloomed]="scrollPercent() > 95">
+                <div class="flower-glow"></div>
+                <div class="petals-container">
+                    <div class="petal outer" *ngFor="let p of [1,2,3,4,5,6,7,8]"></div>
+                    <div class="petal inner" *ngFor="let p of [1,2,3,4,5,6]"></div>
+                    <div class="flower-center">
+                        <div class="pistil" *ngFor="let p of [1,2,3]"></div>
+                    </div>
+                </div>
+                <div class="growth-sparkle"></div>
+            </div>
+        </div>
+
+        <!-- 3. Leaves (Fixed positions, revealed by opacity) -->
+        <div class="leaves-container">
+            <div *ngFor="let leaf of getLeaves()" class="leaf-wrapper"
+                [class.visible]="scrollPercent() > leaf.threshold" [ngClass]="leaf.side"
+                [style.bottom.%]="leaf.bottomPos">
+                <div class="leaf-blade"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pot Base - Clickable to Scroll Top -->
+    <div class="pot-wrapper" (click)="scrollToTop()">
+        <!-- Up Arrow Indicator -->
+        <div class="up-arrow"></div>
+
+        <div class="pot-container">
+            <div class="pot-rim"></div>
+            <div class="pot-body"></div>
+            <div class="pot-soil"></div>
+        </div>
+    </div>
+
+</div>
