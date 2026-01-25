@@ -83,14 +83,20 @@
 
         .download-container {
             display: flex;
-            gap: 1.2rem;
+            flex-direction: row;
+            gap: 1rem;
             margin-top: 1.5rem;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+
+            @media (max-width: 900px) {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
 
             .store-badge {
                 transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 display: block;
-                height: 48px;
+                height: 54px;
 
                 img {
                     height: 100%;

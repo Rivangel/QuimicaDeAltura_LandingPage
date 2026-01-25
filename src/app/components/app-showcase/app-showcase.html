@@ -1,0 +1,47 @@
+<section class="app-showcase" id="app-showcase">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="title">La sabiduría de las montañas en tu mano</h2>
+            <p class="subtitle">Diseñamos una experiencia sencilla y poderosa para que el bienestar natural esté a solo
+                un toque de distancia.</p>
+        </div>
+
+        <div class="showcase-grid">
+            <!-- Left: Features List -->
+            <div class="features-list">
+                @for (tab of tabs; track tab.id) {
+                <div class="feature-card" [class.active]="activeTab === tab.id" (click)="setTab(tab.id)"
+                    (mouseenter)="setTab(tab.id)">
+                    <div class="icon-box">{{ tab.icon }}</div>
+                    <div class="content">
+                        <h3>{{ tab.title }}</h3>
+                        <p>{{ tab.description }}</p>
+                    </div>
+                    <div class="active-indicator"></div>
+                </div>
+                }
+            </div>
+
+            <!-- Right: Interactive Phone -->
+            <div class="phone-display">
+                <div class="phone-frame">
+                    <div class="phone-inner">
+                        <div class="phone-screen">
+                            <img [src]="activeImage" [alt]="activeTab" class="app-screenshot">
+                        </div>
+                    </div>
+                    <!-- Camera and stuff -->
+                    <div class="phone-notch"></div>
+                </div>
+
+                <!-- Decorative backgrounds -->
+                <div class="decorative-circle"></div>
+                <div class="floating-icons">
+                    <span class="float-icon icon-1">🍃</span>
+                    <span class="float-icon icon-2">✨</span>
+                    <span class="float-icon icon-3">💚</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

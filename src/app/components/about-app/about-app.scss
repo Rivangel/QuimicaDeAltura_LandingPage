@@ -107,7 +107,7 @@
         display: flex;
         flex-direction: column;
         background: white;
-        padding: 5rem;
+        padding: 4rem 3rem;
         border-radius: 40px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
         border: 1px solid rgba(94, 121, 75, 0.05);
@@ -227,14 +227,21 @@
 
         .download-container {
             display: flex;
-            gap: 1.2rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
+            flex-direction: row;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            flex-wrap: nowrap;
+            justify-content: center;
+
+            @media (max-width: 600px) {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
 
             .store-badge {
                 transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 display: block;
-                height: 52px;
+                height: 58px;
 
                 img {
                     height: 100%;
