@@ -87,6 +87,7 @@ main {
     /* Center content and account for fixed header */
     padding: 0;
     position: relative;
+    z-index: 1;
 
     /* Ensure child sections don't burst out */
     section {

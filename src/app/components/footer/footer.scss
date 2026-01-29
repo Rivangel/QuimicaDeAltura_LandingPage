@@ -6,6 +6,8 @@
     /* Even more compact height */
     font-family: 'Outfit', sans-serif;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 1;
 
     .container {
         max-width: 1200px;
