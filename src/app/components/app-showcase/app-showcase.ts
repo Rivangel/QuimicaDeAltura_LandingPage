@@ -31,7 +31,7 @@ export class AppShowcase {
             title: 'Asistente Yolotl',
             description: 'Resuelve tus dudas sobre remedios naturales conversando con nuestro experto en IA.',
             icon: '💬',
-            image: '/resources/images/app_mockup_chat.png'
+            image: '/resources/images/app_mockup_chat.svg'
         }
     ];
 
