@@ -17,14 +17,14 @@ export class AppShowcase {
             title: 'Tu Biblioteca Natural',
             description: 'Explora el catálogo más completo de plantas medicinales de la región con un diseño fácil de usar.',
             icon: '🌿',
-            image: '/resources/images/app_mockup_home.png'
+            image: '/resources/images/app_mockup_home.svg'
         },
         {
             id: 'scan',
             title: 'Identificador Inteligente',
             description: 'Toma una foto a cualquier planta y descubre al instante su nombre y propiedades curativas.',
             icon: '📸',
-            image: '/resources/images/app_mockup_scan.png'
+            image: '/resources/images/app_mockup_scan.svg'
         },
         {
             id: 'chat',
