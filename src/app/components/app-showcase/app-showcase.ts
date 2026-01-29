@@ -17,21 +17,21 @@ export class AppShowcase {
             title: 'Tu Biblioteca Natural',
             description: 'Explora el catálogo más completo de plantas medicinales de la región con un diseño fácil de usar.',
             icon: '🌿',
-            image: '/resources/images/app_mockup_home.png'
+            image: '/resources/images/app_mockup_home.svg'
         },
         {
             id: 'scan',
             title: 'Identificador Inteligente',
             description: 'Toma una foto a cualquier planta y descubre al instante su nombre y propiedades curativas.',
             icon: '📸',
-            image: '/resources/images/app_mockup_scan.png'
+            image: '/resources/images/app_mockup_scan.svg'
         },
         {
             id: 'chat',
             title: 'Asistente Yolotl',
             description: 'Resuelve tus dudas sobre remedios naturales conversando con nuestro experto en IA.',
             icon: '💬',
-            image: '/resources/images/app_mockup_chat.png'
+            image: '/resources/images/app_mockup_chat.svg'
         }
     ];
 
