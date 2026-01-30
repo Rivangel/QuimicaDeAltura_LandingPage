@@ -8,10 +8,11 @@ import { Sponsors } from "./components/sponsors/sponsors";
 import { ProblemMission } from "./components/problem-mission/problem-mission";
 import { AppShowcase } from "./components/app-showcase/app-showcase";
 import { ScrollPlant } from "./components/scroll-plant/scroll-plant";
+import { RadialMenu } from "./components/radial-menu/radial-menu";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, CarouselPlants, AboutApp, Sponsors, ProblemMission, AppShowcase, ScrollPlant],
+  imports: [RouterOutlet, Header, Footer, CarouselPlants, AboutApp, Sponsors, ProblemMission, AppShowcase, ScrollPlant, RadialMenu],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

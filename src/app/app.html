@@ -27,7 +27,39 @@
 <app-header></app-header>
 
 <main>
-  <app-carousel-plants></app-carousel-plants>
+  <section class="radial-menu-section" id="home">
+    <div class="split-layout">
+      <!-- Left Panel: Content Card -->
+      <div class="content-panel">
+        <div class="content-wrapper">
+          <h2 class="title">
+            Lo mejor de la<br>
+            Naturaleza + IA:<br>
+            Cuidamos tu salud.
+          </h2>
+          <p class="description">
+            Analizamos las plantas medicinales de Veracruz con inteligencia artificial para encontrar soluciones
+            naturales que de verdad funcionen.
+          </p>
+          <div class="download-container">
+            <a href="#" class="store-badge google-play">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                  alt="Consíguelo en Google Play">
+            </a>
+            <a href="#" class="store-badge app-store">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+                  alt="Descárgalo en el App Store">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Radial Menu -->
+      <div class="radial-menu-panel">
+        <app-radial-menu></app-radial-menu>
+      </div>
+    </div>
+  </section>
   <app-problem-mission></app-problem-mission>
   <app-about-app></app-about-app>
   <app-showcase></app-showcase>

@@ -361,3 +361,140 @@ html {
         opacity: 0;
     }
 }
+
+/* Radial Menu Section with Content Card */
+.radial-menu-section {
+    width: 100%;
+    font-family: 'Outfit', sans-serif;
+    padding: 1rem 2rem;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: 900px) {
+        padding: 1rem 1rem;
+    }
+
+    .split-layout {
+        display: flex;
+        flex-direction: column;
+        max-width: 1400px;
+        width: 100%;
+        margin: 0 auto;
+        gap: 2.5rem;
+        align-items: center;
+        justify-content: center;
+
+        @media (min-width: 1400px) {
+            max-width: 1400px;
+        }
+
+        @media (min-width: 900px) {
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    /* Left Panel Styles - Content Card */
+    .content-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 5;
+        min-width: 0;
+
+        .content-wrapper {
+            background-color: #5E794B;
+            padding: 3rem 2.5rem;
+            border-radius: 40px;
+            box-shadow: 0 15px 35px -12px rgba(94, 121, 75, 0.2);
+            width: 100%;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            box-sizing: border-box;
+
+            &:hover {
+                transform: translateY(-20px) scale(1.02);
+                box-shadow: 0 40px 80px -15px rgba(94, 121, 75, 0.5);
+                filter: brightness(1.05);
+            }
+
+            @media (max-width: 900px) {
+                padding: 3rem 2.5rem;
+                min-height: 400px;
+            }
+
+            @media (max-width: 600px) {
+                border-radius: 24px;
+                padding: 2.5rem 1.5rem;
+            }
+        }
+
+        .title {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 0 0 1.5rem 0;
+            letter-spacing: -0.02em;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0 0 3rem 0;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .download-container {
+            display: flex;
+            flex-direction: row;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+            flex-wrap: nowrap;
+
+            @media (max-width: 900px) {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .store-badge {
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                display: block;
+                height: 60px;
+
+                img {
+                    height: 100%;
+                    width: auto;
+                    border-radius: 8px;
+                    transition: all 0.3s ease;
+                }
+
+                &:hover {
+                    transform: translateY(-5px) scale(1.05);
+                    filter: brightness(1.1);
+                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+                }
+
+                &:active {
+                    transform: translateY(-2px) scale(0.98);
+                }
+            }
+        }
+    }
+
+    /* Right Panel Styles - Radial Menu */
+    .radial-menu-panel {
+        flex: 1;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        overflow: visible;
+    }
+}
