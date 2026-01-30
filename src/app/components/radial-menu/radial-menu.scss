@@ -1,0 +1,223 @@
+.radial-menu-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    overflow: visible;
+}
+
+.radial-menu {
+    position: relative;
+    width: 900px;
+    height: 900px;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    
+    @media (max-width: 1200px) {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    // Pause inner circle buttons when hovering inner circle or any inner circle button
+    &:has(.circle-1:hover) .orbit-button-1,
+    &:has(.circle-1:hover) .orbit-button-2,
+    &:has(.orbit-button-1:hover) .orbit-button-1,
+    &:has(.orbit-button-1:hover) .orbit-button-2,
+    &:has(.orbit-button-2:hover) .orbit-button-1,
+    &:has(.orbit-button-2:hover) .orbit-button-2 {
+        animation-play-state: paused;
+    }
+
+    // Pause outer circle buttons when hovering outer circle or any outer circle button
+    &:has(.circle-2:hover) .orbit-button-2-1,
+    &:has(.circle-2:hover) .orbit-button-2-2,
+    &:has(.circle-2:hover) .orbit-button-2-3,
+    &:has(.circle-2:hover) .orbit-button-2-4,
+    &:has(.circle-2:hover) .orbit-button-2-5,
+    &:has(.orbit-button-2-1:hover) .orbit-button-2-1,
+    &:has(.orbit-button-2-1:hover) .orbit-button-2-2,
+    &:has(.orbit-button-2-1:hover) .orbit-button-2-3,
+    &:has(.orbit-button-2-1:hover) .orbit-button-2-4,
+    &:has(.orbit-button-2-1:hover) .orbit-button-2-5,
+    &:has(.orbit-button-2-2:hover) .orbit-button-2-1,
+    &:has(.orbit-button-2-2:hover) .orbit-button-2-2,
+    &:has(.orbit-button-2-2:hover) .orbit-button-2-3,
+    &:has(.orbit-button-2-2:hover) .orbit-button-2-4,
+    &:has(.orbit-button-2-2:hover) .orbit-button-2-5,
+    &:has(.orbit-button-2-3:hover) .orbit-button-2-1,
+    &:has(.orbit-button-2-3:hover) .orbit-button-2-2,
+    &:has(.orbit-button-2-3:hover) .orbit-button-2-3,
+    &:has(.orbit-button-2-3:hover) .orbit-button-2-4,
+    &:has(.orbit-button-2-3:hover) .orbit-button-2-5,
+    &:has(.orbit-button-2-4:hover) .orbit-button-2-1,
+    &:has(.orbit-button-2-4:hover) .orbit-button-2-2,
+    &:has(.orbit-button-2-4:hover) .orbit-button-2-3,
+    &:has(.orbit-button-2-4:hover) .orbit-button-2-4,
+    &:has(.orbit-button-2-4:hover) .orbit-button-2-5,
+    &:has(.orbit-button-2-5:hover) .orbit-button-2-1,
+    &:has(.orbit-button-2-5:hover) .orbit-button-2-2,
+    &:has(.orbit-button-2-5:hover) .orbit-button-2-3,
+    &:has(.orbit-button-2-5:hover) .orbit-button-2-4,
+    &:has(.orbit-button-2-5:hover) .orbit-button-2-5 {
+        animation-play-state: paused;
+    }
+}
+
+.center-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5E794B 0%, #8BA37A 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(94, 121, 75, 0.3);
+    border: 4px solid white;
+
+    &.circle-2 {
+        width: 540px;
+        height: 540px;
+        z-index: 1;
+        opacity: 0.7;
+        overflow: hidden;
+
+        .center-image {
+            width: 250%;
+            height: 250%;
+            object-fit: cover;
+            filter: blur(8px);
+            transform: translate(-50%, -50%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+    }
+
+    &.circle-1 {
+        width: 270px;
+        height: 270px;
+        z-index: 10;
+        overflow: hidden;
+
+        .center-image {
+            width: 150%;
+            height: 150%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+    }
+}
+
+.orbit-button {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #5E794B 0%, #8BA37A 100%);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(94, 121, 75, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .button-icon {
+        width: 32px;
+        height: 32px;
+        color: white;
+    }
+
+    &:hover {
+        box-shadow: 0 6px 25px rgba(94, 121, 75, 0.6);
+        background: linear-gradient(135deg, #4a613b 0%, #7a9568 100%);
+        filter: brightness(1.1);
+    }
+
+    &:active {
+        filter: brightness(0.9);
+    }
+}
+
+// First circle buttons (2 buttons)
+.orbit-button-1 {
+    animation: orbit linear infinite;
+    animation-duration: 10s;
+    animation-delay: 0s;
+    z-index: 15;
+}
+
+.orbit-button-2 {
+    animation: orbit linear infinite;
+    animation-duration: 10s;
+    animation-delay: -5s;
+    z-index: 15;
+}
+
+// Second circle buttons (5 buttons)
+.orbit-button-2-1 {
+    animation: orbit-2 linear infinite;
+    animation-duration: 15s;
+    animation-delay: 0s;
+    z-index: 20;
+}
+
+.orbit-button-2-2 {
+    animation: orbit-2 linear infinite;
+    animation-duration: 15s;
+    animation-delay: -3s;
+    z-index: 20;
+}
+
+.orbit-button-2-3 {
+    animation: orbit-2 linear infinite;
+    animation-duration: 15s;
+    animation-delay: -6s;
+    z-index: 20;
+}
+
+.orbit-button-2-4 {
+    animation: orbit-2 linear infinite;
+    animation-duration: 15s;
+    animation-delay: -9s;
+    z-index: 20;
+}
+
+.orbit-button-2-5 {
+    animation: orbit-2 linear infinite;
+    animation-duration: 15s;
+    animation-delay: -12s;
+    z-index: 20;
+}
+
+@keyframes orbit {
+    0% {
+        transform: rotate(0deg) translateX(135px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(135px) rotate(-360deg);
+    }
+}
+
+@keyframes orbit-2 {
+    0% {
+        transform: rotate(0deg) translateX(270px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(270px) rotate(-360deg);
+    }
+}
