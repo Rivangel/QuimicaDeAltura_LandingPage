@@ -10,7 +10,7 @@
 html {
     font-size: 22px;
     scroll-behavior: smooth;
-    scroll-padding-top: 130px;
+    scroll-padding-top: 80px;
 }
 
 body {
@@ -83,7 +83,7 @@ main {
     max-width: 1280px;
     /* Restrict max width globally */
     width: 100%;
-    margin: 120px auto 0;
+    margin: 30px auto 0;
     /* Center content and account for fixed header */
     padding: 0;
     position: relative;
