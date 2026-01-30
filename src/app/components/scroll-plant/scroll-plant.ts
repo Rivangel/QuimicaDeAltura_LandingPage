@@ -34,7 +34,10 @@ export class ScrollPlant {
             side: i % 2 === 0 ? 'left' : 'right',
             threshold: (i + 1) * (100 / leafCount),
             bottomPos: (i + 1) * (75 / leafCount)
-        }));
+        })).filter((leaf, index) => {
+            // Remove the second left leaf from bottom (index 2)
+            return !(index === 2 && leaf.side === 'left');
+        });
     }
 
     scrollToTop() {

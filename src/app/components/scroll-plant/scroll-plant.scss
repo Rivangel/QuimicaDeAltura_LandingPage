@@ -202,7 +202,10 @@
         .leaf-blade {
             background: linear-gradient(135deg, #6a994e, #386641);
             border-radius: 100% 0 100% 0;
-            transform: translateX(-55%) rotate(-10deg);
+            // Position so the right edge (connection point) aligns with stem center
+            right: 50%;
+            transform: rotate(-10deg);
+            transform-origin: right center;
         }
     }
 
@@ -210,7 +213,10 @@
         .leaf-blade {
             background: linear-gradient(-135deg, #6a994e, #386641);
             border-radius: 0 100% 0 100%;
-            transform: translateX(55%) rotate(10deg);
+            // Position so the left edge (connection point) aligns with stem center
+            left: 50%;
+            transform: rotate(10deg);
+            transform-origin: left center;
         }
     }
 }
