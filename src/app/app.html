@@ -9,13 +9,15 @@
       <div class="content-panel">
         <div class="content-wrapper">
           <h2 class="title">
-            Lo mejor de la<br>
-            Naturaleza + IA:<br>
-            Cuidamos tu salud.
+            @for (line of titleLines; track $index) {
+              @if ($index > 0) {
+                <br>
+              }
+              {{ line }}
+            }
           </h2>
           <p class="description">
-            Analizamos las plantas medicinales de Veracruz con inteligencia artificial para encontrar soluciones
-            naturales que de verdad funcionen.
+            {{ cardContent().description }}
           </p>
           <div class="download-container">
             <a href="#" class="store-badge google-play">
@@ -32,7 +34,16 @@
 
       <!-- Right Panel: Radial Menu -->
       <div class="radial-menu-panel">
-        <app-radial-menu></app-radial-menu>
+        <app-radial-menu 
+          [activeButton]="activeButton()" 
+          (contentChange)="onContentChange()" 
+          (setOriginalContent)="onSetOriginalContent()"
+          (setMission)="onSetMission()"
+          (setVision)="onSetVision()"
+          (setValues)="onSetValues()"
+          (setContact)="onSetContact()"
+          (setBusinessModel)="onSetBusinessModel()">
+        </app-radial-menu>
       </div>
     </div>
   </section>
