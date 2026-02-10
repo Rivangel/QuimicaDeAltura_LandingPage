@@ -1,0 +1,89 @@
+.newsletter-section {
+    background: linear-gradient(135deg, #8ba772 0%, #5E794B 60%, #445936 100%);
+    padding: 3.5rem 2rem;
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    text-align: center;
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .newsletter-title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin: 0 0 0.75rem;
+    }
+
+    .newsletter-subtitle {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0 0 2rem;
+    }
+
+    .newsletter-form {
+        display: flex;
+        gap: 0.75rem;
+        max-width: 480px;
+        margin: 0 auto;
+
+        // Móviles
+        @media (max-width: 767px) {
+            flex-direction: column;
+        }
+    }
+
+    .email-input {
+        flex: 1;
+        padding: 0.8rem 1.2rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        font-family: inherit;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.3s ease, background 0.3s ease;
+
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        &:focus {
+            border-color: white;
+            background: rgba(255, 255, 255, 0.25);
+        }
+    }
+
+    .submit-btn {
+        padding: 0.8rem 2rem;
+        background: white;
+        color: #5E794B;
+        border: none;
+        border-radius: 50px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    .success-message {
+        font-size: 1rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.95);
+        margin: 0;
+    }
+}

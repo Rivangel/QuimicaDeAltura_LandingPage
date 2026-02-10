@@ -22,43 +22,50 @@ export class App {
   // Card content state
   cardContent = signal({
     title: 'Lo mejor de la\nNaturaleza + IA:\nCuidamos tu salud.',
-    description: 'Analizamos las plantas medicinales de Veracruz con inteligencia artificial para encontrar soluciones naturales que de verdad funcionen.'
+    description: 'Estudiamos las plantas medicinales de Veracruz con tecnología inteligente para encontrar remedios naturales que realmente funcionen.',
+    image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop'
   });
 
   // Alternative content
   private alternativeContent = {
     title: 'Innovación y Tradición:\nUnidas para tu Bienestar.',
-    description: 'Combinamos el conocimiento ancestral de las plantas medicinales con tecnología de vanguardia para ofrecerte soluciones naturales efectivas y seguras.'
+    description: 'Combinamos el saber de nuestros abuelos sobre plantas medicinales con tecnología moderna para darte soluciones naturales que sí funcionan.',
+    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800&auto=format&fit=crop'
   };
 
   // Mission content
   private missionContent = {
     title: 'Nuestra Misión',
-    description: 'Democratizar el acceso a la medicina tradicional mexicana mediante inteligencia artificial, preservando el conocimiento etnobotánico de las Altas Montañas de Veracruz y ofreciendo soluciones naturales accesibles para todos.'
+    description: 'Queremos que todos puedan acceder a la medicina tradicional mexicana. Usamos tecnología inteligente para cuidar el conocimiento sobre plantas de las Altas Montañas de Veracruz y ofrecer soluciones naturales que todos puedan usar.',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=800&auto=format&fit=crop'
   };
 
   // Vision content
   private visionContent = {
     title: 'Nuestra Visión',
-    description: 'Ser la plataforma líder en América Latina que conecta la sabiduría ancestral de las plantas medicinales con la tecnología moderna, creando un puente entre el pasado y el futuro para el bienestar de las comunidades.'
+    description: 'Queremos ser la mejor herramienta en América Latina que une el conocimiento antiguo sobre plantas medicinales con la tecnología de hoy, creando un puente entre el pasado y el futuro para el bienestar de nuestras comunidades.',
+    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop'
   };
 
   // Values content
   private valuesContent = {
     title: 'Nuestros Valores',
-    description: 'Respeto por el conocimiento tradicional, innovación tecnológica responsable, accesibilidad universal, sostenibilidad ambiental y compromiso con la preservación cultural de nuestras comunidades indígenas y rurales.'
+    description: 'Respetamos el conocimiento tradicional, usamos tecnología que ayuda sin dañar, trabajamos para que todos puedan acceder, cuidamos el medio ambiente y nos comprometemos a proteger la cultura de nuestras comunidades.',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop'
   };
 
   // Contact content
   private contactContent = {
     title: 'Contáctanos',
-    description: '¿Tienes preguntas o sugerencias? Estamos aquí para ayudarte. Escríbenos a contacto@quimicadealtura.com o completa nuestro formulario para recibir más información sobre nuestra plataforma y servicios.'
+    description: '¿Tienes preguntas o sugerencias? Estamos aquí para ayudarte. Escríbenos a contacto@quimicadealtura.com o completa nuestro formulario para recibir más información sobre nuestra herramienta y servicios.',
+    image: 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?q=80&w=800&auto=format&fit=crop'
   };
 
   // Business model content
   private businessModelContent = {
     title: 'Modelo de Negocio',
-    description: 'Ofrecemos acceso gratuito a la información básica de plantas medicinales, con suscripciones premium para análisis avanzados con IA, consultorías personalizadas y alianzas estratégicas con instituciones de salud y educación.'
+    description: 'Ofrecemos información básica sobre plantas medicinales de forma gratuita. También tenemos opciones de pago para estudios más detallados con tecnología, asesoría personalizada y trabajamos con hospitales y escuelas.',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop'
   };
 
   private isOriginalContent = true;
@@ -77,7 +84,8 @@ export class App {
   onSetOriginalContent() {
     this.cardContent.set({
       title: 'Lo mejor de la\nNaturaleza + IA:\nCuidamos tu salud.',
-      description: 'Analizamos las plantas medicinales de Veracruz con inteligencia artificial para encontrar soluciones naturales que de verdad funcionen.'
+      description: 'Estudiamos las plantas medicinales de Veracruz con tecnología inteligente para encontrar remedios naturales que realmente funcionen.',
+      image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop'
     });
     this.isOriginalContent = true;
     this.activeButton.set('heart');
@@ -111,7 +119,8 @@ export class App {
   private setOriginalContent() {
     this.cardContent.set({
       title: 'Lo mejor de la\nNaturaleza + IA:\nCuidamos tu salud.',
-      description: 'Analizamos las plantas medicinales de Veracruz con inteligencia artificial para encontrar soluciones naturales que de verdad funcionen.'
+      description: 'Estudiamos las plantas medicinales de Veracruz con tecnología inteligente para encontrar remedios naturales que realmente funcionen.',
+      image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop'
     });
   }
 }

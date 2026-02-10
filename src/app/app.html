@@ -8,6 +8,11 @@
       <!-- Left Panel: Content Card -->
       <div class="content-panel">
         <div class="content-wrapper">
+          @if (cardContent().image) {
+            <div class="card-image-container">
+              <img [src]="cardContent().image" [alt]="cardContent().title" class="card-image">
+            </div>
+          }
           <h2 class="title">
             @for (line of titleLines; track $index) {
               @if ($index > 0) {

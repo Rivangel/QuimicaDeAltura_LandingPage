@@ -1,5 +1,26 @@
+/* Skip to content link */
+.skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #5E794B;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0 0 8px 8px;
+    z-index: 10000;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: top 0.2s ease;
+
+    &:focus {
+        top: 0;
+    }
+}
+
 /* Global Styles */
-@import url('https://fonts.googleapis.com/css2?family=outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
     --primary-color: #5E794B;

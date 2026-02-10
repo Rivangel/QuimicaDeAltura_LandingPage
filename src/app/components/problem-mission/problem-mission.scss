@@ -18,9 +18,9 @@
         position: relative;
         z-index: 1;
 
-        @media (min-width: 1440px) {
+        // Escritorio
+        @media (min-width: 1024px) {
             max-width: 1000px;
-            /* Lock width on huge screens */
         }
 
         /* Decorative Blob */

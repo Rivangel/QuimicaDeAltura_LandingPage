@@ -44,10 +44,6 @@
     }
 }
 
-// Optional: Hide video on mobile for performance
-@media (max-width: 768px) {
-    .scroll-video-container {
-        display: none;
-    }
-}
+// Show video on all devices (móviles, tablets, escritorio)
+// Video is optimized with playsinline and preload="metadata" for mobile performance
 

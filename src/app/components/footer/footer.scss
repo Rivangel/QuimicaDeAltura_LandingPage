@@ -22,12 +22,14 @@
         margin-bottom: 1.2rem;
         /* Compact margin */
 
-        @media (max-width: 1100px) {
+        // Tablets
+        @media (min-width: 768px) and (max-width: 1023px) {
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
         }
 
-        @media (max-width: 600px) {
+        // Móviles
+        @media (max-width: 767px) {
             grid-template-columns: 1fr;
             gap: 1rem;
             text-align: center;
@@ -53,7 +55,8 @@
             margin: 0;
             max-width: 220px;
 
-            @media (max-width: 600px) {
+            // Móviles
+            @media (max-width: 767px) {
                 margin: 0 auto;
             }
         }
@@ -141,7 +144,8 @@
             gap: 1.5rem;
             position: relative; // Para posicionamiento relativo si fuera necesario
 
-            @media (max-width: 600px) {
+            // Móviles
+            @media (max-width: 767px) {
                 flex-direction: column;
                 text-align: center;
                 gap: 1.2rem;

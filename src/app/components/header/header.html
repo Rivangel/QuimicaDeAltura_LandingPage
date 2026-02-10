@@ -10,4 +10,20 @@
     <div class="header-actions">
         <a href="#about-app" class="download-btn">Descargar App</a>
     </div>
+
+    <!-- Hamburger Button -->
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen()" aria-label="Abrir menú de navegación">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
 </header>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-overlay" [class.active]="menuOpen()" (click)="closeMenu()"></div>
+<nav class="mobile-menu" [class.active]="menuOpen()">
+    <a href="#problem-mission" class="mobile-link" (click)="closeMenu()">Problema y misión</a>
+    <a href="#about-app" class="mobile-link" (click)="closeMenu()">¿Qué hace nuestra aplicación?</a>
+    <a href="#about-us" class="mobile-link" (click)="closeMenu()">Acerca de nosotros</a>
+    <a href="#about-app" class="mobile-cta" (click)="closeMenu()">Descargar App</a>
+</nav>

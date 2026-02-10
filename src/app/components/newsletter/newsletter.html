@@ -1,0 +1,21 @@
+<section class="newsletter-section">
+    <div class="container">
+        <h2 class="newsletter-title">Mantente al día con la naturaleza</h2>
+        <p class="newsletter-subtitle">Recibe novedades sobre plantas medicinales, avances de IA y consejos de bienestar natural directamente en tu correo.</p>
+
+        @if (submitted()) {
+            <p class="success-message">Gracias por suscribirte. Pronto recibirás noticias.</p>
+        } @else {
+            <form class="newsletter-form" (ngSubmit)="onSubmit()">
+                <input
+                    type="email"
+                    class="email-input"
+                    placeholder="Tu correo electrónico"
+                    [(ngModel)]="email"
+                    name="email"
+                    required>
+                <button type="submit" class="submit-btn">Suscribirme</button>
+            </form>
+        }
+    </div>
+</section>

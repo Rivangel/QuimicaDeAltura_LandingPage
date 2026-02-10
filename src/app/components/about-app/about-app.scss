@@ -21,9 +21,9 @@
         width: 100%;
         margin: 0 auto;
 
-        @media (min-width: 1440px) {
+        // Escritorio
+        @media (min-width: 1024px) {
             max-width: 1100px;
-            /* Force consistent size on large screens */
         }
     }
 
@@ -60,7 +60,8 @@
         gap: 2rem;
         align-items: stretch;
 
-        @media (max-width: 1100px) {
+        // Tablets y Móviles
+        @media (max-width: 1023px) {
             grid-template-columns: 1fr;
         }
     }
@@ -257,7 +258,8 @@
             flex-wrap: nowrap;
             justify-content: center;
 
-            @media (max-width: 600px) {
+            // Móviles
+            @media (max-width: 767px) {
                 flex-wrap: wrap;
                 gap: 1rem;
             }

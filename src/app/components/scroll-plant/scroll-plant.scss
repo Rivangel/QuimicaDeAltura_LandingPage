@@ -11,7 +11,8 @@
     align-items: center;
     justify-content: flex-end;
 
-    @media (max-width: 768px) {
+    // Móviles
+    @media (max-width: 767px) {
         display: none;
     }
 }
@@ -231,6 +232,10 @@
 
 /* POT WRAPPER (Clickable Area) */
 .pot-wrapper {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
     position: relative;
     width: 100px;
     height: 85px; // Covers the whole pot area plus margin
