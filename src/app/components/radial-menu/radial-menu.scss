@@ -160,6 +160,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    outline: none; // Remove default outline
+    -webkit-tap-highlight-color: transparent; // Remove tap highlight on mobile
 
     .button-icon {
         width: 32px;
@@ -174,7 +176,11 @@
     }
 
     &:active {
-        filter: brightness(0.9);
+        transform: scale(0.95); // Subtle press effect instead of darkening
+    }
+
+    &:focus {
+        outline: none; // Remove focus outline
     }
 }
 
@@ -203,7 +209,11 @@
     }
 
     &:active {
-        filter: brightness(0.9);
+        transform: scale(0.95); // Subtle press effect instead of darkening
+    }
+
+    &:focus {
+        outline: none; // Remove focus outline
     }
 }
 
