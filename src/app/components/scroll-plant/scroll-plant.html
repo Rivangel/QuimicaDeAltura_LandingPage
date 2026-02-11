@@ -9,7 +9,7 @@
 
         <!-- 2. The Flower (Floats at the top of growth) -->
         <div class="flower-anchor" [style.bottom.%]="growthHeight()">
-            <div class="premium-flower" [class.bloomed]="scrollPercent() > 95">
+            <div class="premium-flower" [class.bloomed]="scrollPercent() > 95" (click)="scrollToTop()" style="cursor: pointer;" aria-label="Volver arriba">
                 <div class="flower-glow"></div>
                 <div class="petals-container">
                     <div class="petal outer" *ngFor="let p of [1,2,3,4,5,6,7,8]"></div>

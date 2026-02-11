@@ -11,25 +11,25 @@ export class Testimonials implements AfterViewInit {
 
   testimonials = [
     {
-      avatar: '👩🏽‍🌾',
-      quote: 'Gracias a esta app pude identificar plantas que mi abuela usaba y que yo ya habia olvidado. Ahora las cultivo en mi jardin.',
-      name: 'Maria Elena',
-      role: 'Herbolaria comunitaria',
-      location: 'Orizaba, Veracruz'
-    },
-    {
       avatar: '👨🏽‍🔬',
-      quote: 'Como investigador, la precision de la IA me sorprendio. Es una herramienta invaluable para documentar la etnobotanica regional.',
-      name: 'Dr. Carlos Mendez',
-      role: 'Investigador en Fitoquimica',
-      location: 'Cordoba, Veracruz'
+      quote: 'Esta aplicación es una herramienta invaluable para mi investigación. La precisión en el análisis de compuestos orgánicos de las plantas medicinales me permite identificar rápidamente moléculas con potencial terapéutico.',
+      name: 'Dr. Alan Carrasco Carballo',
+      role: 'Investigador en Química Orgánica',
+      location: 'Veracruz'
     },
     {
-      avatar: '👩🏽‍🏫',
-      quote: 'Mis estudiantes usan la app en las salidas de campo. Les encanta escanear plantas y aprender sobre sus usos medicinales.',
-      name: 'Prof. Laura Hernandez',
-      role: 'Docente de Biologia',
-      location: 'Fortín, Veracruz'
+      avatar: '👩🏽‍🔬',
+      quote: 'Uso esta aplicación en mis clases de microbiología para mostrar a mis estudiantes cómo las plantas medicinales tienen propiedades antimicrobianas validadas científicamente. Es una herramienta excelente para conectar el conocimiento tradicional con la evidencia científica.',
+      name: 'M en C Diana Flores Percino',
+      role: 'Investigadora en Microbiología',
+      location: 'Veracruz'
+    },
+    {
+      avatar: '👩🏽‍🔬',
+      quote: 'La biotecnología y la medicina tradicional se complementan perfectamente en esta aplicación. Es fascinante ver cómo la tecnología puede preservar y potenciar el conocimiento ancestral sobre plantas medicinales.',
+      name: 'Saraluz Soto Ortiz',
+      role: 'Licenciada en Biotecnología',
+      location: 'Veracruz'
     }
   ];
 
