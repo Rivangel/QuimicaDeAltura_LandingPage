@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './sponsors.scss',
 })
 export class Sponsors {
-
+  sponsors = [
+    { name: 'CONACYT', fullName: 'Consejo Nacional de Ciencia y Tecnologia' },
+    { name: 'UV', fullName: 'Universidad Veracruzana' },
+    { name: 'TECNM', fullName: 'Tecnologico Nacional de Mexico' },
+    { name: 'GOB. VER.', fullName: 'Gobierno del Estado de Veracruz' },
+  ];
 }

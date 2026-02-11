@@ -20,7 +20,7 @@ export class Faq {
     },
     {
       q: '¿La aplicación es gratuita?',
-      a: 'La versión básica es completamente gratuita e incluye acceso al catálogo de plantas y recomendaciones generales. Para análisis avanzados con IA y consultorías personalizadas, ofrecemos planes de suscripción accesibles.'
+      a: 'Sí, nuestra aplicación es completamente gratuita para todos los usuarios. Tienes acceso completo a toda la información sobre plantas medicinales, análisis con IA y todas las funcionalidades sin costo alguno. Trabajamos con empresas que venden plantas medicinales y te conectamos con ellas si necesitas adquirir alguna planta.'
     },
     {
       q: '¿Qué región geográfica cubre la aplicación?',

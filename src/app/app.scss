@@ -435,6 +435,7 @@ html {
             justify-content: center;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             box-sizing: border-box;
+            overflow: hidden;
 
             &:hover {
                 transform: translateY(-20px) scale(1.02);

@@ -1,1 +1,18 @@
-<p>overall-statistics works!</p>
+<section class="overall-statistics" id="statistics" #statsSection>
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Nuestro Impacto</h2>
+      <p class="section-subtitle">Numeros que reflejan nuestro compromiso con las comunidades</p>
+    </div>
+
+    <div class="stats-grid">
+      @for (stat of stats; track stat.label) {
+        <div class="stat-card">
+          <span class="stat-icon">{{ stat.icon }}</span>
+          <span class="stat-value">{{ formatValue(stat) }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>

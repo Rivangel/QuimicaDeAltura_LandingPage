@@ -1,24 +1,36 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from "./components/header/header";
 import { Footer } from "./components/footer/footer";
-import { CarouselPlants } from "./components/carousel-plants/carousel-plants";
 import { AboutApp } from "./components/about-app/about-app";
 import { ProblemMission } from "./components/problem-mission/problem-mission";
 import { AppShowcase } from "./components/app-showcase/app-showcase";
 import { ScrollPlant } from "./components/scroll-plant/scroll-plant";
 import { RadialMenu } from "./components/radial-menu/radial-menu";
 import { ScrollVideoBackground } from "./components/scroll-video-background/scroll-video-background";
+import { Faq } from "./components/faq/faq";
+import { Newsletter } from "./components/newsletter/newsletter";
+import { OverallStatistics } from "./components/overall-statistics/overall-statistics";
+import { HowItWorks } from "./components/how-it-works/how-it-works";
+import { Testimonials } from "./components/testimonials/testimonials";
+import { CtaBanner } from "./components/cta-banner/cta-banner";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, CarouselPlants, AboutApp, ProblemMission, AppShowcase, ScrollPlant, RadialMenu, ScrollVideoBackground],
+  imports: [
+    RouterOutlet, Header, Footer, AboutApp, ProblemMission,
+    AppShowcase, ScrollPlant, RadialMenu, ScrollVideoBackground,
+    Faq, Newsletter, OverallStatistics,
+    HowItWorks, Testimonials, CtaBanner
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
+export class App implements AfterViewInit {
+  @ViewChild('contentWrapper') contentWrapperRef!: ElementRef<HTMLElement>;
+
   protected readonly title = signal('LandingPage');
-  
+
   // Card content state
   cardContent = signal({
     title: 'Lo mejor de la\nNaturaleza + IA:\nCuidamos tu salud.',
@@ -64,12 +76,17 @@ export class App {
   // Business model content
   private businessModelContent = {
     title: 'Modelo de Negocio',
-    description: 'Ofrecemos información básica sobre plantas medicinales de forma gratuita. También tenemos opciones de pago para estudios más detallados con tecnología, asesoría personalizada y trabajamos con hospitales y escuelas.',
+    description: 'Nuestra aplicación es completamente gratuita para todos los usuarios. Trabajamos con empresas que venden plantas medicinales y las conectamos contigo. Cuando encuentres una planta que necesites, te redirigimos a vendedores confiables donde puedes adquirirla.',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop'
   };
 
   private isOriginalContent = true;
   activeButton = signal<string | null>('heart');
+
+  ngAfterViewInit() {
+    const el = this.contentWrapperRef.nativeElement;
+    el.style.height = el.offsetHeight + 'px';
+  }
 
   get titleLines() {
     return this.cardContent().title.split('\n');

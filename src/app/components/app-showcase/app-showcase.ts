@@ -14,8 +14,8 @@ export class AppShowcase {
     tabs = [
         {
             id: 'home',
-            title: 'Tu Biblioteca Natural',
-            description: 'Explora el catálogo más completo de plantas medicinales de la región con un diseño fácil de usar.',
+            title: 'Tu Biblioteca de Plantas Medicinales',
+            description: 'Accede al catálogo más completo de plantas medicinales de Veracruz con información detallada y fácil de usar.',
             icon: '🌿',
             image: '/resources/images/app_mockup_home.svg'
         },

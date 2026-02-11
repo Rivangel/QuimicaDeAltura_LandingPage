@@ -7,7 +7,7 @@
     <div class="split-layout">
       <!-- Left Panel: Content Card -->
       <div class="content-panel">
-        <div class="content-wrapper">
+        <div class="content-wrapper" #contentWrapper>
           @if (cardContent().image) {
             <div class="card-image-container">
               <img [src]="cardContent().image" [alt]="cardContent().title" class="card-image">
@@ -39,9 +39,9 @@
 
       <!-- Right Panel: Radial Menu -->
       <div class="radial-menu-panel">
-        <app-radial-menu 
-          [activeButton]="activeButton()" 
-          (contentChange)="onContentChange()" 
+        <app-radial-menu
+          [activeButton]="activeButton()"
+          (contentChange)="onContentChange()"
           (setOriginalContent)="onSetOriginalContent()"
           (setMission)="onSetMission()"
           (setVision)="onSetVision()"
@@ -52,9 +52,16 @@
       </div>
     </div>
   </section>
+
   <app-problem-mission></app-problem-mission>
   <app-about-app></app-about-app>
   <app-showcase></app-showcase>
+  <app-how-it-works></app-how-it-works>
+  <app-overall-statistics></app-overall-statistics>
+  <app-testimonials></app-testimonials>
+  <app-faq></app-faq>
+  <app-newsletter></app-newsletter>
+  <app-cta-banner></app-cta-banner>
 </main>
 
 <app-footer></app-footer>

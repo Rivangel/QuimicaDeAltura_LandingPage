@@ -1,0 +1,100 @@
+.cta-banner-section {
+  padding: 3rem 2rem;
+  font-family: 'Outfit', sans-serif;
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .cta-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #8ba772 0%, #5E794B 60%, #445936 100%);
+    border-radius: 32px;
+    padding: 4rem 3rem;
+    text-align: center;
+    color: white;
+    box-shadow: 0 20px 60px rgba(94, 121, 75, 0.3);
+
+    @media (max-width: 767px) {
+      padding: 3rem 1.5rem;
+      border-radius: 24px;
+    }
+  }
+
+  .leaf-left,
+  .leaf-right {
+    position: absolute;
+    font-size: 4rem;
+    opacity: 0.15;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .leaf-left {
+    top: 20px;
+    left: 30px;
+    transform: rotate(-30deg);
+  }
+
+  .leaf-right {
+    bottom: 20px;
+    right: 30px;
+    transform: rotate(20deg);
+  }
+
+  .cta-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 1rem;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 767px) {
+      font-size: 1.6rem;
+    }
+  }
+
+  .cta-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 2rem;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .store-badges {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .store-badge {
+    display: block;
+    height: 55px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    img {
+      height: 100%;
+      width: auto;
+      border-radius: 8px;
+    }
+
+    &:hover {
+      transform: translateY(-4px) scale(1.05);
+      filter: brightness(1.1);
+    }
+
+    &:active {
+      transform: translateY(-2px) scale(0.98);
+    }
+  }
+}

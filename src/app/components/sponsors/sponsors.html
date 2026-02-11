@@ -1,11 +1,16 @@
 <section class="sponsors-section" id="about-us">
-    <div class="container">
-        <h3 class="sponsors-title">Instituciones Colaboradoras</h3>
-        <div class="sponsors-grid">
-            <div class="sponsor-logo">CONACYT</div>
-            <div class="sponsor-logo">UV</div>
-            <div class="sponsor-logo">TECNM</div>
-            <div class="sponsor-logo">GOBIERNO VERACRUZ</div>
+  <div class="container">
+    <h3 class="sponsors-title">Instituciones Colaboradoras</h3>
+    <p class="sponsors-subtitle">Respaldados por instituciones lideres en ciencia y educacion</p>
+    <div class="sponsors-grid">
+      @for (sponsor of sponsors; track sponsor.name) {
+        <div class="sponsor-card">
+          <div class="sponsor-logo-placeholder">
+            <span class="sponsor-abbr">{{ sponsor.name }}</span>
+          </div>
+          <span class="sponsor-full-name">{{ sponsor.fullName }}</span>
         </div>
+      }
     </div>
+  </div>
 </section>

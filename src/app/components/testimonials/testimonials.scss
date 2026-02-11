@@ -1,0 +1,130 @@
+.testimonials-section {
+  padding: 5rem 2rem;
+  font-family: 'Outfit', sans-serif;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .section-title {
+    color: #5E794B;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+    margin-top: 0;
+  }
+
+  .section-subtitle {
+    color: #8da37d;
+    font-size: 1.2rem;
+    font-weight: 600;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .testimonials-grid {
+    display: flex;
+    gap: 1.5rem;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+      height: auto !important;
+    }
+  }
+
+  .testimonial-card {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(94, 121, 75, 0.12);
+    border-radius: 24px;
+    padding: 2.5rem 2rem 2rem;
+    text-align: left;
+    transition: flex 0.4s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(94, 121, 75, 0.08);
+
+    .testimonials-grid:hover & {
+      flex: 0.6 1 0;
+    }
+
+    &:hover {
+      flex: 2 1 0;
+      box-shadow: 0 16px 40px rgba(94, 121, 75, 0.18);
+      z-index: 10;
+    }
+  }
+
+  .quote-mark {
+    position: absolute;
+    top: 8px;
+    left: 18px;
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(94, 121, 75, 0.08);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    font-family: Georgia, serif;
+  }
+
+  .quote {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.7;
+    margin: 0 0 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .avatar {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .role {
+    font-size: 0.8rem;
+    color: #5E794B;
+    font-weight: 600;
+  }
+
+  .location {
+    font-size: 0.75rem;
+    color: #999;
+  }
+}

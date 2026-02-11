@@ -1,77 +1,111 @@
 .sponsors-section {
-    padding: 6rem 2rem;
-    background: transparent;
-    text-align: center;
-    border-top: 1px solid rgba(0, 0, 0, 0.03);
+  padding: 5rem 2rem;
+  background: transparent;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
 
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sponsors-title {
+    color: #8da37d;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    position: relative;
+    display: inline-block;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 50px;
+      height: 1px;
+      background: rgba(141, 163, 125, 0.3);
     }
 
-    .sponsors-title {
-        color: #8da37d;
-        font-size: 1.1rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 4rem;
-        position: relative;
-        display: inline-block;
-
-        &::before,
-        &::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 50px;
-            height: 1px;
-            background: rgba(141, 163, 125, 0.3);
-        }
-
-        &::before {
-            left: -70px;
-        }
-
-        &::after {
-            right: -70px;
-        }
+    &::before {
+      left: -70px;
     }
 
-    .sponsors-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 3rem;
-
-        .sponsor-logo {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #5E794B;
-            opacity: 0.7;
-            filter: grayscale(1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            padding: 1.5rem 2.5rem;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            &:hover {
-                opacity: 1;
-                filter: grayscale(0);
-                transform: translateY(-8px) scale(1.05);
-                box-shadow: 0 15px 35px rgba(94, 121, 75, 0.15);
-                border-color: rgba(94, 121, 75, 0.2);
-                background: rgba(255, 255, 255, 0.9);
-                color: #5E794B;
-            }
-        }
+    &::after {
+      right: -70px;
     }
+  }
+
+  .sponsors-subtitle {
+    font-size: 1rem;
+    color: #999;
+    margin: 0 0 3rem;
+    font-weight: 400;
+  }
+
+  .sponsors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    justify-items: center;
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sponsor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-6px);
+
+      .sponsor-logo-placeholder {
+        border-color: rgba(94, 121, 75, 0.4);
+        box-shadow: 0 12px 30px rgba(94, 121, 75, 0.15);
+        background: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+
+  .sponsor-logo-placeholder {
+    width: 100%;
+    max-width: 200px;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(94, 121, 75, 0.25);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .sponsor-abbr {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #5E794B;
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+  }
+
+  .sponsor-full-name {
+    font-size: 0.8rem;
+    color: #888;
+    font-weight: 500;
+    max-width: 200px;
+    line-height: 1.3;
+  }
 }

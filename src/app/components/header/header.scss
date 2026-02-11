@@ -26,13 +26,14 @@
 
     .nav-links {
         display: flex;
-        gap: 3rem;
+        gap: 1.5rem;
 
         .nav-link {
             text-decoration: none;
             color: #5E794B;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.85rem;
+            white-space: nowrap;
             transition: opacity 0.3s ease;
 
             &:hover {

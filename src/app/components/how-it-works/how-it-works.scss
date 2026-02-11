@@ -1,4 +1,4 @@
-.overall-statistics {
+.how-it-works {
   padding: 5rem 2rem;
   font-family: 'Outfit', sans-serif;
 
@@ -37,30 +37,47 @@
     margin: 0 auto;
   }
 
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+  .steps-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 1.5rem;
 
-    @media (min-width: 768px) and (max-width: 1023px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: 767px) {
-      grid-template-columns: 1fr;
+    @media (max-width: 1023px) {
+      flex-direction: column;
+      gap: 1.5rem;
     }
   }
 
-  .stat-card {
+  .connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .arrow {
+      font-size: 2rem;
+      color: #8da37d;
+      font-weight: 300;
+    }
+
+    @media (max-width: 1023px) {
+      .arrow {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .step-card {
+    position: relative;
+    overflow: hidden;
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(94, 121, 75, 0.12);
     border-radius: 24px;
-    padding: 2.5rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    padding: 2.5rem 2rem 2rem;
+    flex: 1;
+    max-width: 320px;
+    text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 20px rgba(94, 121, 75, 0.08);
 
@@ -68,23 +85,42 @@
       transform: translateY(-8px);
       box-shadow: 0 16px 40px rgba(94, 121, 75, 0.18);
     }
+
+    @media (max-width: 1023px) {
+      max-width: 100%;
+      width: 100%;
+    }
   }
 
-  .stat-icon {
-    font-size: 2.5rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .stat-value {
-    font-size: 2.8rem;
-    font-weight: 800;
-    color: #5E794B;
+  .step-watermark {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 7rem;
+    font-weight: 900;
+    color: rgba(94, 121, 75, 0.06);
     line-height: 1;
+    pointer-events: none;
+    user-select: none;
   }
 
-  .stat-label {
+  .step-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 0.75rem;
+  }
+
+  .step-description {
     font-size: 0.95rem;
-    font-weight: 500;
     color: #666;
+    line-height: 1.6;
+    margin: 0;
   }
 }
