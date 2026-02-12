@@ -60,7 +60,266 @@
 </head>
 
 <body>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <svg id="loading-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="loading-svg">
+      <defs>
+        <filter id="sunGlow">
+          <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+          <feMerge>
+            <feMergeNode in="blur"></feMergeNode>
+            <feMergeNode in="SourceGraphic"></feMergeNode>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- Ground shadow -->
+      <ellipse cx="200" cy="365" rx="100" ry="12" fill="#5E794B" opacity="0.12" />
+
+      <!-- Sun group (positioned by JS) -->
+      <g id="ld-sun" filter="url(#sunGlow)">
+        <!-- Sun rays -->
+        <g id="ld-rays" opacity="0.45">
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="3" stroke-linecap="round" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(45)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(90)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(135)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(180)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(225)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(270)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(315)" />
+        </g>
+        <circle r="20" fill="#C4964A" />
+        <circle r="14" fill="#d4a94f" />
+        <circle r="7" fill="#e0bb6a" opacity="0.6" />
+      </g>
+
+      <!-- Stem -->
+      <path id="ld-stem" stroke="#5E794B" stroke-width="5" fill="none" stroke-linecap="round" />
+
+      <!-- Left leaf (shape is fixed, positioned via transform) -->
+      <g id="ld-leaf-l">
+        <path d="M0,0 Q-22,-14 -28,-30 Q-12,-18 0,-6 Z" fill="#6d9560" opacity="0.9" />
+      </g>
+      <!-- Right leaf -->
+      <g id="ld-leaf-r">
+        <path d="M0,0 Q22,-14 28,-30 Q12,-18 0,-6 Z" fill="#6d9560" opacity="0.9" />
+      </g>
+
+      <!-- Flower head -->
+      <g id="ld-flower">
+        <!-- Outer petals -->
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(0)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(30)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(60)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(90)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(120)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(150)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(180)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(210)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(240)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(270)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(300)" />
+        <ellipse cx="0" cy="-18" rx="6" ry="14" fill="#C4964A" transform="rotate(330)" />
+        <!-- Inner petals -->
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(15)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(45)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(75)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(105)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(135)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(165)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(195)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(225)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(255)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(285)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(315)" />
+        <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#d4a94f" transform="rotate(345)" />
+        <!-- Center -->
+        <circle r="10" fill="#5E794B" />
+        <circle r="7" fill="#4a613b" />
+        <circle cx="0" cy="-3" r="1.2" fill="#3a4b2e" opacity="0.6" />
+        <circle cx="2.5" cy="1" r="1.2" fill="#3a4b2e" opacity="0.6" />
+        <circle cx="-2.5" cy="1" r="1.2" fill="#3a4b2e" opacity="0.6" />
+        <circle cx="0" cy="3.5" r="1.2" fill="#3a4b2e" opacity="0.6" />
+      </g>
+
+      <!-- Loading text with animated dots -->
+      <text x="185" y="395" text-anchor="middle" fill="#5E794B" font-family="'Outfit', sans-serif" font-size="14" font-weight="600" opacity="0.8">Cargando</text>
+      <text x="214" y="395" fill="#5E794B" font-family="'Outfit', sans-serif" font-size="14" font-weight="600" opacity="0.8">
+        <tspan class="dot dot1">.</tspan><tspan class="dot dot2">.</tspan><tspan class="dot dot3">.</tspan>
+      </text>
+    </svg>
+  </div>
+
+  <style>
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #e8f0e3 0%, #f8faf7 40%, #f8faf7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-svg {
+      width: 280px;
+      height: 280px;
+      max-width: 70vw;
+      max-height: 70vw;
+    }
+
+    .dot { opacity: 0; animation: dotBlink 1.4s ease-in-out infinite; }
+    .dot1 { animation-delay: 0s; }
+    .dot2 { animation-delay: 0.3s; }
+    .dot3 { animation-delay: 0.6s; }
+    @keyframes dotBlink {
+      0%, 20% { opacity: 0; }
+      40% { opacity: 1; }
+      60%, 100% { opacity: 0; }
+    }
+  </style>
+
+  <script>
+    // Sunflower loading animation — natural motion with easing & inertia
+    (function() {
+      var BASE_X = 200, BASE_Y = 360;
+      var ARC_CX = 200, ARC_CY = 260;
+      var ARC_R = 110;
+      var DUR = 5000;  // slower, more relaxed cycle
+
+      var sun    = document.getElementById('ld-sun');
+      var rays   = document.getElementById('ld-rays');
+      var stem   = document.getElementById('ld-stem');
+      var leafL  = document.getElementById('ld-leaf-l');
+      var leafR  = document.getElementById('ld-leaf-r');
+      var flower = document.getElementById('ld-flower');
+      if (!sun) return;
+
+      // Smooth easing — no sharp reversals
+      function ease(x) { return 0.5 - 0.5 * Math.cos(x * Math.PI); }
+
+      // Track previous flower position for inertia
+      var prevFlowerT = 0.5;
+      var flowerVel = 0;
+
+      // Cubic bezier point helper
+      function cubicB(p, p0, p1, p2, p3) {
+        var ip = 1 - p;
+        return ip*ip*ip*p0 + 3*ip*ip*p*p1 + 3*ip*p*p*p2 + p*p*p*p3;
+      }
+
+      function tick(ts) {
+        // --- Sun: smooth cosine ping-pong (eases at edges) ---
+        var raw = (ts % DUR) / DUR;
+        var t = 0.5 - 0.5 * Math.cos(raw * 2 * Math.PI); // smooth 0→1→0 with ease
+
+        // Sun position along arc
+        var sunAngle = Math.PI * (1 - t);
+        var sunX = ARC_CX + ARC_R * Math.cos(sunAngle);
+        var sunY = ARC_CY - ARC_R * Math.sin(sunAngle);
+        sun.setAttribute('transform', 'translate(' + sunX + ',' + sunY + ')');
+
+        // Rays: slow rotation + subtle pulse
+        var rayRot = (ts * 0.04) % 360;
+        var rayPulse = 0.35 + 0.15 * Math.sin(ts * 0.003);
+        rays.setAttribute('transform', 'rotate(' + rayRot + ')');
+        rays.setAttribute('opacity', rayPulse.toFixed(2));
+
+        // --- Flower: lags behind sun with spring-like inertia ---
+        var targetT = t;
+        var springK = 0.04;   // spring stiffness (lower = more lag)
+        var damping = 0.82;   // damping (lower = less overshoot)
+        flowerVel = (flowerVel + (targetT - prevFlowerT) * springK) * damping;
+        prevFlowerT = prevFlowerT + flowerVel;
+        var ft = Math.max(0, Math.min(1, prevFlowerT)); // clamp
+
+        // Stem top position — tallest at center, shorter at sides (smooth cosine)
+        var sway = (ft - 0.5) * 80;
+        var heightCos = Math.cos((ft - 0.5) * Math.PI); // 1 at center, 0 at edges
+        var stemTopX = BASE_X + sway;
+        var stemTopY = 280 - heightCos * 35; // 280 at sides, 245 at center
+
+        // Stem: S-curve with cubic bezier — more organic
+        var c1x = BASE_X - sway * 0.4;
+        var c1y = BASE_Y - 30;
+        var c2x = BASE_X + sway * 1.1;
+        var c2y = stemTopY + 25;
+        stem.setAttribute('d',
+          'M' + BASE_X + ',' + BASE_Y +
+          ' C' + c1x + ',' + c1y +
+          ' ' + c2x + ',' + c2y +
+          ' ' + stemTopX + ',' + stemTopY);
+
+        // Flower head: tilt toward sun + micro-bobbing
+        var tiltDeg = (ft - 0.5) * 45;
+        var bob = Math.sin(ts * 0.004) * 2.5 + Math.sin(ts * 0.0067) * 1.5;
+        var headScale = 1 + Math.sin(ts * 0.0025) * 0.03; // subtle petal breathing
+        flower.setAttribute('transform',
+          'translate(' + stemTopX + ',' + (stemTopY + bob) + ')' +
+          ' rotate(' + tiltDeg + ')' +
+          ' scale(' + headScale.toFixed(3) + ')');
+
+        // --- Leaves: positioned on cubic bezier + organic flutter ---
+        var flutterL = Math.sin(ts * 0.004) * 15 + Math.sin(ts * 0.0095) * 8;
+        var flutterR = Math.sin(ts * 0.005 + 2) * 15 + Math.sin(ts * 0.011 + 1) * 8;
+
+        // Left leaf at 30% along stem curve
+        var lp = 0.30;
+        var lx = cubicB(lp, BASE_X, c1x, c2x, stemTopX);
+        var ly = cubicB(lp, BASE_Y, c1y, c2y, stemTopY);
+        leafL.setAttribute('transform',
+          'translate(' + lx + ',' + ly + ') rotate(' + (flutterL - 10) + ')');
+
+        // Right leaf at 55% along stem curve
+        var rp = 0.55;
+        var rx = cubicB(rp, BASE_X, c1x, c2x, stemTopX);
+        var ry = cubicB(rp, BASE_Y, c1y, c2y, stemTopY);
+        leafR.setAttribute('transform',
+          'translate(' + rx + ',' + ry + ') rotate(' + (flutterR + 10) + ')');
+
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+
   <app-root></app-root>
+
+  <script>
+    // Hide loading screen as soon as Angular app is ready
+    var checkReady = setInterval(function () {
+      var appRoot = document.querySelector('app-root');
+      if (appRoot && appRoot.children.length > 0) {
+        clearInterval(checkReady);
+        var loader = document.getElementById('loading-screen');
+        if (loader) {
+          loader.classList.add('hidden');
+          setTimeout(function () { loader.remove(); }, 700);
+        }
+      }
+    }, 100);
+
+    // Fallback: hide after 10 seconds even if app not ready
+    setTimeout(function() {
+      clearInterval(checkReady);
+      var loader = document.getElementById('loading-screen');
+      if (loader && !loader.classList.contains('hidden')) {
+        loader.classList.add('hidden');
+        setTimeout(function () { loader.remove(); }, 700);
+      }
+    }, 10000);
+  </script>
 </body>
 
 </html>
