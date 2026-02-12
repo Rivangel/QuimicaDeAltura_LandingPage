@@ -13,21 +13,9 @@ export class AboutApp implements AfterViewInit, OnDestroy {
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
-    // Check if element is already in viewport
-    const rect = this.el.nativeElement.getBoundingClientRect();
-    const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-    
-    if (isInViewport) {
-      // Small delay to ensure DOM is ready
-      setTimeout(() => this.visible.set(true), 100);
-    }
-
     this.observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          this.visible.set(true);
-          this.observer?.disconnect();
-        }
+        this.visible.set(entry.isIntersecting);
       },
       { 
         threshold: 0.1,
