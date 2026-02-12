@@ -11,19 +11,19 @@ export class Newsletter implements AfterViewInit, OnDestroy {
   visible = signal(false);
   email = '';
   submitted = signal(false);
+  errorMessage = signal('');
   private observer: IntersectionObserver | null = null;
+
+  private readonly EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
     this.observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          this.visible.set(true);
-          this.observer?.disconnect();
-        }
+        this.visible.set(entry.isIntersecting);
       },
-      { threshold: 0.15 }
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
     this.observer.observe(this.el.nativeElement);
   }
@@ -33,9 +33,26 @@ export class Newsletter implements AfterViewInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.email) {
-      this.submitted.set(true);
-      this.email = '';
+    // Clear previous error
+    this.errorMessage.set('');
+
+    if (!this.email || this.email.trim() === '') {
+      this.errorMessage.set('Por favor, ingresa tu correo electrónico.');
+      return;
+    }
+
+    if (!this.EMAIL_REGEX.test(this.email.trim())) {
+      this.errorMessage.set('Por favor, ingresa un correo electrónico válido.');
+      return;
+    }
+
+    this.submitted.set(true);
+    this.email = '';
+  }
+
+  clearError() {
+    if (this.errorMessage()) {
+      this.errorMessage.set('');
     }
   }
 }
