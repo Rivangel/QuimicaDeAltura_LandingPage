@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, signal, ViewChild, ElementRef, AfterViewInit, OnDestroy, HostListener, NgZone } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from "./components/header/header";
 import { Footer } from "./components/footer/footer";
@@ -26,7 +26,7 @@ import { CtaBanner } from "./components/cta-banner/cta-banner";
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements AfterViewInit {
+export class App implements AfterViewInit, OnDestroy {
   @ViewChild('contentWrapper') contentWrapperRef!: ElementRef<HTMLElement>;
 
   protected readonly title = signal('LandingPage');
@@ -94,6 +94,21 @@ export class App implements AfterViewInit {
     this.businessModelContent.image,
   ];
 
+  // Falling leaves mouse push
+  private mouseX = -9999;
+  private mouseY = -9999;
+  private leafPushRAF: number | null = null;
+  private readonly PUSH_RADIUS = 120;  // how close before push starts (px)
+  private readonly PUSH_STRENGTH = 80; // max push distance (px)
+
+  constructor(private ngZone: NgZone) {}
+
+  @HostListener('window:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    this.mouseX = e.clientX;
+    this.mouseY = e.clientY;
+  }
+
   ngAfterViewInit() {
     const el = this.contentWrapperRef.nativeElement;
     el.style.height = el.offsetHeight + 'px';
@@ -103,6 +118,46 @@ export class App implements AfterViewInit {
       const img = new Image();
       img.src = src;
     });
+
+    // Start leaf push loop outside Angular zone (no change detection needed)
+    this.ngZone.runOutsideAngular(() => this.pushLeavesLoop());
+  }
+
+  ngOnDestroy() {
+    if (this.leafPushRAF !== null) {
+      cancelAnimationFrame(this.leafPushRAF);
+    }
+  }
+
+  private pushLeavesLoop() {
+    const leaves = document.querySelectorAll<HTMLElement>('.falling-leaf');
+
+    const tick = () => {
+      leaves.forEach(leaf => {
+        const rect = leaf.getBoundingClientRect();
+        const leafCX = rect.left + rect.width / 2;
+        const leafCY = rect.top + rect.height / 2;
+        const dx = leafCX - this.mouseX;
+        const dy = leafCY - this.mouseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < this.PUSH_RADIUS && dist > 0) {
+          // Closer = stronger push, direction away from mouse
+          const force = (1 - dist / this.PUSH_RADIUS) * this.PUSH_STRENGTH;
+          const pushX = (dx / dist) * force;
+          const pushY = (dy / dist) * force;
+          leaf.style.setProperty('--push-x', pushX + 'px');
+          leaf.style.setProperty('--push-y', pushY + 'px');
+        } else {
+          leaf.style.setProperty('--push-x', '0px');
+          leaf.style.setProperty('--push-y', '0px');
+        }
+      });
+
+      this.leafPushRAF = requestAnimationFrame(tick);
+    };
+
+    this.leafPushRAF = requestAnimationFrame(tick);
   }
 
   get titleLines() {
