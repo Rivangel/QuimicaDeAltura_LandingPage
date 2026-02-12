@@ -20,14 +20,14 @@ export class Testimonials implements AfterViewInit, OnDestroy {
       quote: 'Esta aplicación es una herramienta invaluable para mi investigación. La precisión en el análisis de compuestos orgánicos de las plantas medicinales me permite identificar rápidamente moléculas con potencial terapéutico.',
       name: 'Dr. Alan Carrasco Carballo',
       role: 'Investigador en Química Orgánica',
-      location: 'Veracruz'
+      location: 'Puebla'
     },
     {
       avatar: '👩🏽‍🔬',
       quote: 'Uso esta aplicación en mis clases de microbiología para mostrar a mis estudiantes cómo las plantas medicinales tienen propiedades antimicrobianas validadas científicamente. Es una herramienta excelente para conectar el conocimiento tradicional con la evidencia científica.',
       name: 'M en C Diana Flores Percino',
       role: 'Investigadora en Microbiología',
-      location: 'Veracruz'
+      location: 'Puebla'
     },
     {
       avatar: '👩🏽‍🔬',

@@ -124,21 +124,24 @@
 
     .error-message {
         position: absolute;
-        bottom: -1.5rem;
-        left: 1.2rem;
+        top: calc(100% + 0.5rem);
+        left: 50%;
+        transform: translateX(-50%);
         margin: 0;
         font-size: 0.78rem;
         font-weight: 500;
         color: #ffb4b4;
         animation: shake 0.4s ease;
+        text-align: center;
+        width: 100%;
     }
 
     @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        20% { transform: translateX(-5px); }
-        40% { transform: translateX(5px); }
-        60% { transform: translateX(-3px); }
-        80% { transform: translateX(3px); }
+        0%, 100% { transform: translateX(-50%); }
+        20% { transform: translateX(calc(-50% - 5px)); }
+        40% { transform: translateX(calc(-50% + 5px)); }
+        60% { transform: translateX(calc(-50% - 3px)); }
+        80% { transform: translateX(calc(-50% + 3px)); }
     }
 
     .submit-btn {

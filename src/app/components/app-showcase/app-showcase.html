@@ -6,40 +6,54 @@
                 un toque de distancia.</p>
         </div>
 
-        <div class="showcase-grid">
-            <!-- Left: Features List -->
-            <div class="features-list">
-                @for (tab of tabs; track tab.id) {
-                <div class="feature-card" [class.active]="activeTab === tab.id" (click)="setTab(tab.id)"
-                    (mouseenter)="setTab(tab.id)">
-                    <div class="icon-box">{{ tab.icon }}</div>
-                    <div class="content">
-                        <h3>{{ tab.title }}</h3>
-                        <p>{{ tab.description }}</p>
+        <div class="showcase-layout">
+            <!-- Left Features -->
+            <div class="features-col features-left">
+                <div class="feature-card" [class.active]="activeTab === tabs[0].id" (click)="setTab(tabs[0].id)"
+                    (mouseenter)="setTab(tabs[0].id)">
+                    <div class="card-body">
+                        <div class="icon-box">{{ tabs[0].icon }}</div>
+                        <h3>{{ tabs[0].title }}</h3>
+                        <p>{{ tabs[0].description }}</p>
                     </div>
-                    <div class="active-indicator"></div>
+                    <div class="connector-line"></div>
                 </div>
-                }
             </div>
 
-            <!-- Right: Interactive Phone -->
-            <div class="phone-display">
-                <div class="phone-frame">
-                    <div class="phone-inner">
+            <!-- Center: Floating Phone -->
+            <div class="phone-center">
+                <div class="phone-float-wrapper">
+                    <div class="phone-frame">
+                        <div class="phone-notch"></div>
                         <div class="phone-screen">
                             <img [src]="activeImage" [alt]="activeTab" class="app-screenshot">
                         </div>
                     </div>
-                    <!-- Camera and stuff -->
-                    <div class="phone-notch"></div>
+                </div>
+                <!-- Decorative glow -->
+                <div class="phone-glow"></div>
+            </div>
+
+            <!-- Right Features -->
+            <div class="features-col features-right">
+                <div class="feature-card" [class.active]="activeTab === tabs[1].id" (click)="setTab(tabs[1].id)"
+                    (mouseenter)="setTab(tabs[1].id)">
+                    <div class="connector-line"></div>
+                    <div class="card-body">
+                        <div class="icon-box">{{ tabs[1].icon }}</div>
+                        <h3>{{ tabs[1].title }}</h3>
+                        <p>{{ tabs[1].description }}</p>
+                    </div>
                 </div>
 
-                <!-- Decorative backgrounds -->
-                <div class="decorative-circle"></div>
-                <div class="floating-icons">
-                    <span class="float-icon icon-1">🍃</span>
-                    <span class="float-icon icon-2">✨</span>
-                    <span class="float-icon icon-3">💚</span>
+                <div class="feature-card" [class.active]="activeTab === tabs[2].id" (click)="setTab(tabs[2].id)"
+                    (mouseenter)="setTab(tabs[2].id)">
+                    <div class="connector-line"></div>
+                    <div class="card-body">
+                        <div class="icon-box">{{ tabs[2].icon }}</div>
+                        <h3>{{ tabs[2].title }}</h3>
+                        <p>{{ tabs[2].description }}</p>
+                    </div>
                 </div>
             </div>
         </div>
