@@ -187,7 +187,7 @@
 // First circle buttons (2 buttons)
 .orbit-button-1 {
     animation: orbit linear infinite;
-    animation-duration: 10s;
+    animation-duration: 20s;
     animation-delay: 0s;
     z-index: 15;
 }
@@ -219,44 +219,44 @@
 
 .orbit-button-2 {
     animation: orbit linear infinite;
-    animation-duration: 10s;
-    animation-delay: -5s;
+    animation-duration: 20s;
+    animation-delay: -10s;
     z-index: 15;
 }
 
 // Second circle buttons (5 buttons)
 .orbit-button-2-1 {
     animation: orbit-2 linear infinite;
-    animation-duration: 15s;
+    animation-duration: 20s;
     animation-delay: 0s;
     z-index: 20;
 }
 
 .orbit-button-2-2 {
     animation: orbit-2 linear infinite;
-    animation-duration: 15s;
-    animation-delay: -3s;
+    animation-duration: 20s;
+    animation-delay: -4s;
     z-index: 20;
 }
 
 .orbit-button-2-3 {
     animation: orbit-2 linear infinite;
-    animation-duration: 15s;
-    animation-delay: -6s;
+    animation-duration: 20s;
+    animation-delay: -8s;
     z-index: 20;
 }
 
 .orbit-button-2-4 {
     animation: orbit-2 linear infinite;
-    animation-duration: 15s;
-    animation-delay: -9s;
+    animation-duration: 20s;
+    animation-delay: -12s;
     z-index: 20;
 }
 
 .orbit-button-2-5 {
     animation: orbit-2 linear infinite;
-    animation-duration: 15s;
-    animation-delay: -12s;
+    animation-duration: 20s;
+    animation-delay: -16s;
     z-index: 20;
 }
 
