@@ -205,6 +205,11 @@ html {
     top: -50px;
     animation: fall linear infinite;
     filter: drop-shadow(0 2px 4px rgba(94, 121, 75, 0.2));
+    // Push offset from mouse — stacks on top of transform
+    --push-x: 0px;
+    --push-y: 0px;
+    translate: var(--push-x) var(--push-y);
+    transition: translate 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .falling-leaf-1 {
