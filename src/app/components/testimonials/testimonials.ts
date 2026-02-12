@@ -44,12 +44,9 @@ export class Testimonials implements AfterViewInit, OnDestroy {
 
     this.observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          this.visible.set(true);
-          this.observer?.disconnect();
-        }
+        this.visible.set(entry.isIntersecting);
       },
-      { threshold: 0.15 }
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
     this.observer.observe(this.el.nativeElement);
   }
