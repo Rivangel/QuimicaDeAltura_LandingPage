@@ -1,4 +1,4 @@
-import { Component, signal, OnInit, OnDestroy } from '@angular/core';
+import { Component, signal, OnInit, OnDestroy, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +9,14 @@ import { Component, signal, OnInit, OnDestroy } from '@angular/core';
 export class Header implements OnInit, OnDestroy {
   menuOpen = signal(false);
   activeSection = signal('');
+  scrollProgress = 0;
+
+  @HostListener('window:scroll')
+  onScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    this.scrollProgress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  }
 
   private observer: IntersectionObserver | null = null;
   private sectionIds = [

@@ -16,6 +16,18 @@
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     font-family: 'Outfit', sans-serif;
+    position: relative;
+
+    .scroll-progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #B58A3E, #C4964A, #d4a654);
+        pointer-events: none;
+        transition: width 0.1s linear;
+        box-shadow: 0 0 6px rgba(196, 150, 74, 0.4);
+    }
 
     .logo-container {
         .logo {
