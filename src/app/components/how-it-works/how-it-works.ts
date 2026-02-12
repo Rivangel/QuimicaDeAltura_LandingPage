@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, OnDestroy, signal } from '@angular/core';
 
 @Component({
   selector: 'app-how-it-works',
@@ -6,7 +6,29 @@ import { Component } from '@angular/core';
   templateUrl: './how-it-works.html',
   styleUrl: './how-it-works.scss',
 })
-export class HowItWorks {
+export class HowItWorks implements AfterViewInit, OnDestroy {
+  visible = signal(false);
+  private observer: IntersectionObserver | null = null;
+
+  constructor(private el: ElementRef) {}
+
+  ngAfterViewInit() {
+    this.observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          this.visible.set(true);
+          this.observer?.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    this.observer.observe(this.el.nativeElement);
+  }
+
+  ngOnDestroy() {
+    this.observer?.disconnect();
+  }
+
   steps = [
     {
       number: 1,

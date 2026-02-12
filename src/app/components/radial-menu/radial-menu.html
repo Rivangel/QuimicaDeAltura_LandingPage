@@ -7,35 +7,35 @@
     
     <!-- Second circle orbiting buttons (5 buttons) -->
     <!-- Button 1: Misión -->
-    <button class="orbit-button orbit-button-2-1" [class.active]="activeButton === 'mission'" (click)="onMissionClick()">
+    <button class="orbit-button orbit-button-2-1" [class.active]="activeButton === 'mission'" (mouseenter)="onMissionClick()">
       <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="currentColor"/>
       </svg>
     </button>
     
     <!-- Button 2: Visión -->
-    <button class="orbit-button orbit-button-2-2" [class.active]="activeButton === 'vision'" (click)="onVisionClick()">
+    <button class="orbit-button orbit-button-2-2" [class.active]="activeButton === 'vision'" (mouseenter)="onVisionClick()">
       <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="currentColor"/>
       </svg>
     </button>
     
     <!-- Button 3: Valores -->
-    <button class="orbit-button orbit-button-2-3" [class.active]="activeButton === 'values'" (click)="onValuesClick()">
+    <button class="orbit-button orbit-button-2-3" [class.active]="activeButton === 'values'" (mouseenter)="onValuesClick()">
       <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" fill="currentColor"/>
       </svg>
     </button>
     
     <!-- Button 4: Formulario de Contacto -->
-    <button class="orbit-button orbit-button-2-4" [class.active]="activeButton === 'contact'" (click)="onContactClick()">
+    <button class="orbit-button orbit-button-2-4" [class.active]="activeButton === 'contact'" (mouseenter)="onContactClick()">
       <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
       </svg>
     </button>
     
     <!-- Button 5: Modelo de Negocio -->
-    <button class="orbit-button orbit-button-2-5" [class.active]="activeButton === 'business'" (click)="onBusinessModelClick()">
+    <button class="orbit-button orbit-button-2-5" [class.active]="activeButton === 'business'" (mouseenter)="onBusinessModelClick()">
       <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="currentColor"/>
       </svg>
@@ -47,13 +47,13 @@
     </div>
     
     <!-- First circle orbiting buttons (2 buttons) -->
-    <button class="orbit-button orbit-button-1" [class.active]="activeButton === 'showcase'" (click)="onShowcaseButtonClick()">
+    <button class="orbit-button orbit-button-1" [class.active]="activeButton === 'showcase'" (mouseenter)="onShowcaseButtonClick()">
       <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="currentColor"/>
       </svg>
     </button>
     
-    <button class="orbit-button orbit-button-2" [class.active]="activeButton === 'heart'" (click)="onHeartButtonClick()">
+    <button class="orbit-button orbit-button-2" [class.active]="activeButton === 'heart'" (mouseenter)="onHeartButtonClick()">
       <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/>
       </svg>

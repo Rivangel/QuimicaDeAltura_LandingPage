@@ -16,6 +16,9 @@
     text-align: center;
     color: white;
     box-shadow: 0 20px 60px rgba(94, 121, 75, 0.3);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 
     @media (max-width: 767px) {
       padding: 3rem 1.5rem;
@@ -27,21 +30,40 @@
   .leaf-right {
     position: absolute;
     font-size: 4rem;
-    opacity: 0.15;
+    opacity: 0;
     pointer-events: none;
     user-select: none;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transition-delay: 0.4s;
   }
 
   .leaf-left {
     top: 20px;
     left: 30px;
-    transform: rotate(-30deg);
+    transform: rotate(-30deg) translate(-40px, -40px);
   }
 
   .leaf-right {
     bottom: 20px;
     right: 30px;
-    transform: rotate(20deg);
+    transform: rotate(20deg) translate(40px, 40px);
+  }
+
+  &.visible {
+    .cta-card {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .leaf-left {
+      opacity: 0.15;
+      transform: rotate(-30deg);
+    }
+
+    .leaf-right {
+      opacity: 0.15;
+      transform: rotate(20deg);
+    }
   }
 
   .cta-title {

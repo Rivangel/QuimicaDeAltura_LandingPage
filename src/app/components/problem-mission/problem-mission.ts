@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, OnDestroy, signal } from '@angular/core';
 
 @Component({
   selector: 'app-problem-mission',
@@ -6,6 +6,26 @@ import { Component } from '@angular/core';
   templateUrl: './problem-mission.html',
   styleUrl: './problem-mission.scss',
 })
-export class ProblemMission {
+export class ProblemMission implements AfterViewInit, OnDestroy {
+  visible = signal(false);
+  private observer: IntersectionObserver | null = null;
 
+  constructor(private el: ElementRef) {}
+
+  ngAfterViewInit() {
+    this.observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          this.visible.set(true);
+          this.observer?.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    this.observer.observe(this.el.nativeElement);
+  }
+
+  ngOnDestroy() {
+    this.observer?.disconnect();
+  }
 }
