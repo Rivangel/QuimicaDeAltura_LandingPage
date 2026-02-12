@@ -1,5 +1,5 @@
 .problem-mission {
-    padding: 2rem 1.5rem;
+    padding: 4rem 2rem;
     background-color: transparent;
     /* Reverted to solid white to avoid cut */
     position: relative;
@@ -90,7 +90,7 @@
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.5);
         box-shadow: 0 10px 30px rgba(94, 121, 75, 0.05);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.5s ease, background 0.5s ease, backdrop-filter 0.5s ease;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -202,19 +202,15 @@
             transform: translateY(0);
         }
 
-        .mission-card {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out,
-                        box-shadow 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                        border-color 0.5s ease, background 0.5s ease,
-                        backdrop-filter 0.5s ease;
+        .cards-layout .mission-card {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
         }
 
         // Staggered delays: title → card1 → card2 → card3
         .title-wrapper { transition-delay: 0s; }
-        .mission-card:nth-child(1) { transition-delay: 0.2s; }
-        .mission-card:nth-child(2) { transition-delay: 0.4s; }
-        .mission-card:nth-child(3) { transition-delay: 0.6s; }
+        .cards-layout .mission-card:nth-child(1) { transition-delay: 0.2s; }
+        .cards-layout .mission-card:nth-child(2) { transition-delay: 0.4s; }
+        .cards-layout .mission-card:nth-child(3) { transition-delay: 0.6s; }
     }
 }

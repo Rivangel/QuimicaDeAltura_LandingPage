@@ -1,5 +1,5 @@
 .app-showcase {
-    padding: 2rem 2rem;
+    padding: 4rem 2rem;
     background: transparent;
     font-family: 'Outfit', sans-serif;
     position: relative;
@@ -26,6 +26,10 @@
         padding: 1.5rem 2rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.5);
+
+        opacity: 0;
+        transform: translateY(60px);
+        transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 
         .title {
             color: #5E794B;
@@ -74,10 +78,13 @@
             gap: 1.2rem;
             align-items: center;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             border: 1px solid rgba(0, 0, 0, 0.03);
             position: relative;
             overflow: hidden;
+
+            opacity: 0;
+            transform: translateY(50px);
 
             .icon-box {
                 width: 50px;
@@ -165,6 +172,10 @@
         justify-content: center;
         align-items: center;
 
+        opacity: 0;
+        transform: translateX(80px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
 
         .decorative-circle {
             position: absolute;
@@ -208,6 +219,43 @@
                 }
             }
         }
+    }
+
+    // Animate in when visible
+    &.visible {
+        .section-header {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .features-list .feature-card {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+
+            &:hover,
+            &.active {
+                transform: translateX(10px) !important;
+            }
+
+            @media (max-width: 1023px) {
+                &:hover,
+                &.active {
+                    transform: translateY(-8px) !important;
+                }
+            }
+        }
+
+        .phone-display {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        // Staggered delays
+        .section-header { transition-delay: 0s; }
+        .features-list .feature-card:nth-child(1) { transition-delay: 0.15s; }
+        .features-list .feature-card:nth-child(2) { transition-delay: 0.3s; }
+        .features-list .feature-card:nth-child(3) { transition-delay: 0.45s; }
+        .phone-display { transition-delay: 0.3s; }
     }
 }
 

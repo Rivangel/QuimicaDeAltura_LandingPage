@@ -1,9 +1,9 @@
 .about-app-section {
-    padding: 2rem 2rem;
+    padding: 4rem 2rem;
     background: transparent;
     font-family: 'Outfit', sans-serif;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 
     &::before {
         content: '';
@@ -54,6 +54,10 @@
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.5);
 
+        opacity: 0;
+        transform: translateY(60px);
+        transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+
         .title {
             color: #5E794B;
             font-size: 2rem;
@@ -94,8 +98,12 @@
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(94, 121, 75, 0.06);
             border: 1px solid rgba(94, 121, 75, 0.05);
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: opacity 0.3s ease-out, transform 0.6s ease-out,
+                        background-color 0.2s ease 0s, box-shadow 0.2s ease 0s;
             flex: 1;
+
+            opacity: 0;
+            transform: translateY(60px);
             display: flex;
             flex-direction: row;
             align-items: flex-start;
@@ -112,21 +120,23 @@
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-            }
 
-            h3 {
-                color: #5E794B;
-                font-size: 1.2rem;
-                font-weight: 800;
-                margin-bottom: 0.5rem;
-                margin-top: 0;
-            }
+                h3 {
+                    color: #5E794B;
+                    font-size: 1.2rem;
+                    font-weight: 800;
+                    margin-bottom: 0.5rem;
+                    margin-top: 0;
+                    transition: color 0.2s ease 0.01s;
+                }
 
-            p {
-                color: #666;
-                line-height: 1.5;
-                font-size: 0.95rem;
-                margin: 0;
+                p {
+                    color: #666;
+                    line-height: 1.5;
+                    font-size: 0.95rem;
+                    margin: 0;
+                    transition: color 0.2s ease 0.01s;
+                }
             }
 
             &:hover {
@@ -134,9 +144,11 @@
                 background-color: #5E794B;
                 box-shadow: 0 25px 50px rgba(94, 121, 75, 0.25);
 
-                h3,
-                p {
-                    color: white;
+                .card-content {
+                    h3,
+                    p {
+                        color: white;
+                    }
                 }
             }
         }
@@ -152,6 +164,9 @@
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
         border: 1px solid rgba(94, 121, 75, 0.05);
         transition: all 0.5s ease;
+
+        opacity: 0;
+        transform: translateY(80px);
 
         .benefits-content {
             height: 100%;
@@ -302,5 +317,34 @@
                 }
             }
         }
+    }
+
+    // Animate in when visible
+    &.visible {
+        .header-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .vision-cards .info-card {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+
+            &:hover {
+                transform: translateY(-5px) scale(1.01) !important;
+            }
+        }
+
+        .benefits-showcase {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        // Staggered delays
+        .header-content { transition-delay: 0s; }
+        .vision-cards .info-card:nth-child(1) { transition-delay: 0.15s; }
+        .vision-cards .info-card:nth-child(2) { transition-delay: 0.3s; }
+        .vision-cards .info-card:nth-child(3) { transition-delay: 0.45s; }
+        .benefits-showcase { transition-delay: 0.5s; }
     }
 }
