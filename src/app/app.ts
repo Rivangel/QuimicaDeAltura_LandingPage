@@ -83,9 +83,26 @@ export class App implements AfterViewInit {
   private isOriginalContent = true;
   activeButton = signal<string | null>('heart');
 
+  // Preload all card images so they're cached before user interaction
+  private allImages = [
+    this.cardContent().image,
+    this.alternativeContent.image,
+    this.missionContent.image,
+    this.visionContent.image,
+    this.valuesContent.image,
+    this.contactContent.image,
+    this.businessModelContent.image,
+  ];
+
   ngAfterViewInit() {
     const el = this.contentWrapperRef.nativeElement;
     el.style.height = el.offsetHeight + 'px';
+
+    // Preload images in background
+    this.allImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
   }
 
   get titleLines() {
