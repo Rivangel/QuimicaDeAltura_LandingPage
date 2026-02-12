@@ -25,16 +25,17 @@
       <div class="content-panel">
         <div class="content-wrapper" #contentWrapper>
           @if (cardContent().image) {
-            <div class="card-image-container">
-              <img [src]="cardContent().image" [alt]="cardContent().title" class="card-image">
-            </div>
+          <div class="card-image-container">
+            <img [src]="cardContent().image" [alt]="cardContent().title" class="card-image" loading="eager"
+              decoding="sync">
+          </div>
           }
           <h2 class="title">
             @for (line of titleLines; track $index) {
-              @if ($index > 0) {
-                <br>
-              }
-              {{ line }}
+            @if ($index > 0) {
+            <br>
+            }
+            {{ line }}
             }
           </h2>
           <p class="description">
@@ -45,15 +46,9 @@
 
       <!-- Right Panel: Radial Menu -->
       <div class="radial-menu-panel">
-        <app-radial-menu
-          [activeButton]="activeButton()"
-          (contentChange)="onContentChange()"
-          (setOriginalContent)="onSetOriginalContent()"
-          (setMission)="onSetMission()"
-          (setVision)="onSetVision()"
-          (setValues)="onSetValues()"
-          (setContact)="onSetContact()"
-          (setBusinessModel)="onSetBusinessModel()">
+        <app-radial-menu [activeButton]="activeButton()" (contentChange)="onContentChange()"
+          (setOriginalContent)="onSetOriginalContent()" (setMission)="onSetMission()" (setVision)="onSetVision()"
+          (setValues)="onSetValues()" (setContact)="onSetContact()" (setBusinessModel)="onSetBusinessModel()">
         </app-radial-menu>
       </div>
     </div>

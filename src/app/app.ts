@@ -83,16 +83,8 @@ export class App implements AfterViewInit, OnDestroy {
   private isOriginalContent = true;
   activeButton = signal<string | null>('heart');
 
-  // Preload all card images so they're cached before user interaction
-  private allImages = [
-    this.cardContent().image,
-    this.alternativeContent.image,
-    this.missionContent.image,
-    this.visionContent.image,
-    this.valuesContent.image,
-    this.contactContent.image,
-    this.businessModelContent.image,
-  ];
+  // Preload list removed
+
 
   // Falling leaves mouse push
   private mouseX = -9999;
@@ -101,7 +93,7 @@ export class App implements AfterViewInit, OnDestroy {
   private readonly PUSH_RADIUS = 120;  // how close before push starts (px)
   private readonly PUSH_STRENGTH = 80; // max push distance (px)
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone) { }
 
   @HostListener('window:mousemove', ['$event'])
   onMouseMove(e: MouseEvent) {
@@ -113,11 +105,9 @@ export class App implements AfterViewInit, OnDestroy {
     const el = this.contentWrapperRef.nativeElement;
     el.style.height = el.offsetHeight + 'px';
 
-    // Preload images in background
-    this.allImages.forEach(src => {
-      const img = new Image();
-      img.src = src;
-    });
+    // Preload images removed for performance optimization
+    // Images will load on demand when user navigates
+
 
     // Start leaf push loop outside Angular zone (no change detection needed)
     this.ngZone.runOutsideAngular(() => this.pushLeavesLoop());
