@@ -95,6 +95,42 @@ button.cta-button,
     }
 }
 
+/* Text Selection Highlight — Dark Amber */
+::selection {
+    background: #9a7535;
+    color: #fff;
+}
+
+::-moz-selection {
+    background: #9a7535;
+    color: #fff;
+}
+
+/* Custom Scrollbar — Amber/Gold */
+::-webkit-scrollbar {
+    width: 14px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5e6c8;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #C4964A, #B58A3E);
+    border-radius: 7px;
+    border: 2px solid #f5e6c8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #d4a654, #C4964A);
+}
+
+/* Firefox scrollbar */
+html {
+    scrollbar-width: auto;
+    scrollbar-color: #C4964A #f5e6c8;
+}
+
 /* Global Layout Restriction */
 body,
 html {
