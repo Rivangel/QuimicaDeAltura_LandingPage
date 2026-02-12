@@ -64,6 +64,7 @@
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
+    perspective: 1000px; // Enable 3D space
 
     @media (max-width: 1023px) {
       flex-direction: column;
@@ -105,10 +106,11 @@
     max-width: 320px;
     text-align: center;
     box-shadow: 0 4px 20px rgba(94, 121, 75, 0.08);
+    transform-style: preserve-3d; // Maintain 3D space
 
     opacity: 0;
-    transform: translateY(80px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transform: translateY(80px) rotateY(-90deg) rotateX(10deg);
+    transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 
     @media (max-width: 1023px) {
       max-width: 100%;
@@ -157,10 +159,10 @@
 
     .step-card {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) rotateY(0deg) rotateX(0deg);
 
       &:hover {
-        transform: translateY(-8px);
+        transform: translateY(-8px) rotateY(0deg) rotateX(0deg);
         box-shadow: 0 16px 40px rgba(94, 121, 75, 0.18);
       }
     }

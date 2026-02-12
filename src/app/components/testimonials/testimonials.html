@@ -8,8 +8,6 @@
     <div class="testimonials-grid" #grid>
       @for (t of testimonials; track t.name) {
         <div class="testimonial-card">
-          <span class="quote-mark" aria-hidden="true">"</span>
-          <p class="quote">{{ t.quote }}</p>
           <div class="author">
             <span class="avatar">{{ t.avatar }}</span>
             <div class="author-info">
@@ -17,6 +15,10 @@
               <span class="role">{{ t.role }}</span>
               <span class="location">{{ t.location }}</span>
             </div>
+          </div>
+          <div class="quote-container">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <p class="quote">{{ t.quote }}</p>
           </div>
         </div>
       }
