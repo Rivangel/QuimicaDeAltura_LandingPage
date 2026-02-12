@@ -50,7 +50,7 @@
 
     .header-actions {
         .download-btn {
-            background-color: #5E794B;
+            background-color: var(--accent-color);
             color: white;
             text-decoration: none;
             padding: 0.6rem 1.6rem;
@@ -59,12 +59,12 @@
             font-size: 0.9rem;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: inline-block;
-            box-shadow: 0 4px 15px rgba(94, 121, 75, 0.2);
+            box-shadow: 0 4px 15px rgba(196, 150, 74, 0.3);
 
             &:hover {
                 transform: translateY(-3px) scale(1.05);
-                box-shadow: 0 8px 25px rgba(94, 121, 75, 0.3);
-                background-color: #4a613b;
+                box-shadow: 0 8px 25px rgba(196, 150, 74, 0.4);
+                background-color: var(--accent-hover);
             }
 
             &:active {

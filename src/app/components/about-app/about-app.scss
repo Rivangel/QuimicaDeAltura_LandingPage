@@ -163,8 +163,8 @@
                     .check {
                         width: 22px;
                         height: 22px;
-                        background: #f0f7ec;
-                        color: #5E794B;
+                        background: #fdf5e8;
+                        color: var(--accent-color);
                         border-radius: 6px;
                         display: flex;
                         align-items: center;
@@ -278,7 +278,7 @@
                 &:hover {
                     transform: translateY(-8px) scale(1.05);
                     filter: brightness(1.05);
-                    box-shadow: 0 15px 30px rgba(94, 121, 75, 0.2);
+                    box-shadow: 0 15px 30px rgba(196, 150, 74, 0.3);
                 }
 
                 &:active {
