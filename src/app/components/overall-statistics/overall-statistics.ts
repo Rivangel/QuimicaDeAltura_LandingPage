@@ -27,10 +27,16 @@ export class OverallStatistics implements AfterViewInit, OnDestroy {
           if (entry.isIntersecting && !this.hasAnimated) {
             this.hasAnimated = true;
             this.animateCounters();
+          } else if (!entry.isIntersecting && this.hasAnimated) {
+            // Reset counters when section leaves the viewport
+            this.hasAnimated = false;
+            this.animationFrameIds.forEach((id) => cancelAnimationFrame(id));
+            this.animationFrameIds = [];
+            this.stats.forEach((stat) => stat.current.set(0));
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
     this.observer.observe(this.statsSection.nativeElement);
   }
