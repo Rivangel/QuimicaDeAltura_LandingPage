@@ -7,13 +7,19 @@
             <p class="success-message">Gracias por suscribirte. Pronto recibirás noticias.</p>
         } @else {
             <form class="newsletter-form" (ngSubmit)="onSubmit()">
-                <input
-                    type="email"
-                    class="email-input"
-                    placeholder="Tu correo electrónico"
-                    [(ngModel)]="email"
-                    name="email"
-                    required>
+                <div class="input-wrapper">
+                    <input
+                        type="email"
+                        class="email-input"
+                        [class.input-error]="errorMessage()"
+                        placeholder="Tu correo electrónico"
+                        [(ngModel)]="email"
+                        (input)="clearError()"
+                        name="email">
+                    @if (errorMessage()) {
+                        <p class="error-message">{{ errorMessage() }}</p>
+                    }
+                </div>
                 <button type="submit" class="submit-btn">Suscribirme</button>
             </form>
         }
