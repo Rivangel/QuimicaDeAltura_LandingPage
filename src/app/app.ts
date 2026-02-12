@@ -35,49 +35,49 @@ export class App implements AfterViewInit, OnDestroy {
   cardContent = signal({
     title: 'Lo mejor de la\nNaturaleza + IA:\nCuidamos tu salud.',
     description: 'Estudiamos las plantas medicinales de Veracruz con tecnología inteligente para encontrar remedios naturales que realmente funcionen.',
-    image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop'
+    image: 'resources/images/lush Veracruz mountain vegetation.png'
   });
 
   // Alternative content
   private alternativeContent = {
     title: 'Innovación y Tradición:\nUnidas para tu Bienestar.',
     description: 'Combinamos el saber de nuestros abuelos sobre plantas medicinales con tecnología moderna para darte soluciones naturales que sí funcionan.',
-    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800&auto=format&fit=crop'
+    image: 'resources/images/elder\'s hands holding a medicinal herb.png'
   };
 
   // Mission content
   private missionContent = {
     title: 'Nuestra Misión',
     description: 'Queremos que todos puedan acceder a la medicina tradicional mexicana. Usamos tecnología inteligente para cuidar el conocimiento sobre plantas de las Altas Montañas de Veracruz y ofrecer soluciones naturales que todos puedan usar.',
-    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=800&auto=format&fit=crop'
+    image: 'resources/images/Panoramic shot of the Altas Montañas region.png'
   };
 
   // Vision content
   private visionContent = {
     title: 'Nuestra Visión',
     description: 'Queremos ser la mejor herramienta en América Latina que une el conocimiento antiguo sobre plantas medicinales con la tecnología de hoy, creando un puente entre el pasado y el futuro para el bienestar de nuestras comunidades.',
-    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop'
+    image: 'resources/images/stylized map of Latin America with botanical nodes.png'
   };
 
   // Values content
   private valuesContent = {
     title: 'Nuestros Valores',
     description: 'Respetamos el conocimiento tradicional, usamos tecnología que ayuda sin dañar, trabajamos para que todos puedan acceder, cuidamos el medio ambiente y nos comprometemos a proteger la cultura de nuestras comunidades.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop'
+    image: 'resources/images/A community scene.png'
   };
 
   // Contact content
   private contactContent = {
     title: 'Contáctanos',
     description: '¿Tienes preguntas o sugerencias? Estamos aquí para ayudarte. Escríbenos a contacto@quimicadealtura.com o completa nuestro formulario para recibir más información sobre nuestra herramienta y servicios.',
-    image: 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?q=80&w=800&auto=format&fit=crop'
+    image: 'resources/images/warm workspace .png'
   };
 
   // Business model content
   private businessModelContent = {
     title: 'Modelo de Negocio',
     description: 'Nuestra aplicación es completamente gratuita para todos los usuarios. Trabajamos con empresas que venden plantas medicinales y las conectamos contigo. Cuando encuentres una planta que necesites, te redirigimos a vendedores confiables donde puedes adquirirla.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop'
+    image: 'resources/images/A marketplace or vendor scene.png'
   };
 
   private isOriginalContent = true;
@@ -174,7 +174,7 @@ export class App implements AfterViewInit, OnDestroy {
     this.cardContent.set({
       title: 'Lo mejor de la\nNaturaleza + IA:\nCuidamos tu salud.',
       description: 'Estudiamos las plantas medicinales de Veracruz con tecnología inteligente para encontrar remedios naturales que realmente funcionen.',
-      image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop'
+      image: 'resources/images/lush Veracruz mountain vegetation.png'
     });
     this.isOriginalContent = true;
     this.activeButton.set('heart');
@@ -209,7 +209,7 @@ export class App implements AfterViewInit, OnDestroy {
     this.cardContent.set({
       title: 'Lo mejor de la\nNaturaleza + IA:\nCuidamos tu salud.',
       description: 'Estudiamos las plantas medicinales de Veracruz con tecnología inteligente para encontrar remedios naturales que realmente funcionen.',
-      image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop'
+      image: 'resources/images/lush Veracruz mountain vegetation.png'
     });
   }
 }
