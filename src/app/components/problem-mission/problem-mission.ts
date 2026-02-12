@@ -13,6 +13,15 @@ export class ProblemMission implements AfterViewInit, OnDestroy {
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
+    // Check if element is already in viewport
+    const rect = this.el.nativeElement.getBoundingClientRect();
+    const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isInViewport) {
+      // Small delay to ensure DOM is ready
+      setTimeout(() => this.visible.set(true), 100);
+    }
+
     this.observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -20,7 +29,10 @@ export class ProblemMission implements AfterViewInit, OnDestroy {
           this.observer?.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
     );
     this.observer.observe(this.el.nativeElement);
   }

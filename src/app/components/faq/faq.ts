@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, OnDestroy, signal } from '@angular/core';
 
 @Component({
   selector: 'app-faq',
@@ -6,8 +6,12 @@ import { Component, signal } from '@angular/core';
   templateUrl: './faq.html',
   styleUrl: './faq.scss',
 })
-export class Faq {
+export class Faq implements AfterViewInit, OnDestroy {
   openIndex = signal<number | null>(null);
+  visible = signal(false);
+  private observer: IntersectionObserver | null = null;
+
+  constructor(private el: ElementRef) {}
 
   questions = [
     {
@@ -34,5 +38,22 @@ export class Faq {
 
   toggle(index: number) {
     this.openIndex.update(current => current === index ? null : index);
+  }
+
+  ngAfterViewInit() {
+    this.observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          this.visible.set(true);
+          this.observer?.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    this.observer.observe(this.el.nativeElement);
+  }
+
+  ngOnDestroy() {
+    this.observer?.disconnect();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, signal } from '@angular/core';
 
 @Component({
   selector: 'app-testimonials',
@@ -6,8 +6,13 @@ import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
   templateUrl: './testimonials.html',
   styleUrl: './testimonials.scss',
 })
-export class Testimonials implements AfterViewInit {
+export class Testimonials implements AfterViewInit, OnDestroy {
   @ViewChild('grid') gridRef!: ElementRef<HTMLElement>;
+
+  visible = signal(false);
+  private observer: IntersectionObserver | null = null;
+
+  constructor(private el: ElementRef) {}
 
   testimonials = [
     {
@@ -36,5 +41,20 @@ export class Testimonials implements AfterViewInit {
   ngAfterViewInit() {
     const el = this.gridRef.nativeElement;
     el.style.height = el.offsetHeight + 'px';
+
+    this.observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          this.visible.set(true);
+          this.observer?.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    this.observer.observe(this.el.nativeElement);
+  }
+
+  ngOnDestroy() {
+    this.observer?.disconnect();
   }
 }
