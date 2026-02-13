@@ -62,6 +62,8 @@
   .testimonials-grid {
     display: flex;
     gap: 1.5rem;
+    align-items: flex-start;
+    /* Allow cards to grow independently */
 
     @media (max-width: 767px) {
       flex-direction: column;
@@ -73,7 +75,8 @@
     position: relative;
     flex: 1 1 auto;
     min-width: 0;
-    overflow: visible;
+    overflow: hidden;
+    /* Restore hidden to clip background */
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(94, 121, 75, 0.12);
@@ -85,6 +88,9 @@
     justify-content: center;
     transition: flex 0.4s ease, box-shadow 0.3s ease, opacity 0.6s ease-out, transform 0.6s ease-out;
     box-shadow: 0 4px 20px rgba(94, 121, 75, 0.08);
+    height: auto;
+    min-height: 350px;
+    /* Ensure uniform initial height */
 
     opacity: 0;
     transform: translateY(60px);
@@ -192,7 +198,7 @@
       visibility: visible;
       transform: translateY(0);
       margin-top: 0.5rem;
-      overflow: visible;
+      overflow: hidden;
     }
 
     /* Trigger quote reveal */
