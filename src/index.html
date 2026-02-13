@@ -82,13 +82,20 @@
         <!-- Sun rays -->
         <g id="ld-rays" opacity="0.45">
           <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="3" stroke-linecap="round" />
-          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(45)" />
-          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(90)" />
-          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(135)" />
-          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(180)" />
-          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(225)" />
-          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(270)" />
-          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round" transform="rotate(315)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round"
+            transform="rotate(45)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round"
+            transform="rotate(90)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round"
+            transform="rotate(135)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round"
+            transform="rotate(180)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round"
+            transform="rotate(225)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round"
+            transform="rotate(270)" />
+          <line x1="0" y1="-28" x2="0" y2="-40" stroke="#C4964A" stroke-width="2.5" stroke-linecap="round"
+            transform="rotate(315)" />
         </g>
         <circle r="20" fill="#C4964A" />
         <circle r="14" fill="#d4a94f" />
@@ -145,9 +152,13 @@
       </g>
 
       <!-- Loading text with animated dots -->
-      <text x="185" y="395" text-anchor="middle" fill="#5E794B" font-family="'Outfit', sans-serif" font-size="14" font-weight="600" opacity="0.8">Cargando</text>
-      <text x="214" y="395" fill="#5E794B" font-family="'Outfit', sans-serif" font-size="14" font-weight="600" opacity="0.8">
-        <tspan class="dot dot1">.</tspan><tspan class="dot dot2">.</tspan><tspan class="dot dot3">.</tspan>
+      <text x="185" y="395" text-anchor="middle" fill="#5E794B" font-family="'Outfit', sans-serif" font-size="14"
+        font-weight="600" opacity="0.8">Cargando</text>
+      <text x="214" y="395" fill="#5E794B" font-family="'Outfit', sans-serif" font-size="14" font-weight="600"
+        opacity="0.8">
+        <tspan class="dot dot1">.</tspan>
+        <tspan class="dot dot2">.</tspan>
+        <tspan class="dot dot3">.</tspan>
       </text>
     </svg>
   </div>
@@ -180,30 +191,54 @@
       max-height: 70vw;
     }
 
-    .dot { opacity: 0; animation: dotBlink 1.4s ease-in-out infinite; }
-    .dot1 { animation-delay: 0s; }
-    .dot2 { animation-delay: 0.3s; }
-    .dot3 { animation-delay: 0.6s; }
+    .dot {
+      opacity: 0;
+      animation: dotBlink 1.4s ease-in-out infinite;
+    }
+
+    .dot1 {
+      animation-delay: 0s;
+    }
+
+    .dot2 {
+      animation-delay: 0.3s;
+    }
+
+    .dot3 {
+      animation-delay: 0.6s;
+    }
+
     @keyframes dotBlink {
-      0%, 20% { opacity: 0; }
-      40% { opacity: 1; }
-      60%, 100% { opacity: 0; }
+
+      0%,
+      20% {
+        opacity: 0;
+      }
+
+      40% {
+        opacity: 1;
+      }
+
+      60%,
+      100% {
+        opacity: 0;
+      }
     }
   </style>
 
   <script>
     // Sunflower loading animation — natural motion with easing & inertia
-    (function() {
+    (function () {
       var BASE_X = 200, BASE_Y = 360;
       var ARC_CX = 200, ARC_CY = 260;
       var ARC_R = 110;
       var DUR = 5000;  // slower, more relaxed cycle
 
-      var sun    = document.getElementById('ld-sun');
-      var rays   = document.getElementById('ld-rays');
-      var stem   = document.getElementById('ld-stem');
-      var leafL  = document.getElementById('ld-leaf-l');
-      var leafR  = document.getElementById('ld-leaf-r');
+      var sun = document.getElementById('ld-sun');
+      var rays = document.getElementById('ld-rays');
+      var stem = document.getElementById('ld-stem');
+      var leafL = document.getElementById('ld-leaf-l');
+      var leafR = document.getElementById('ld-leaf-r');
       var flower = document.getElementById('ld-flower');
       if (!sun) return;
 
@@ -217,7 +252,7 @@
       // Cubic bezier point helper
       function cubicB(p, p0, p1, p2, p3) {
         var ip = 1 - p;
-        return ip*ip*ip*p0 + 3*ip*ip*p*p1 + 3*ip*p*p*p2 + p*p*p*p3;
+        return ip * ip * ip * p0 + 3 * ip * ip * p * p1 + 3 * ip * p * p * p2 + p * p * p * p3;
       }
 
       function tick(ts) {
@@ -298,10 +333,14 @@
   <app-root></app-root>
 
   <script>
-    // Hide loading screen as soon as Angular app is ready
+    // Hide loading screen as soon as Angular app is ready, but wait at least 3 seconds
+    var minLoadTime = Date.now() + 3000;
+
     var checkReady = setInterval(function () {
       var appRoot = document.querySelector('app-root');
-      if (appRoot && appRoot.children.length > 0) {
+      var now = Date.now();
+
+      if (appRoot && appRoot.children.length > 0 && now >= minLoadTime) {
         clearInterval(checkReady);
         var loader = document.getElementById('loading-screen');
         if (loader) {
@@ -312,7 +351,7 @@
     }, 100);
 
     // Fallback: hide after 10 seconds even if app not ready
-    setTimeout(function() {
+    setTimeout(function () {
       clearInterval(checkReady);
       var loader = document.getElementById('loading-screen');
       if (loader && !loader.classList.contains('hidden')) {
