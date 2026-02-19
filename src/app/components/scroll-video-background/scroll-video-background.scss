@@ -7,50 +7,60 @@
     z-index: -2; // Behind everything but above base background
     overflow: hidden;
     pointer-events: none;
+    will-change: transform; // Optimize for scrolling
+    transform: translateZ(0); // Force GPU acceleration
 
-    .scroll-video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100%;
-        object-fit: cover; // Fills the background
-        object-position: center center;
-        filter: blur(0px) sepia(20%) saturate(120%) hue-rotate(10deg);
-        opacity: 0.6; // Adjust opacity as needed
-        transition: opacity 0.3s ease;
-        // Prevent quality loss from scaling
-        image-rendering: auto;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        // Zoom in to hide watermark (scale > 1 zooms in)
-        transform: translate(-50%, -50%) scale(1.2) translateZ(0);
-    }
-
-    .video-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-            to bottom,
-            rgba(94, 121, 75, 0.25) 0%, // Green tint at top
-            rgba(94, 121, 75, 0.1) 50%, // Lighter in middle
-            rgba(94, 121, 75, 0.25) 100% // Green tint at bottom
-        ),
-        linear-gradient(
-            to bottom,
-            rgba(248, 250, 247, 0.3) 0%,
-            rgba(248, 250, 247, 0.1) 50%,
-            rgba(248, 250, 247, 0.3) 100%
-        );
-        pointer-events: none;
-        z-index: 1;
-        mix-blend-mode: multiply; // Creates a more natural color blend
+    // Ensure hover text can appear above
+    .dna-hover-text {
+        pointer-events: auto; // Allow text to be visible
     }
 }
 
-// Show video on all devices (móviles, tablets, escritorio)
-// Video is optimized with playsinline and preload="metadata" for mobile performance
+#dna-container {
+    position: absolute;
+    inset: 0;
+    perspective: 1000px;
+    overflow: hidden;
+    will-change: transform; // Optimize for 3D transforms
+    transform: translateZ(0); // Force GPU acceleration
+}
 
+.strand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+}
+
+.word {
+    position: absolute;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+    opacity: 0.35;
+    will-change: transform, opacity;
+    font-weight: 600;
+    font-family: 'Courier New', 'Consolas', monospace;
+    text-shadow:
+        0 0 3px currentColor,
+        0 0 6px currentColor,
+        0 0 9px rgba(196, 150, 74, 0.4),
+        0 0 12px rgba(196, 150, 74, 0.2);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform-origin: center center;
+}
+
+.strand-a .word {
+    color: #C4964A;
+}
+
+.strand-b .word {
+    color: #C4964A;
+}
+
+#bonds-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}

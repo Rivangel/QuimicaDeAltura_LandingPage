@@ -28,6 +28,7 @@ import { CtaBanner } from "./components/cta-banner/cta-banner";
 })
 export class App implements AfterViewInit, OnDestroy {
   @ViewChild('contentWrapper') contentWrapperRef!: ElementRef<HTMLElement>;
+  @ViewChild('radialMenuSection') radialMenuSectionRef!: ElementRef<HTMLElement>;
 
   protected readonly title = signal('LandingPage');
 
@@ -108,19 +109,85 @@ export class App implements AfterViewInit, OnDestroy {
     // Preload images removed for performance optimization
     // Images will load on demand when user navigates
 
+    // Setup scroll-based reveal for radial menu section
+    this.setupScrollReveal();
 
     // Start leaf push loop outside Angular zone (no change detection needed)
     this.ngZone.runOutsideAngular(() => this.pushLeavesLoop());
+  }
+
+  private scrollRevealHandler: (() => void) | null = null;
+
+  // Easing function matching DNA helix (easeInOut)
+  private easeInOut(t: number): number {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  }
+
+  private setupScrollReveal() {
+    const heroSection = document.getElementById('hero');
+    const radialSection = this.radialMenuSectionRef?.nativeElement;
+
+    if (!heroSection || !radialSection) return;
+
+    const updateTransform = () => {
+      const scrollY = window.scrollY;
+      const heroHeight = heroSection.offsetHeight;
+
+      // Calculate progress based on hero section scroll
+      // Progress goes from 0 (at top) to 1 (when hero is scrolled past)
+      const heroProgress = Math.max(0, Math.min(1, scrollY / (heroHeight * 0.7)));
+
+      // Use same easing as DNA helix (easeInOut)
+      const easedProgress = this.easeInOut(heroProgress);
+
+      // Start small and grow to normal size
+      const scaleStart = 0.3;
+      const scaleEnd = 1.0;
+      const scale = scaleStart + (easedProgress * (scaleEnd - scaleStart)); // 0.3 to 1.0
+
+      // Opacity: fade in as it appears (start completely transparent)
+      const opacity = 0 + (easedProgress * 1.0); // 0 to 1.0
+
+      // Start from top (negative translateY) and move down to final position
+      // Calculate position to start above and move down
+      const startFromTop = -heroHeight * 2.0; // Start from top (more negative = higher up)
+      const translateY = startFromTop + (easedProgress * Math.abs(startFromTop)); // Move from top down to final position
+      const translateX = (1 - easedProgress) * 800; // Start 800px (right), end at 0
+
+      // Z-index: start behind hero, move forward to cover it
+      // Start at -1 (behind), end at 1 (in front)
+      const zIndex = -1 + (easedProgress * 2); // -1 to 1
+
+      radialSection.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+      radialSection.style.opacity = String(opacity);
+      radialSection.style.zIndex = String(Math.floor(zIndex));
+      radialSection.style.transformOrigin = 'center center';
+    };
+
+    this.scrollRevealHandler = updateTransform;
+
+    // Initial setup
+    updateTransform();
+
+    // Update on scroll (outside Angular zone for performance)
+    this.ngZone.runOutsideAngular(() => {
+      window.addEventListener('scroll', updateTransform, { passive: true });
+      window.addEventListener('resize', updateTransform, { passive: true });
+    });
   }
 
   ngOnDestroy() {
     if (this.leafPushRAF !== null) {
       cancelAnimationFrame(this.leafPushRAF);
     }
+    if (this.scrollRevealHandler) {
+      window.removeEventListener('scroll', this.scrollRevealHandler);
+      window.removeEventListener('resize', this.scrollRevealHandler);
+    }
   }
 
   private pushLeavesLoop() {
-    const leaves = document.querySelectorAll<HTMLElement>('.falling-leaf');
+    const leaves = document.querySelectorAll<HTMLElement>('.falling-leaf, .falling-leaf-front');
 
     const tick = () => {
       leaves.forEach(leaf => {

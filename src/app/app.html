@@ -18,8 +18,32 @@
 
 <app-header></app-header>
 
+<!-- Front Falling Leaves (on top of content) -->
+<div class="falling-leaves-front">
+  <div class="falling-leaf-front falling-leaf-front-1"></div>
+  <div class="falling-leaf-front falling-leaf-front-2"></div>
+  <div class="falling-leaf-front falling-leaf-front-3"></div>
+  <div class="falling-leaf-front falling-leaf-front-4"></div>
+  <div class="falling-leaf-front falling-leaf-front-5"></div>
+</div>
+
 <main>
-  <section class="radial-menu-section" id="home">
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">¿Estás listo para la innovación en medicina tradicional?</h1>
+      <div class="scroll-hint">
+        <span class="scroll-text">Desplázate para continuar</span>
+        <div class="scroll-arrow">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="radial-menu-section" id="home" #radialMenuSection>
     <div class="split-layout">
       <!-- Left Panel: Content Card -->
       <div class="content-panel">
@@ -53,10 +77,9 @@
       </div>
     </div>
   </section>
-
+  <app-how-it-works></app-how-it-works>
   <app-about-app></app-about-app>
   <app-showcase></app-showcase>
-  <app-how-it-works></app-how-it-works>
   <app-overall-statistics></app-overall-statistics>
   <app-problem-mission></app-problem-mission>
   <app-testimonials></app-testimonials>

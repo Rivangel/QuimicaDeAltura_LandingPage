@@ -21,8 +21,8 @@ export class Header implements OnInit, OnDestroy {
   private observer: IntersectionObserver | null = null;
   private sectionIds = [
     'home',
-    'about-app',
     'how-it-works',
+    'about-app',
     'statistics',
     'problem-mission',
     'testimonials',

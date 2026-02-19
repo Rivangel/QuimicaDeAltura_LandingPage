@@ -1,24 +1,37 @@
 <section class="how-it-works" id="how-it-works" [class.visible]="visible()">
   <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Como Funciona</h2>
-      <p class="section-subtitle">Tres simples pasos para descubrir el poder de las plantas medicinales</p>
-    </div>
-
-    <div class="steps-grid">
-      @for (step of steps; track step.number; let i = $index) {
-        @if (i > 0) {
-          <div class="connector" aria-hidden="true">
-            <span class="arrow">→</span>
-          </div>
-        }
-        <div class="step-card">
-          <span class="step-watermark">{{ step.number }}</span>
-          <span class="step-icon">{{ step.icon }}</span>
-          <h3 class="step-title">{{ step.title }}</h3>
-          <p class="step-description">{{ step.description }}</p>
+    <div class="main-layout">
+      <!-- Left Column: Description Card -->
+      <div class="description-column">
+        <div class="description-card" [class.visible]="hoveredDescription() !== null">
+          <p class="description-text">{{ animatedDescription() }}</p>
         </div>
-      }
+      </div>
+
+      <!-- Right Column: Header and Step Cards -->
+      <div class="content-column">
+        <div class="section-header">
+          <h2 class="section-title">Como Funciona</h2>
+          <p class="section-subtitle">Tres simples pasos para descubrir el poder de las plantas medicinales</p>
+        </div>
+
+        <div class="steps-grid">
+          @for (step of steps; track step.number; let i = $index) {
+            @if (i > 0) {
+              <div class="connector" aria-hidden="true">
+                <span class="arrow">→</span>
+              </div>
+            }
+            <div class="step-card"
+                 (mouseenter)="onCardHover(step.description)"
+                 (mouseleave)="onCardLeave()">
+              <span class="step-watermark">{{ step.number }}</span>
+              <span class="step-icon">{{ step.icon }}</span>
+              <h3 class="step-title">{{ step.title }}</h3>
+            </div>
+          }
+        </div>
+      </div>
     </div>
   </div>
 </section>
