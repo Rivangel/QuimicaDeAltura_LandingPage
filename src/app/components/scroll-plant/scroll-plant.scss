@@ -1,20 +1,68 @@
+$plant-green: #2ecc71;
+$plant-dark-green: #27ae60;
+$vine-color: #386641;
+$pot-color: #f39c12;
+$pot-dark: #d35400;
+$pot-rim: #e67e22;
+$soil: #3e2723;
+$flower-outer: #ff4757;
+$flower-inner: #ffa502;
+$glow: rgba(46, 204, 113, 0.6);
+$aura: rgba(255, 71, 87, 0.4);
+
 .scroll-plant-system {
     position: fixed;
     bottom: 0;
     right: 40px;
-    width: 100px;
+    width: 120px;
     height: 100vh;
     z-index: 997;
-    pointer-events: none; // Allow clicks to pass through except for interactive children
+    pointer-events: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.1));
 
-    // Móviles
     @media (max-width: 767px) {
         display: none;
     }
+}
+
+// Sparkles / Fireflies in the background
+.fireflies {
+    position: absolute;
+    width: 100%;
+    height: 75%;
+    bottom: 80px;
+    pointer-events: none;
+    z-index: 1;
+
+    .firefly {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #f1c40f;
+        border-radius: 50%;
+        box-shadow: 0 0 8px 3px rgba(241, 196, 15, 0.6);
+        opacity: 0;
+        animation: float-firefly 5s ease-in-out infinite alternate;
+
+        &:nth-child(1) { left: 10%; bottom: 20%; animation-duration: 4s; }
+        &:nth-child(2) { left: 80%; bottom: 40%; animation-duration: 6s; }
+        &:nth-child(3) { left: 30%; bottom: 60%; animation-duration: 5s; }
+        &:nth-child(4) { left: 70%; bottom: 80%; animation-duration: 7s; }
+        &:nth-child(5) { left: 50%; bottom: 30%; animation-duration: 5.5s; }
+        &:nth-child(6) { left: 20%; bottom: 90%; animation-duration: 4.5s; }
+    }
+}
+
+@keyframes float-firefly {
+    0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+    25% { opacity: 1; transform: translateY(-20px) translateX(15px) scale(1.2); }
+    50% { opacity: 0.5; transform: translateY(-40px) translateX(-10px) scale(1); }
+    75% { opacity: 1; transform: translateY(-60px) translateX(10px) scale(1.3); }
+    100% { transform: translateY(-80px) translateX(0) scale(0.8); opacity: 0; }
 }
 
 .stem-track {
@@ -24,6 +72,7 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
+    z-index: 10;
 }
 
 /* 1. MASKED STEM */
@@ -34,8 +83,9 @@
     transform: translateX(-50%);
     width: 60px;
     overflow: hidden;
-    transition: height 0.1s linear;
+    transition: height 0.15s ease-out;
     z-index: 10;
+    border-radius: 30px 30px 0 0;
 }
 
 .vine-graphic {
@@ -44,11 +94,69 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 200' preserveAspectRatio='none'%3E%3Cpath d='M30,200 C50,150 10,50 30,0' fill='none' stroke='%23386641' stroke-width='7' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 200' preserveAspectRatio='none'%3E%3Cpath d='M30,200 C45,150 15,50 30,0' fill='none' stroke='%2327ae60' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
     background-repeat: repeat-y;
-    background-size: 100% 200px;
+    background-size: 100% 150px;
     background-position: bottom center;
-    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
+    filter: drop-shadow(0 0 6px $glow);
+    animation: vine-pulse 3s infinite ease-in-out;
+}
+
+@keyframes vine-pulse {
+    0%, 100% { filter: drop-shadow(0 0 6px $glow); }
+    50% { filter: drop-shadow(0 0 12px rgba(46, 204, 113, 0.9)); }
+}
+
+/* SPROUT TIP */
+.sprout-tip {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    transition: bottom 0.15s ease-out, opacity 0.3s;
+    z-index: 15;
+    margin-bottom: 45px;
+    opacity: 1;
+
+    &.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .tip-glow {
+        width: 10px;
+        height: 10px;
+        background: #fff;
+        border-radius: 50%;
+        margin: 5px auto;
+        box-shadow: 0 0 15px 5px #a8ff78;
+        animation: pulse-tip 1.5s infinite alternate;
+    }
+
+    .tip-leaf {
+        position: absolute;
+        bottom: 2px;
+        width: 15px;
+        height: 10px;
+        background: #a8ff78;
+        border-radius: 10px 0 10px 0;
+        
+        &.left {
+            left: -8px;
+            transform: rotate(-30deg);
+        }
+        &.right {
+            right: -8px;
+            border-radius: 0 10px 0 10px;
+            transform: rotate(30deg);
+        }
+    }
+}
+
+@keyframes pulse-tip {
+    0% { transform: scale(0.8); box-shadow: 0 0 10px 2px #a8ff78; }
+    100% { transform: scale(1.2); box-shadow: 0 0 20px 8px #a8ff78; }
 }
 
 /* 2. FLOWER ANCHOR */
@@ -57,45 +165,67 @@
     left: 50%;
     width: 0;
     height: 0;
-    transition: bottom 0.1s linear;
+    transition: bottom 0.15s ease-out;
     z-index: 20;
-    margin-bottom: 25px;
-    pointer-events: none; // Allow clicks to pass through to flower
+    margin-bottom: 30px;
 }
 
 .premium-flower {
     position: absolute;
     top: 0;
     left: 0;
-    width: 85px;
-    height: 85px;
-    transform: translate(-50%, -50%) scale(0);
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%) scale(0) rotate(-90deg);
     opacity: 0;
-    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: auto;
     cursor: pointer;
     z-index: 100;
 
     &.bloomed {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1) rotate(360deg);
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        animation: flower-idle 6s infinite ease-in-out 1s;
+
+        .magic-dust .dust-particle {
+            animation: shoot-dust 2s infinite ease-out;
+        }
     }
 
     &:hover {
-        transform: translate(-50%, -50%) scale(1.1) rotate(360deg);
-        filter: brightness(1.2);
+        transform: translate(-50%, -50%) scale(1.15) rotate(15deg) !important;
+        filter: brightness(1.1);
+        .flower-glow-aura {
+            box-shadow: 0 0 40px 20px $aura;
+        }
     }
 }
 
-.flower-glow {
+@keyframes flower-idle {
+    0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+    25% { transform: translate(-50%, -50%) scale(1.02) rotate(3deg); }
+    75% { transform: translate(-50%, -50%) scale(1.02) rotate(-3deg); }
+}
+
+.flower-glow-aura {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 140%;
-    height: 140%;
-    background: radial-gradient(circle, rgba(255, 107, 107, 0.5) 0%, transparent 70%);
-    filter: blur(20px);
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, #ff6b6b 0%, transparent 70%);
+    filter: blur(15px);
+    border-radius: 50%;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 0 30px 10px $aura;
+    animation: aura-pulse 3s infinite alternate;
+}
+
+@keyframes aura-pulse {
+    0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
 }
 
 .petals-container {
@@ -109,33 +239,36 @@
     top: 50%;
     left: 50%;
     transform-origin: bottom center;
-    border-radius: 50% 50% 20% 20%;
+    border-radius: 50% 50% 10% 10%;
+    box-shadow: inset 0 -5px 10px rgba(0,0,0,0.2);
 
     &.outer {
-        width: 32px;
-        height: 48px;
-        background: linear-gradient(to bottom, #d62828, #fb8500);
-        margin-left: -16px;
-        margin-top: -48px;
+        width: 30px;
+        height: 50px;
+        background: linear-gradient(to bottom, #ff4757, #ff6b81);
+        margin-left: -15px;
+        margin-top: -50px;
+        border: 1px solid rgba(255,255,255,0.3);
 
         @for $i from 1 through 8 {
             &:nth-child(#{$i}) {
-                transform: rotate($i * 45deg) translateY(-2px);
+                transform: rotate($i * 45deg) translateY(-5px);
             }
         }
     }
 
     &.inner {
-        width: 22px;
-        height: 36px;
-        background: linear-gradient(to bottom, #ffbe0b, #fb5607);
-        margin-left: -11px;
-        margin-top: -36px;
+        width: 20px;
+        height: 35px;
+        background: linear-gradient(to bottom, #ffa502, #ff7f50);
+        margin-left: -10px;
+        margin-top: -35px;
         z-index: 2;
+        border: 1px solid rgba(255,255,255,0.4);
 
         @for $i from 1 through 6 {
             &:nth-child(#{$i + 8}) {
-                transform: rotate($i * 60deg + 22.5deg) translateY(-2px);
+                transform: rotate($i * 60deg + 22.5deg) translateY(-3px);
             }
         }
     }
@@ -143,55 +276,76 @@
 
 .flower-center {
     position: absolute;
-    width: 30px;
-    height: 30px;
-    background: radial-gradient(circle, #ffea00 0%, #ffcc00 100%);
+    width: 36px;
+    height: 36px;
+    background: radial-gradient(circle, #fff200 0%, #f39c12 90%);
     border-radius: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
-    border: 2px solid rgba(255, 255, 255, 0.8);
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3), 0 0 15px rgba(255, 242, 0, 0.8);
 }
 
 .pistil {
     position: absolute;
-    width: 4px;
-    height: 4px;
-    background: #a4161a;
+    width: 6px;
+    height: 6px;
+    background: #d35400;
     border-radius: 50%;
     top: 50%;
     left: 50%;
 
-    @for $i from 1 through 3 {
+    @for $i from 1 through 4 {
         &:nth-child(#{$i}) {
-            transform: translate(-50%, -50%) rotate($i * 120deg) translateY(6px);
+            transform: translate(-50%, -50%) rotate($i * 90deg) translateY(10px);
         }
     }
 }
 
-.growth-sparkle {
+.magic-dust {
     position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
-    width: 12px;
-    height: 12px;
-    background: #fff;
-    border-radius: 50%;
-    filter: blur(4px);
-    box-shadow: 0 0 15px #fff;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    @for $i from 1 through 5 {
+        &:nth-child(#{$i + 4}) {
+            transform: translate(-50%, -50%) rotate($i * 72deg);
+        }
+    }
+
+    .dust-particle {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        width: 4px;
+        height: 4px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 6px #fff;
+        opacity: 0;
+    }
+}
+
+@keyframes shoot-dust {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-40px) scale(0); opacity: 0; }
 }
 
 /* 3. LEAVES */
 .leaves-container {
     position: absolute;
-    width: 60px;
+    width: 80px;
     height: 100%;
     bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
     pointer-events: none;
+    z-index: 12;
 }
 
 .leaf-wrapper {
@@ -201,70 +355,194 @@
     left: 50%;
     margin-left: -25px;
     opacity: 0;
-    transition: opacity 0.3s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: scale(0) rotate(0deg);
+    transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 5;
 
     &.visible {
         opacity: 1;
+        transform: scale(1) rotate(0deg);
+        animation: leaf-sway 4s infinite ease-in-out alternate;
     }
 
     &.left {
+        left: 20%;
         .leaf-blade {
-            background: linear-gradient(135deg, #6a994e, #386641);
+            background: linear-gradient(135deg, #7bed9f, #2ed573);
             border-radius: 100% 0 100% 0;
-            // Position so the right edge (connection point) aligns with stem center
-            right: 50%;
-            transform: rotate(-10deg);
+            right: 15px;
+            transform: rotate(-15deg);
             transform-origin: right center;
+        }
+        .leaf-stem {
+            right: 0;
+            transform: rotate(-15deg);
         }
     }
 
     &.right {
+        left: 80%;
         .leaf-blade {
-            background: linear-gradient(-135deg, #6a994e, #386641);
+            background: linear-gradient(-135deg, #7bed9f, #2ed573);
             border-radius: 0 100% 0 100%;
-            // Position so the left edge (connection point) aligns with stem center
-            left: 50%;
-            transform: rotate(10deg);
+            left: 15px;
+            transform: rotate(15deg);
             transform-origin: left center;
         }
+        .leaf-stem {
+            left: 0;
+            transform: rotate(15deg);
+        }
+    }
+    
+    .leaf-stem {
+        position: absolute;
+        top: 15px;
+        width: 20px;
+        height: 3px;
+        background: #27ae60;
+        border-radius: 2px;
+        z-index: -1;
     }
 }
 
 .leaf-blade {
     position: absolute;
-    top: 0;
-    width: 36px;
+    top: 5px;
+    width: 38px;
     height: 24px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255,255,255,0.4);
+    overflow: hidden;
+
+    .leaf-veins {
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255,255,255,0.4);
+        border-radius: 2px;
+        
+        &::after, &::before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 1px;
+            background: rgba(255,255,255,0.4);
+        }
+        &::before { top: -5px; left: 10px; transform: rotate(30deg); }
+        &::after { bottom: -5px; left: 15px; transform: rotate(-30deg); }
+    }
 }
 
-/* POT WRAPPER (Clickable Area) */
+@keyframes leaf-sway {
+    0% { transform: scale(1) rotate(-3deg); }
+    100% { transform: scale(1) rotate(3deg); }
+}
+
+
+/* POT WRAPPER */
 .pot-wrapper {
     background: none;
     border: none;
     padding: 0;
     font: inherit;
     position: relative;
-    width: 100px;
-    height: 85px; // Covers the whole pot area plus margin
+    width: 110px;
+    height: 95px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     margin-bottom: 20px;
-    z-index: 100; // Must be higher than stem track to be clickable
+    z-index: 100;
     cursor: pointer;
-    pointer-events: auto; // Re-enable pointer events for click
-    transition: transform 0.2s ease;
+    pointer-events: auto;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation: pot-bob 3s infinite ease-in-out;
 
     &:hover {
-        transform: translateY(-5px);
+        transform: translateY(-10px) scale(1.05);
 
-        .up-arrow {
+        .pot-face .smile {
+            height: 12px;
+            border-radius: 0 0 10px 10px;
+            background: #2c3e50;
+            border: none;
+            transform: translateY(2px);
+        }
+
+        .pot-face .eye {
+            height: 8px;
+            margin-top: 2px;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .magic-up-indicator {
             opacity: 1;
-            transform: translate(-50%, -10px);
+            transform: translate(-50%, -20px);
+            color: #f1c40f;
+            filter: drop-shadow(0 0 8px #f1c40f);
+        }
+        
+        .pot-shadow-base {
+            transform: translateX(-50%) scale(0.8);
+            opacity: 0.3;
         }
     }
+    
+    &:active {
+        transform: translateY(2px) scale(0.95);
+    }
+}
+
+@keyframes pot-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.pot-shadow-base {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 15px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 50%;
+    filter: blur(4px);
+    transition: all 0.3s ease;
+    z-index: 0;
+}
+
+/* UP ARROW INDICATOR */
+.magic-up-indicator {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 32px;
+    height: 32px;
+    color: rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 20;
+    pointer-events: none;
+    background: rgba(0,0,0,0.4);
+    border-radius: 50%;
+    padding: 6px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+
+    &.active {
+        opacity: 0.7;
+        animation: arrow-bounce 2s infinite ease-in-out;
+    }
+}
+
+@keyframes arrow-bounce {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -8px); }
 }
 
 /* POT Visuals */
@@ -276,50 +554,140 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    pointer-events: none; // Clicks go to wrapper
+    pointer-events: none;
+    z-index: 2;
 }
 
 .pot-rim {
     width: 100px;
     height: 16px;
-    background: #604035;
+    background: linear-gradient(180deg, lighten($pot-color, 10%), $pot-rim);
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    z-index: 2;
+    z-index: 4;
+    position: relative;
+    overflow: hidden;
+    order: 1;
+    margin-bottom: auto; // Push to top
+    top: 0;
+    position: absolute;
+    
+    .rim-highlight {
+        position: absolute;
+        top: 2px;
+        left: 5px;
+        width: 90px;
+        height: 4px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 4px;
+    }
 }
 
 .pot-body {
     width: 76px;
-    height: 50px;
-    background: linear-gradient(to bottom, #795548, #4e342e);
-    border-radius: 0 0 30px 30px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    height: 55px;
+    background: linear-gradient(135deg, $pot-color, $pot-dark);
+    border-radius: 0 0 35px 35px;
+    box-shadow: inset -5px -5px 15px rgba(0,0,0,0.3), 0 8px 15px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+    z-index: 3;
+    
+    .pot-highlight {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 20px;
+        height: 40px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 10px;
+        transform: rotate(-15deg);
+    }
+}
+
+/* Cute Face */
+.pot-face {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    
+    .eye {
+        width: 6px;
+        height: 6px;
+        background: #2c3e50;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        animation: blink 4s infinite;
+        
+        &.left { left: 5px; }
+        &.right { right: 5px; }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+        }
+    }
+    
+    .smile {
+        position: absolute;
+        top: 6px;
+        width: 10px;
+        height: 6px;
+        border-bottom: 2px solid #2c3e50;
+        border-radius: 0 0 10px 10px;
+        transition: all 0.2s;
+    }
+    
+    .blush {
+        position: absolute;
+        top: 4px;
+        width: 8px;
+        height: 4px;
+        background: rgba(255, 107, 107, 0.6);
+        border-radius: 50%;
+        filter: blur(1px);
+        
+        &.bl-left { left: 0; }
+        &.bl-right { right: 0; }
+    }
+}
+
+@keyframes blink {
+    0%, 96%, 98% { transform: scaleY(1); }
+    97% { transform: scaleY(0.1); }
 }
 
 .pot-soil {
     position: absolute;
-    top: 10px;
-    width: 80px;
-    height: 20px;
-    background: radial-gradient(circle, #4e342e 30%, #30201a 90%);
+    top: 6px;
+    width: 82px;
+    height: 18px;
+    background: radial-gradient(ellipse at center, lighten($soil, 10%) 0%, $soil 100%);
     border-radius: 50%;
-    z-index: 1;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
-}
-
-/* UP ARROW INDICATOR */
-.up-arrow {
-    position: absolute;
-    bottom: 30px; // Center vertically in pot body roughly
+    z-index: 2;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
     left: 50%;
-    transform: translate(-50%, 0);
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 12px solid rgba(255, 255, 255, 0.7);
-    opacity: 0.5;
-    transition: all 0.3s ease;
-    z-index: 20;
-    pointer-events: none;
+    transform: translateX(-50%);
+    
+    .soil-texture {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(#111 1px, transparent 1px);
+        background-size: 4px 4px;
+        opacity: 0.3;
+        border-radius: 50%;
+    }
 }

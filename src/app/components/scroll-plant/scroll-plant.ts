@@ -1,4 +1,4 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,9 +8,14 @@ import { CommonModule } from '@angular/common';
     templateUrl: './scroll-plant.html',
     styleUrl: './scroll-plant.scss'
 })
-export class ScrollPlant {
+export class ScrollPlant implements OnInit {
     scrollPercent = signal(0);
     growthHeight = signal(0);
+    leaves: any[] = [];
+
+    ngOnInit() {
+        this.leaves = this.generateLeaves();
+    }
 
     @HostListener('window:scroll', [])
     onWindowScroll() {
@@ -19,24 +24,24 @@ export class ScrollPlant {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollableHeight = documentHeight - windowHeight;
 
-        // 0 to 100
-        const rawPercent = Math.min(Math.max((scrollTop / scrollableHeight) * 100, 0), 100);
+        const rawPercent = scrollableHeight > 0 
+            ? Math.min(Math.max((scrollTop / scrollableHeight) * 100, 0), 100) 
+            : 0;
+            
         this.scrollPercent.set(rawPercent);
-
-        // Map scroll (0-100) to Plant Growth (0-75%)
-        this.growthHeight.set(rawPercent * 0.75);
+        this.growthHeight.set(rawPercent * 0.75); // Plant grows up to 75% of screen
     }
 
-    getLeaves() {
-        const leafCount = 10;
+    generateLeaves() {
+        const leafCount = 12; // increased density
         return Array.from({ length: leafCount }, (_, i) => ({
             id: i,
             side: i % 2 === 0 ? 'left' : 'right',
             threshold: (i + 1) * (100 / leafCount),
-            bottomPos: (i + 1) * (75 / leafCount)
+            bottomPos: (i + 1) * (75 / leafCount),
+            delay: Math.random() * 2 // random animation delay for swaying
         })).filter((leaf, index) => {
-            // Remove the second left leaf from bottom (index 2)
-            return !(index === 2 && leaf.side === 'left');
+            return !(index === 2 && leaf.side === 'left'); // keeping the gap for a more natural look
         });
     }
 

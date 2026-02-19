@@ -1,47 +1,87 @@
 <div class="scroll-plant-system">
+    <!-- Magic background fireflies -->
+    <div class="fireflies">
+        <div class="firefly" *ngFor="let f of [1,2,3,4,5,6]" [style.animation-delay]="f * 0.7 + 's'"></div>
+    </div>
 
     <div class="stem-track">
         <!-- 1. The Masked Stem (Grows with height) -->
         <div class="stem-mask" [style.height.%]="growthHeight()">
-            <!-- The static vine image that gets revealed -->
             <div class="vine-graphic"></div>
+        </div>
+
+        <!-- The Leading Sprout Tip (Moves with scroll) -->
+        <div class="sprout-tip" [style.bottom.%]="growthHeight()" [class.hidden]="scrollPercent() > 95">
+            <div class="tip-glow"></div>
+            <div class="tip-leaf left"></div>
+            <div class="tip-leaf right"></div>
         </div>
 
         <!-- 2. The Flower (Floats at the top of growth) -->
         <div class="flower-anchor" [style.bottom.%]="growthHeight()">
-            <div class="premium-flower" [class.bloomed]="scrollPercent() > 95" (click)="scrollToTop()" style="cursor: pointer;" aria-label="Volver arriba">
-                <div class="flower-glow"></div>
+            <div class="premium-flower" [class.bloomed]="scrollPercent() > 95" (click)="scrollToTop()"
+                aria-label="Volver arriba">
+                <div class="flower-glow-aura"></div>
+
                 <div class="petals-container">
                     <div class="petal outer" *ngFor="let p of [1,2,3,4,5,6,7,8]"></div>
                     <div class="petal inner" *ngFor="let p of [1,2,3,4,5,6]"></div>
+
                     <div class="flower-center">
-                        <div class="pistil" *ngFor="let p of [1,2,3]"></div>
+                        <div class="pistil" *ngFor="let p of [1,2,3,4]"></div>
+                        <!-- Magic dust when bloomed -->
+                        <div class="magic-dust" *ngFor="let d of [1,2,3,4,5]">
+                            <div class="dust-particle"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="growth-sparkle"></div>
             </div>
         </div>
 
         <!-- 3. Leaves (Fixed positions, revealed by opacity) -->
         <div class="leaves-container">
-            <div *ngFor="let leaf of getLeaves()" class="leaf-wrapper"
-                [class.visible]="scrollPercent() > leaf.threshold" [ngClass]="leaf.side"
-                [style.bottom.%]="leaf.bottomPos">
-                <div class="leaf-blade"></div>
+            <div *ngFor="let leaf of leaves" class="leaf-wrapper" [class.visible]="scrollPercent() > leaf.threshold"
+                [ngClass]="leaf.side" [style.bottom.%]="leaf.bottomPos" [style.animation-delay]="leaf.delay + 's'">
+                <div class="leaf-stem"></div>
+                <div class="leaf-blade">
+                    <div class="leaf-veins"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Pot Base - Clickable to Scroll Top -->
     <button class="pot-wrapper" (click)="scrollToTop()" aria-label="Volver arriba">
-        <!-- Up Arrow Indicator -->
-        <div class="up-arrow"></div>
+        <!-- Floating Up Indicator -->
+        <div class="magic-up-indicator" [class.active]="scrollPercent() > 10">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 20V4M12 4L5 11M12 4L19 11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </div>
+
+        <div class="pot-shadow-base"></div>
 
         <div class="pot-container">
-            <div class="pot-rim"></div>
-            <div class="pot-body"></div>
-            <div class="pot-soil"></div>
+            <!-- Soil and Seedling inside -->
+            <div class="pot-soil">
+                <div class="soil-texture"></div>
+            </div>
+
+            <div class="pot-body">
+                <div class="pot-highlight"></div>
+                <div class="pot-face">
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="smile"></div>
+                    <div class="blush bl-left"></div>
+                    <div class="blush bl-right"></div>
+                </div>
+            </div>
+
+            <div class="pot-rim">
+                <div class="rim-highlight"></div>
+            </div>
         </div>
     </button>
-
 </div>
