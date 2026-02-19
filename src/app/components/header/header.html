@@ -3,8 +3,8 @@
         <a href="#home"><img src="resources/images/logo.png" alt="Química de Altura Logo" class="logo"></a>
     </div>
     <nav class="nav-links">
-        <a href="#about-app" class="nav-link" [class.active]="activeSection() === 'about-app'">La App</a>
         <a href="#how-it-works" class="nav-link" [class.active]="activeSection() === 'how-it-works'">Como Funciona</a>
+        <a href="#about-app" class="nav-link" [class.active]="activeSection() === 'about-app'">La App</a>
         <a href="#statistics" class="nav-link" [class.active]="activeSection() === 'statistics'">Impacto</a>
         <a href="#problem-mission" class="nav-link" [class.active]="activeSection() === 'problem-mission'">Mision</a>
         <a href="#testimonials" class="nav-link" [class.active]="activeSection() === 'testimonials'">Testimonios</a>
@@ -28,8 +28,8 @@
 <!-- Mobile Menu Overlay -->
 <div class="mobile-overlay" [class.active]="menuOpen()" (click)="closeMenu()"></div>
 <nav class="mobile-menu" [class.active]="menuOpen()">
-    <a href="#about-app" class="mobile-link" [class.active]="activeSection() === 'about-app'" (click)="closeMenu()">La App</a>
     <a href="#how-it-works" class="mobile-link" [class.active]="activeSection() === 'how-it-works'" (click)="closeMenu()">Como Funciona</a>
+    <a href="#about-app" class="mobile-link" [class.active]="activeSection() === 'about-app'" (click)="closeMenu()">La App</a>
     <a href="#statistics" class="mobile-link" [class.active]="activeSection() === 'statistics'" (click)="closeMenu()">Impacto</a>
     <a href="#problem-mission" class="mobile-link" [class.active]="activeSection() === 'problem-mission'" (click)="closeMenu()">Mision</a>
     <a href="#testimonials" class="mobile-link" [class.active]="activeSection() === 'testimonials'" (click)="closeMenu()">Testimonios</a>

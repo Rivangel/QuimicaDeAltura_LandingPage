@@ -367,6 +367,178 @@ html {
     }
 }
 
+/* Front Falling Leaves (on top of content) */
+.falling-leaves-front {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 500; // Above content but below header (1000)
+    overflow: hidden;
+}
+
+.falling-leaf-front {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background-image: url('/resources/images/reshot-icon-big-leaf-UJBHWNLTER.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.7;
+    top: -50px;
+    animation: fall linear infinite;
+    filter: drop-shadow(0 3px 6px rgba(94, 121, 75, 0.3));
+    // Push offset from mouse — stacks on top of transform
+    --push-x: 0px;
+    --push-y: 0px;
+    translate: var(--push-x) var(--push-y);
+    transition: translate 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.falling-leaf-front-1 {
+    left: 18%;
+    animation-duration: 9s;
+    animation-delay: 0s;
+    width: 38px;
+    height: 38px;
+    opacity: 0.75;
+}
+
+.falling-leaf-front-2 {
+    left: 45%;
+    animation-duration: 11s;
+    animation-delay: 2s;
+    width: 42px;
+    height: 42px;
+    opacity: 0.8;
+}
+
+.falling-leaf-front-3 {
+    left: 72%;
+    animation-duration: 10s;
+    animation-delay: 4s;
+    width: 35px;
+    height: 35px;
+    opacity: 0.7;
+}
+
+.falling-leaf-front-4 {
+    left: 30%;
+    animation-duration: 13s;
+    animation-delay: 1s;
+    width: 40px;
+    height: 40px;
+    opacity: 0.75;
+}
+
+.falling-leaf-front-5 {
+    left: 85%;
+    animation-duration: 12s;
+    animation-delay: 3s;
+    width: 36px;
+    height: 36px;
+    opacity: 0.7;
+}
+
+/* Hero Section */
+.hero-section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    padding-top: 120px; // Account for fixed header
+    font-family: 'Outfit', sans-serif;
+    position: relative;
+    background: transparent;
+    z-index: 0; // Base z-index for proper layering with radial menu section
+
+    .hero-content {
+        text-align: center;
+        max-width: 1200px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+    }
+
+    .hero-title {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-weight: 800;
+        color: #C4964A;
+        margin: 0;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        text-shadow: 
+            0 2px 10px rgba(196, 150, 74, 0.3),
+            0 4px 20px rgba(196, 150, 74, 0.2);
+        animation: fadeInUp 1s ease-out;
+
+        @media (max-width: 767px) {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+        }
+    }
+
+    .scroll-hint {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        opacity: 0;
+        animation: fadeInUp 1s ease-out 0.5s forwards;
+        margin-top: 2rem;
+
+        .scroll-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(196, 150, 74, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .scroll-arrow {
+            color: #C4964A;
+            animation: bounce 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+
+            svg {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(10px);
+        }
+    }
+}
+
 /* Radial Menu Section with Content Card */
 .radial-menu-section {
     width: 100%;
@@ -377,6 +549,12 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    will-change: transform, opacity, z-index;
+    // Initial state: small, behind hero section, positioned top-right (will be controlled by JS)
+    transform: scale(0.3) translate(800px, -1000px);
+    opacity: 0;
+    z-index: -1; // Start behind hero section
 
     // Tablets
     @media (min-width: 768px) and (max-width: 1023px) {
@@ -429,26 +607,29 @@ html {
         min-width: 0;
 
         .content-wrapper {
-            background-color: #5E794B;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 3rem 2.5rem;
-            border-radius: 40px;
-            box-shadow: 0 15px 35px -12px rgba(94, 121, 75, 0.2);
+            border-radius: 20px;
+            border: 2px solid rgba(94, 121, 75, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             width: 100%;
             min-height: 580px;
-            color: white;
+            color: #5E794B;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            transition: box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                        transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                        filter 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                        border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                        background 0.3s ease;
             box-sizing: border-box;
             overflow: hidden;
 
             &:hover {
                 transform: translateY(-20px) scale(1.02);
-                box-shadow: 0 40px 80px -15px rgba(94, 121, 75, 0.5);
-                filter: brightness(1.05);
+                border-color: rgba(94, 121, 75, 0.6);
+                background: rgba(255, 255, 255, 0.5);
             }
 
             // Tablets
@@ -459,7 +640,7 @@ html {
 
             // Móviles
             @media (max-width: 767px) {
-                border-radius: 24px;
+                border-radius: 20px;
                 padding: 2.5rem 1.5rem;
                 min-height: 460px;
             }
@@ -505,13 +686,16 @@ html {
             line-height: 1.1;
             margin: 0 0 1.5rem 0;
             letter-spacing: -0.02em;
+            color: #5E794B;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
         }
 
         .description {
             font-size: 1rem;
             line-height: 1.6;
             margin: 0 0 3rem 0;
-            color: rgba(255, 255, 255, 0.95);
+            color: #333;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
         }
 
         .download-container {
