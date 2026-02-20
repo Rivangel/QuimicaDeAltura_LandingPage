@@ -65,6 +65,12 @@ export class HowItWorks implements AfterViewInit, OnDestroy {
       return; // Don't trigger hover effects on mobile
     }
     
+    // Clear any existing animation first
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
+    
     this.hoveredDescription.set(description);
     this.animateDescription(description);
     this.dnaHoverService.setHoverText(description); // Signal to hide DNA words
@@ -77,9 +83,12 @@ export class HowItWorks implements AfterViewInit, OnDestroy {
       return; // Don't trigger hover effects on mobile
     }
     
+    // Always clear hover state, even if already null
     this.hoveredDescription.set(null);
     this.animatedDescription.set('');
     this.dnaHoverService.setHoverText(null); // Signal to show DNA words again
+    
+    // Cancel any ongoing animation
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = null;

@@ -1,4 +1,5 @@
 import { Component, signal, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { NAVIGATION_SECTIONS } from '../../config/navigation.config';
 
 @Component({
   selector: 'app-header',
@@ -19,16 +20,7 @@ export class Header implements OnInit, OnDestroy {
   }
 
   private observer: IntersectionObserver | null = null;
-  private sectionIds = [
-    'home',
-    'how-it-works',
-    'about-app',
-    'statistics',
-    'problem-mission',
-    'testimonials',
-    'faq',
-    'newsletter',
-  ];
+  private readonly sectionIds = NAVIGATION_SECTIONS;
 
   ngOnInit() {
     this.observer = new IntersectionObserver(

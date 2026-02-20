@@ -583,10 +583,13 @@ export class ScrollVideoBackground implements OnInit, AfterViewInit, OnDestroy {
             }
 
             // ---- BUILD ----
-            if (!shouldHideThisWord && a.isFading && a.buildStartTime === undefined) {
+            // Start building if we should show the word and it was previously fading or hidden
+            if (!shouldHideThisWord && (a.isFading || (a.fadedChars.size > 0 && a.buildStartTime === undefined))) {
                 a.isFading = false;
-                a.buildStartTime = ts;
-                a.builtChars.clear();
+                if (a.buildStartTime === undefined) {
+                    a.buildStartTime = ts;
+                    a.builtChars.clear();
+                }
             }
 
             let modeA: 'normal' | 'fade' | 'build' = 'normal';
@@ -671,10 +674,13 @@ export class ScrollVideoBackground implements OnInit, AfterViewInit, OnDestroy {
             }
 
             // ---- BUILD ----
-            if (!shouldHideThisWord && b.isFading && b.buildStartTime === undefined) {
+            // Start building if we should show the word and it was previously fading or hidden
+            if (!shouldHideThisWord && (b.isFading || (b.fadedChars.size > 0 && b.buildStartTime === undefined))) {
                 b.isFading = false;
-                b.buildStartTime = ts;
-                b.builtChars.clear();
+                if (b.buildStartTime === undefined) {
+                    b.buildStartTime = ts;
+                    b.builtChars.clear();
+                }
             }
 
             let modeB: 'normal' | 'fade' | 'build' = 'normal';

@@ -1,82 +1,25 @@
 <app-scroll-video-background></app-scroll-video-background>
 
-<!-- Falling Leaves -->
-<div class="falling-leaves">
-  <div class="falling-leaf falling-leaf-1"></div>
-  <div class="falling-leaf falling-leaf-2"></div>
-  <div class="falling-leaf falling-leaf-3"></div>
-  <div class="falling-leaf falling-leaf-4"></div>
-  <div class="falling-leaf falling-leaf-5"></div>
-  <div class="falling-leaf falling-leaf-6"></div>
-  <div class="falling-leaf falling-leaf-7"></div>
-  <div class="falling-leaf falling-leaf-8"></div>
-  <div class="falling-leaf falling-leaf-9"></div>
-  <div class="falling-leaf falling-leaf-10"></div>
-  <div class="falling-leaf falling-leaf-11"></div>
-  <div class="falling-leaf falling-leaf-12"></div>
-</div>
+<app-falling-leaves-background></app-falling-leaves-background>
 
 <app-header></app-header>
 
-<!-- Front Falling Leaves (on top of content) -->
-<div class="falling-leaves-front">
-  <div class="falling-leaf-front falling-leaf-front-1"></div>
-  <div class="falling-leaf-front falling-leaf-front-2"></div>
-  <div class="falling-leaf-front falling-leaf-front-3"></div>
-  <div class="falling-leaf-front falling-leaf-front-4"></div>
-  <div class="falling-leaf-front falling-leaf-front-5"></div>
-</div>
+<app-falling-leaves-front></app-falling-leaves-front>
 
 <main>
-  <!-- Hero Section -->
-  <section class="hero-section" id="hero">
-    <div class="hero-content">
-      <h1 class="hero-title">¿Estás listo para la innovación en medicina tradicional?</h1>
-      <div class="scroll-hint">
-        <span class="scroll-text">Desplázate para continuar</span>
-        <div class="scroll-arrow">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
+  <app-hero-section></app-hero-section>
 
-  <section class="radial-menu-section" id="home" #radialMenuSection>
-    <div class="split-layout">
-      <!-- Left Panel: Content Card -->
-      <div class="content-panel">
-        <div class="content-wrapper" #contentWrapper>
-          @if (cardContent().image) {
-          <div class="card-image-container">
-            <img [src]="cardContent().image" [alt]="cardContent().title" class="card-image" loading="eager"
-              decoding="sync">
-          </div>
-          }
-          <h2 class="title">
-            @for (line of titleLines; track $index) {
-            @if ($index > 0) {
-            <br>
-            }
-            {{ line }}
-            }
-          </h2>
-          <p class="description">
-            {{ cardContent().description }}
-          </p>
-        </div>
-      </div>
-
-      <!-- Right Panel: Radial Menu -->
-      <div class="radial-menu-panel">
-        <app-radial-menu [activeButton]="activeButton()" (contentChange)="onContentChange()"
-          (setOriginalContent)="onSetOriginalContent()" (setMission)="onSetMission()" (setVision)="onSetVision()"
-          (setValues)="onSetValues()" (setContact)="onSetContact()" (setBusinessModel)="onSetBusinessModel()">
-        </app-radial-menu>
-      </div>
-    </div>
-  </section>
+  <app-radial-menu-section 
+    [cardContent]="cardContent" 
+    [activeButton]="activeButton"
+    (contentChange)="onContentChange()"
+    (setOriginalContent)="onSetOriginalContent()"
+    (setMission)="onSetMission()"
+    (setVision)="onSetVision()"
+    (setValues)="onSetValues()"
+    (setContact)="onSetContact()"
+    (setBusinessModel)="onSetBusinessModel()">
+  </app-radial-menu-section>
   <app-how-it-works></app-how-it-works>
   <app-about-app></app-about-app>
   <app-showcase></app-showcase>

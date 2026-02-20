@@ -38,15 +38,15 @@
 
     .nav-links {
         display: flex;
-        gap: 1.5rem;
+        gap: 1rem;
 
         .nav-link {
             text-decoration: none;
             color: #5E794B;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             white-space: nowrap;
-            padding: 0.3rem 0.7rem;
+            padding: 0.3rem 0.6rem;
             border-radius: 20px;
             transition: background-color 0.3s ease, opacity 0.3s ease;
 

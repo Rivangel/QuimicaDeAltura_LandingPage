@@ -1,0 +1,34 @@
+<section class="radial-menu-section" id="home" #radialMenuSection>
+  <div class="split-layout">
+    <!-- Left Panel: Content Card -->
+    <div class="content-panel">
+      <div class="content-wrapper" #contentWrapper>
+        @if (cardContent().image) {
+        <div class="card-image-container">
+          <img [src]="cardContent().image" [alt]="cardContent().title" class="card-image" loading="eager"
+            decoding="sync">
+        </div>
+        }
+        <h2 class="title">
+          @for (line of titleLines; track $index) {
+          @if ($index > 0) {
+          <br>
+          }
+          {{ line }}
+          }
+        </h2>
+        <p class="description">
+          {{ cardContent().description }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Panel: Radial Menu -->
+    <div class="radial-menu-panel">
+      <app-radial-menu [activeButton]="activeButton()" (contentChange)="onContentChange()"
+        (setOriginalContent)="onSetOriginalContent()" (setMission)="onSetMission()" (setVision)="onSetVision()"
+        (setValues)="onSetValues()" (setContact)="onSetContact()" (setBusinessModel)="onSetBusinessModel()">
+      </app-radial-menu>
+    </div>
+  </div>
+</section>
