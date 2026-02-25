@@ -3,7 +3,7 @@
   font-family: 'Outfit', sans-serif;
   position: relative;
   width: 100%;
-  min-height: fit-content;
+  overflow: hidden;
   isolation: isolate; // Create stacking context to prevent children from escaping
 
 
