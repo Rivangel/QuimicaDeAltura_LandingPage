@@ -1,10 +1,6 @@
 <app-scroll-video-background></app-scroll-video-background>
 
-<app-falling-leaves-background></app-falling-leaves-background>
-
 <app-header></app-header>
-
-<app-falling-leaves-front></app-falling-leaves-front>
 
 <main>
   <app-hero-section></app-hero-section>
@@ -22,6 +18,13 @@
   </app-radial-menu-section>
   <app-how-it-works></app-how-it-works>
   <app-about-app></app-about-app>
+  <section class="phone-3d-section">
+    <app-phone-3d
+      modelUrl="/resources/3d%20models/Samsung%20phone.glb"
+      screenMeshName="Screen"
+      [screenAspectRatio]=".6">
+    </app-phone-3d>
+  </section>
   <app-showcase></app-showcase>
   <app-overall-statistics></app-overall-statistics>
   <app-problem-mission></app-problem-mission>

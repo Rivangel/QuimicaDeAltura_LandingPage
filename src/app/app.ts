@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, AfterViewInit, OnDestroy, NgZone } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from "./components/header/header";
 import { Footer } from "./components/footer/footer";
@@ -13,8 +13,7 @@ import { OverallStatistics } from "./components/overall-statistics/overall-stati
 import { HowItWorks } from "./components/how-it-works/how-it-works";
 import { Testimonials } from "./components/testimonials/testimonials";
 import { CtaBanner } from "./components/cta-banner/cta-banner";
-import { FallingLeavesBackground } from "./components/falling-leaves-background/falling-leaves-background";
-import { FallingLeavesFront } from "./components/falling-leaves-front/falling-leaves-front";
+import { Phone3dComponent } from "./components/phone-3d/phone-3d.component";
 import { HeroSection } from "./components/hero-section/hero-section";
 import { RadialMenuSection } from "./components/radial-menu-section/radial-menu-section";
 import { ContentService } from "./services/content.service";
@@ -23,22 +22,28 @@ import { ContentService } from "./services/content.service";
   selector: 'app-root',
   imports: [
     RouterOutlet, Header, Footer, AboutApp, ProblemMission,
-    AppShowcase, ScrollPlant, ScrollVideoBackground,
+    AppShowcase, Phone3dComponent, ScrollPlant, ScrollVideoBackground,
     Faq, Newsletter, OverallStatistics,
     HowItWorks, Testimonials, CtaBanner,
-    FallingLeavesBackground, FallingLeavesFront,
     HeroSection, RadialMenuSection
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
+export class App implements AfterViewInit, OnDestroy {
   protected readonly title = signal('LandingPage');
 
-  // Use content service for state management
-  constructor(public contentService: ContentService) {}
+  // Scroll snap
+  private snapSections: Element[] = [];
+  private snapIndex = 0;
+  private snapLocked = false;
+  private snapTouchStartY = 0;
+  private snapWheelHandler: ((e: WheelEvent) => void) | null = null;
+  private snapTouchStartHandler: ((e: TouchEvent) => void) | null = null;
+  private snapTouchEndHandler: ((e: TouchEvent) => void) | null = null;
 
-  // Expose service signals for template (read-only access)
+  constructor(public contentService: ContentService, private ngZone: NgZone) {}
+
   get cardContent() {
     return this.contentService.cardContent.asReadonly();
   }
