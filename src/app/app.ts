@@ -52,32 +52,88 @@ export class App implements AfterViewInit, OnDestroy {
     return this.contentService.activeButton.asReadonly();
   }
 
-  // Delegate methods to content service
-  onContentChange(): void {
-    this.contentService.setAlternativeContent();
+  ngAfterViewInit() {
+    this.ngZone.runOutsideAngular(() => this.initScrollSnap());
   }
 
-  onSetOriginalContent(): void {
-    this.contentService.setDefaultContent();
+  ngOnDestroy() {
+    if (this.snapWheelHandler) window.removeEventListener('wheel', this.snapWheelHandler);
+    if (this.snapTouchStartHandler) window.removeEventListener('touchstart', this.snapTouchStartHandler);
+    if (this.snapTouchEndHandler) window.removeEventListener('touchend', this.snapTouchEndHandler);
   }
 
-  onSetMission(): void {
-    this.contentService.setMissionContent();
+  private initScrollSnap() {
+    this.snapSections = Array.from(document.querySelectorAll(
+      'main > app-hero-section, main > app-radial-menu-section, ' +
+      'main > app-how-it-works, main > app-about-app, main > section, ' +
+      'main > app-showcase, main > app-overall-statistics, main > app-problem-mission, ' +
+      'main > app-testimonials, main > app-faq, main > app-newsletter, main > app-cta-banner'
+    ));
+
+    const getHeaderHeight = (): number => {
+      const header = document.querySelector<HTMLElement>('app-header');
+      return header ? header.offsetHeight : 0;
+    };
+
+    const getDocumentTop = (el: Element): number => {
+      let top = 0;
+      let node: HTMLElement | null = el as HTMLElement;
+      while (node) {
+        top += node.offsetTop;
+        node = node.offsetParent as HTMLElement | null;
+      }
+      return top;
+    };
+
+    const findCurrentIndex = (): number => {
+      const headerH = getHeaderHeight();
+      const currentPos = window.scrollY + headerH;
+      let best = 0;
+      let bestDist = Infinity;
+      this.snapSections.forEach((el, i) => {
+        const dist = Math.abs(getDocumentTop(el) - currentPos);
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      });
+      return best;
+    };
+
+    const goToSection = (index: number) => {
+      if (index < 0 || index >= this.snapSections.length || this.snapLocked) return;
+      this.snapLocked = true;
+      this.snapIndex = index;
+      const targetY = getDocumentTop(this.snapSections[index]) - getHeaderHeight();
+      window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+      setTimeout(() => { this.snapLocked = false; }, 900);
+    };
+
+    this.snapWheelHandler = (e: WheelEvent) => {
+      e.preventDefault();
+      if (this.snapLocked) return;
+      this.snapIndex = findCurrentIndex();
+      goToSection(e.deltaY > 0 ? this.snapIndex + 1 : this.snapIndex - 1);
+    };
+
+    this.snapTouchStartHandler = (e: TouchEvent) => {
+      this.snapTouchStartY = e.touches[0].clientY;
+    };
+
+    this.snapTouchEndHandler = (e: TouchEvent) => {
+      const dy = this.snapTouchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dy) < 30 || this.snapLocked) return;
+      this.snapIndex = findCurrentIndex();
+      goToSection(dy > 0 ? this.snapIndex + 1 : this.snapIndex - 1);
+    };
+
+    window.addEventListener('wheel', this.snapWheelHandler, { passive: false });
+    window.addEventListener('touchstart', this.snapTouchStartHandler, { passive: true });
+    window.addEventListener('touchend', this.snapTouchEndHandler, { passive: true });
   }
 
-  onSetVision(): void {
-    this.contentService.setVisionContent();
-  }
-
-  onSetValues(): void {
-    this.contentService.setValuesContent();
-  }
-
-  onSetContact(): void {
-    this.contentService.setContactContent();
-  }
-
-  onSetBusinessModel(): void {
-    this.contentService.setBusinessModelContent();
-  }
+  onContentChange(): void { this.contentService.setAlternativeContent(); }
+  onSetOriginalContent(): void { this.contentService.setDefaultContent(); }
+  onSetMission(): void { this.contentService.setMissionContent(); }
+  onSetVision(): void { this.contentService.setVisionContent(); }
+  onSetValues(): void { this.contentService.setValuesContent(); }
+  onSetContact(): void { this.contentService.setContactContent(); }
+  onSetBusinessModel(): void { this.contentService.setBusinessModelContent(); }
 }

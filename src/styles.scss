@@ -154,3 +154,40 @@ main {
         width: 100%;
     }
 }
+
+/* ── Scroll-snap targets ────────────────────────────────────────────────────
+   Every direct child of <main> (both plain sections and Angular components)
+   snaps its top edge to the viewport top when the user scrolls.              */
+main > app-hero-section,
+main > app-radial-menu-section,
+main > section,
+main > app-how-it-works,
+main > app-about-app,
+main > app-showcase,
+main > app-overall-statistics,
+main > app-problem-mission,
+main > app-testimonials,
+main > app-faq,
+main > app-newsletter,
+main > app-cta-banner {
+    scroll-snap-align: start;
+    height: 100dvh;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Angular custom elements are inline by default; make them block so the
+   snap geometry is calculated correctly.                                    */
+app-hero-section,
+app-radial-menu-section,
+app-how-it-works,
+app-about-app,
+app-showcase,
+app-overall-statistics,
+app-problem-mission,
+app-testimonials,
+app-faq,
+app-newsletter,
+app-cta-banner {
+    display: block;
+}
