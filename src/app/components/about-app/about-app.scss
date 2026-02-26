@@ -1,5 +1,5 @@
 .about-app-section {
-    padding: 4rem 2rem;
+    padding: 2rem 2rem 4rem;
     background: transparent;
     font-family: 'Outfit', sans-serif;
     position: relative;
@@ -24,7 +24,7 @@
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-radius: 20px;
-        padding: 1.5rem 2rem;
+        padding: 0.6rem 1.5rem;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         border: 2px solid rgba(94, 121, 75, 0.3);
 
@@ -36,7 +36,7 @@
             color: #5E794B;
             font-size: 2rem;
             font-weight: 800;
-            margin-bottom: 0.8rem;
+            margin: 0;
             text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
         }
 
