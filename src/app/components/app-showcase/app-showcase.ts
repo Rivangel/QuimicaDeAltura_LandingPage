@@ -1,10 +1,11 @@
 import { Component, ElementRef, AfterViewInit, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Phone3dComponent } from '../phone-3d/phone-3d.component';
 
 @Component({
     selector: 'app-showcase',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, Phone3dComponent],
     templateUrl: './app-showcase.html',
     styleUrl: './app-showcase.scss'
 })
@@ -14,9 +15,9 @@ export class AppShowcase implements AfterViewInit, OnDestroy {
 
     constructor(private el: ElementRef) { }
 
-    activeTab = 'home';
+    activeTab: 'home' | 'scan' | 'chat' = 'home';
 
-    tabs = [
+    tabs: Array<{ id: 'home' | 'scan' | 'chat'; title: string; description: string; icon: string; image: string }> = [
         {
             id: 'home',
             title: 'Tu Biblioteca de Plantas Medicinales',
@@ -44,7 +45,7 @@ export class AppShowcase implements AfterViewInit, OnDestroy {
         return this.tabs.find(t => t.id === this.activeTab)?.image || '';
     }
 
-    setTab(tabId: string) {
+    setTab(tabId: 'home' | 'scan' | 'chat') {
         this.activeTab = tabId;
     }
 
