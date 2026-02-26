@@ -99,6 +99,8 @@ export class App implements AfterViewInit, OnDestroy {
   }
 
   private initScrollSnap() {
+    if (window.innerWidth < 768) return; // native scroll on mobile — no snap
+
     this.snapSections = Array.from(document.querySelectorAll(
       'main > app-hero-section, main > app-radial-menu-section, ' +
       'main > app-how-it-works, main > app-about-app, main > section, ' +

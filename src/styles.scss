@@ -156,34 +156,57 @@ main {
 
 /* ── Scroll-snap targets ────────────────────────────────────────────────────
    Every direct child of <main> (both plain sections and Angular components)
-   snaps its top edge to the viewport top when the user scrolls.              */
-main > app-hero-section,
-main > app-radial-menu-section,
-main > section,
-main > app-how-it-works,
-main > app-about-app,
-main > app-showcase,
-main > app-overall-statistics,
-main > app-problem-mission,
-main > app-testimonials,
-main > app-faq,
-main > app-newsletter,
-main > app-cta-banner {
-    scroll-snap-align: start;
-    height: 100dvh;
-    box-sizing: border-box;
-    overflow: hidden;
+   snaps its top edge to the viewport top when the user scrolls.
+   Disabled on mobile (≤ 767 px) so sections render at full natural height.  */
+@media (min-width: 768px) {
+    main > app-hero-section,
+    main > app-radial-menu-section,
+    main > section,
+    main > app-how-it-works,
+    main > app-about-app,
+    main > app-showcase,
+    main > app-overall-statistics,
+    main > app-problem-mission,
+    main > app-testimonials,
+    main > app-faq,
+    main > app-newsletter,
+    main > app-cta-banner {
+        scroll-snap-align: start;
+        height: 100dvh;
+        box-sizing: border-box;
+        overflow: hidden;
 
-    content-visibility: auto;
-    contain-intrinsic-size: auto 100dvh;
+        content-visibility: auto;
+        contain-intrinsic-size: auto 100dvh;
+    }
+
+    /* Content-driven sections: let them grow with their content */
+    main > app-about-app,
+    main > app-faq {
+        height: auto;
+        overflow: visible;
+        contain-intrinsic-size: auto 500px;
+    }
 }
 
-/* Content-driven sections: let them grow with their content */
-main > app-about-app,
-main > app-faq {
-    height: auto;
-    overflow: visible;
-    contain-intrinsic-size: auto 500px;
+/* On mobile every section is full-height at minimum but not clipped */
+@media (max-width: 767px) {
+    main > app-hero-section,
+    main > app-radial-menu-section,
+    main > section,
+    main > app-how-it-works,
+    main > app-about-app,
+    main > app-showcase,
+    main > app-overall-statistics,
+    main > app-problem-mission,
+    main > app-testimonials,
+    main > app-faq,
+    main > app-newsletter,
+    main > app-cta-banner {
+        height: auto;
+        min-height: 100dvh;
+        overflow: visible;
+    }
 }
 
 /* Scroll-boundary bounce hint for tall sections */
@@ -225,7 +248,10 @@ app-footer {
 }
 
 app-footer {
-    scroll-snap-align: start;
     content-visibility: auto;
     contain-intrinsic-size: auto 300px;
+
+    @media (min-width: 768px) {
+        scroll-snap-align: start;
+    }
 }
