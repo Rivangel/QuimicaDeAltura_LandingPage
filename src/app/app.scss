@@ -131,6 +131,24 @@ $border-glass: rgba(255, 255, 255, 0.05);
                 }
             }
         }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: $text-muted;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                transform: scale(1.1);
+                color: #fff;
+            }
+        }
     }
 
     .mobile-only {
@@ -1009,10 +1027,220 @@ h1.glitch {
         gap: 5px;
         cursor: pointer;
 
+        &.mobile-toggle {
+            flex-direction: row;
+            background: none;
+            border: none;
+            color: $text-muted;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
         .line {
             width: 30px;
             height: 2px;
             background: #fff;
         }
+    }
+}
+
+:host-context(body.light-mode) {
+    color: #022c22;
+
+    h1.glitch {
+        color: #022c22;
+        text-shadow: 2px 2px 0 rgba(22, 163, 74, 0.5), -2px -2px 0 rgba(220, 38, 38, 0.5);
+    }
+
+    .section-subtitle.emphasize {
+        color: #000;
+    }
+
+    .benefits-box h3,
+    .benefits-box strong {
+        color: #022c22;
+    }
+
+    .glass-card,
+    .step-card,
+    .testi-card {
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+
+        p {
+            color: #115e59;
+        }
+
+        h3,
+        strong {
+            color: #022c22;
+        }
+
+        h2 {
+            color: #000;
+        }
+
+        .step-number {
+            -webkit-text-fill-color: rgba(0, 0, 0, 0.1);
+            text-shadow: none;
+        }
+
+        .quotes {
+            color: rgba(0, 0, 0, 0.1);
+        }
+
+        .author-block {
+            border-top-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .author-block .a-info strong {
+            color: #022c22;
+        }
+    }
+
+    .interactive-list li,
+    .showcase-item {
+        background: rgba(0, 0, 0, 0.03);
+        border-color: rgba(0, 0, 0, 0.05);
+        color: #115e59;
+
+        &:hover {
+            background: rgba(34, 197, 94, 0.15);
+        }
+    }
+
+    .interactive-list li strong {
+        color: #16a34a;
+    }
+
+    .showcase-item h3 {
+        color: #022c22;
+    }
+
+    .showcase-item:hover h3 {
+        color: #16a34a;
+    }
+
+    .glass-header {
+        background: rgba(255, 255, 255, 0.85);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+        .logo {
+            @include text-gradient(#16a34a, #022c22);
+        }
+
+        .main-nav a {
+            color: #115e59;
+
+            &:hover {
+                color: #000;
+            }
+        }
+
+        .main-nav .download-btn {
+            color: #16a34a;
+            border-color: #16a34a;
+            background: rgba(22, 163, 74, 0.1);
+
+            &:hover {
+                color: #fff;
+                background: #16a34a;
+            }
+        }
+
+        .theme-toggle {
+            color: #115e59;
+
+            &:hover {
+                color: #000;
+            }
+        }
+
+        .mobile-only .line {
+            background: #000;
+        }
+    }
+
+    .glass-footer {
+        background: rgba(255, 255, 255, 0.85);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+        h4,
+        p,
+        a {
+            color: #022c22;
+        }
+    }
+
+    .stats-grid .stat-box {
+        background: rgba(255, 255, 255, 0.85);
+        border-color: rgba(0, 0, 0, 0.1);
+
+        .counter-wrap {
+            color: #000;
+            text-shadow: none;
+        }
+    }
+
+    .faq-item {
+        border-bottom-color: rgba(0, 0, 0, 0.1);
+
+        .faq-question {
+            color: #000;
+        }
+    }
+
+    .app-store-btn {
+        background: rgba(0, 0, 0, 0.05);
+        border-color: rgba(0, 0, 0, 0.1);
+        color: #000;
+
+        &:hover {
+            background: #000;
+            color: #fff;
+        }
+    }
+
+    .newsletter-form input {
+        background: rgba(0, 0, 0, 0.05);
+        border-color: rgba(0, 0, 0, 0.1);
+        color: #000;
+
+        &::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    .webgl-container .vignette {
+        box-shadow: inset 0 0 150px rgba(255, 255, 255, 0.95);
+    }
+
+    .scroll-indicator .mouse {
+        border-color: #16a34a;
+
+        &::before {
+            background: #16a34a;
+        }
+    }
+
+    .custom-cursor {
+        background-color: #000;
+        border-color: #000;
+        mix-blend-mode: normal;
+
+        &.active {
+            border-color: #16a34a;
+            box-shadow: inset 0 0 10px rgba(22, 163, 74, 0.3);
+            background-color: transparent;
+        }
+    }
+
+    .text-gradient {
+        @include text-gradient(#15803d, #4c1d95);
+    }
+
+    .step-line {
+        background: rgba(0, 0, 0, 0.2);
     }
 }

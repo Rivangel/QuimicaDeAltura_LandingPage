@@ -13,8 +13,14 @@
         <a href="#mision">Misión</a>
         <a href="#testimonios">Testimonios</a>
         <a href="#faq">FAQ</a>
+        <button class="theme-toggle" (click)="toggleTheme()" aria-label="Cambiar tema">
+            <span class="icon">{{ isLightMode ? '🌙' : '☀️' }}</span>
+        </button>
         <a href="#download" class="download-btn">Descargar App</a>
     </nav>
+    <button class="theme-toggle mobile-toggle mobile-only" (click)="toggleTheme()" aria-label="Cambiar tema">
+        <span class="icon">{{ isLightMode ? '🌙' : '☀️' }}</span>
+    </button>
     <div class="menu-btn mobile-only">
         <div class="line"></div>
         <div class="line"></div>

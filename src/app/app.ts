@@ -24,6 +24,8 @@ export class App implements AfterViewInit, OnDestroy {
     private uniformTime = { value: 0.0 };
     private uniformProgress = { value: 0.0 };
 
+    isLightMode = false;
+
     private mouseX = 0;
     private mouseY = 0;
 
@@ -38,6 +40,25 @@ export class App implements AfterViewInit, OnDestroy {
     ngOnDestroy() {
         if (this.requestID !== null) cancelAnimationFrame(this.requestID);
         ScrollTrigger.getAll().forEach(t => t.kill());
+    }
+
+    toggleTheme() {
+        this.isLightMode = !this.isLightMode;
+        if (this.isLightMode) {
+            document.body.classList.add('light-mode');
+            if (this.particlesMesh && this.particlesMesh.material) {
+                const material = this.particlesMesh.material as THREE.Material;
+                material.blending = THREE.NormalBlending;
+                material.needsUpdate = true;
+            }
+        } else {
+            document.body.classList.remove('light-mode');
+            if (this.particlesMesh && this.particlesMesh.material) {
+                const material = this.particlesMesh.material as THREE.Material;
+                material.blending = THREE.AdditiveBlending;
+                material.needsUpdate = true;
+            }
+        }
     }
 
     @HostListener('window:mousemove', ['$event'])
