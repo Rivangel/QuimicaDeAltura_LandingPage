@@ -91,7 +91,7 @@ export class ScrollVideoBackground implements OnInit, AfterViewInit, OnDestroy {
     // Cache section bounds to avoid expensive DOM queries every frame
     private howItWorksBounds: { top: number; bottom: number } | null = null;
     private boundsUpdateTime = 0;
-    private readonly BOUNDS_UPDATE_INTERVAL = 100; // Update bounds every 100ms
+    private readonly BOUNDS_UPDATE_INTERVAL = 100;
 
     constructor(
         private ngZone: NgZone,
@@ -132,10 +132,8 @@ export class ScrollVideoBackground implements OnInit, AfterViewInit, OnDestroy {
         this.createStrand(strandAEl, this.nodesA);
         this.createStrand(strandBEl, this.nodesB);
 
-        // Initialize bounds cache
         this.updateHowItWorksBounds();
 
-        // Start animation loop outside Angular zone for performance
         this.ngZone.runOutsideAngular(() => {
             this.animate(performance.now());
         });
@@ -144,17 +142,15 @@ export class ScrollVideoBackground implements OnInit, AfterViewInit, OnDestroy {
     ngOnDestroy() {
         if (this.animationFrameId !== null) {
             cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
         }
         window.removeEventListener('resize', this.resizeHandler);
         this.hoverSubscription?.unsubscribe();
-        // Clear cache
         this.howItWorksBounds = null;
     }
 
     @HostListener('window:scroll', ['$event'])
-    onWindowScroll(event: Event) {
-        // Update scrollY directly - the animation loop handles it efficiently
-        // Invalidate bounds cache to force update on next check
+    onWindowScroll(_event: Event) {
         this.scrollY = window.scrollY;
         this.howItWorksBounds = null;
     }
