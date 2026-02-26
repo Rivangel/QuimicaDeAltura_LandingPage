@@ -16,6 +16,7 @@ import { CtaBanner } from "./components/cta-banner/cta-banner";
 import { Phone3dComponent } from "./components/phone-3d/phone-3d.component";
 import { HeroSection } from "./components/hero-section/hero-section";
 import { RadialMenuSection } from "./components/radial-menu-section/radial-menu-section";
+import { LoadingFlowerComponent } from "./components/loading-flower/loading-flower.component";
 import { ContentService } from "./services/content.service";
 
 @Component({
@@ -25,13 +26,14 @@ import { ContentService } from "./services/content.service";
     AppShowcase, Phone3dComponent, ScrollPlant, ScrollVideoBackground,
     Faq, Newsletter, OverallStatistics,
     HowItWorks, Testimonials, CtaBanner,
-    HeroSection, RadialMenuSection
+    HeroSection, RadialMenuSection, LoadingFlowerComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App implements AfterViewInit, OnDestroy {
   protected readonly title = signal('LandingPage');
+  protected readonly showLoading = signal(true);
 
   // Scroll snap
   private snapSections: Element[] = [];
@@ -60,7 +62,23 @@ export class App implements AfterViewInit, OnDestroy {
   private showcaseTabIndex = 0;
   private readonly showcaseTabs: Array<'home' | 'scan' | 'chat'> = ['home', 'scan', 'chat'];
 
-  constructor(public contentService: ContentService, private ngZone: NgZone) {}
+  constructor(public contentService: ContentService, private ngZone: NgZone) {
+    const minLoadTime = Date.now() + 3000;
+    const checkDone = () => {
+      if (Date.now() >= minLoadTime) {
+        this.showLoading.set(false);
+        return true;
+      }
+      return false;
+    };
+    const t = setInterval(() => {
+      if (checkDone()) clearInterval(t);
+    }, 100);
+    setTimeout(() => {
+      clearInterval(t);
+      if (this.showLoading()) this.showLoading.set(false);
+    }, 10000);
+  }
 
   get cardContent() {
     return this.contentService.cardContent.asReadonly();
