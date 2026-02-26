@@ -1,71 +1,360 @@
-<app-scroll-video-background></app-scroll-video-background>
-
-<!-- Falling Leaves -->
-<div class="falling-leaves">
-  <div class="falling-leaf falling-leaf-1"></div>
-  <div class="falling-leaf falling-leaf-2"></div>
-  <div class="falling-leaf falling-leaf-3"></div>
-  <div class="falling-leaf falling-leaf-4"></div>
-  <div class="falling-leaf falling-leaf-5"></div>
-  <div class="falling-leaf falling-leaf-6"></div>
-  <div class="falling-leaf falling-leaf-7"></div>
-  <div class="falling-leaf falling-leaf-8"></div>
-  <div class="falling-leaf falling-leaf-9"></div>
-  <div class="falling-leaf falling-leaf-10"></div>
-  <div class="falling-leaf falling-leaf-11"></div>
-  <div class="falling-leaf falling-leaf-12"></div>
+<div class="webgl-container">
+    <canvas #webglCanvas id="webgl-canvas"></canvas>
+    <div class="vignette"></div>
 </div>
 
-<app-header></app-header>
-
-<main>
-  <section class="radial-menu-section" id="home">
-    <div class="split-layout">
-      <!-- Left Panel: Content Card -->
-      <div class="content-panel">
-        <div class="content-wrapper" #contentWrapper>
-          @if (cardContent().image) {
-          <div class="card-image-container">
-            <img [src]="cardContent().image" [alt]="cardContent().title" class="card-image" loading="eager"
-              decoding="sync">
-          </div>
-          }
-          <h2 class="title">
-            @for (line of titleLines; track $index) {
-            @if ($index > 0) {
-            <br>
-            }
-            {{ line }}
-            }
-          </h2>
-          <p class="description">
-            {{ cardContent().description }}
-          </p>
-        </div>
-      </div>
-
-      <!-- Right Panel: Radial Menu -->
-      <div class="radial-menu-panel">
-        <app-radial-menu [activeButton]="activeButton()" (contentChange)="onContentChange()"
-          (setOriginalContent)="onSetOriginalContent()" (setMission)="onSetMission()" (setVision)="onSetVision()"
-          (setValues)="onSetValues()" (setContact)="onSetContact()" (setBusinessModel)="onSetBusinessModel()">
-        </app-radial-menu>
-      </div>
+<!-- Header Menu -->
+<header class="glass-header">
+    <div class="logo">Química de Altura</div>
+    <nav class="main-nav">
+        <a href="#app">La App</a>
+        <a href="#funciona">Cómo Funciona</a>
+        <a href="#impacto">Impacto</a>
+        <a href="#mision">Misión</a>
+        <a href="#testimonios">Testimonios</a>
+        <a href="#faq">FAQ</a>
+        <a href="#download" class="download-btn">Descargar App</a>
+    </nav>
+    <div class="menu-btn mobile-only">
+        <div class="line"></div>
+        <div class="line"></div>
     </div>
-  </section>
+</header>
 
-  <app-about-app></app-about-app>
-  <app-showcase></app-showcase>
-  <app-how-it-works></app-how-it-works>
-  <app-overall-statistics></app-overall-statistics>
-  <app-problem-mission></app-problem-mission>
-  <app-testimonials></app-testimonials>
-  <app-faq></app-faq>
-  <app-newsletter></app-newsletter>
-  <app-cta-banner></app-cta-banner>
-</main>
+<div class="scroll-container">
+    <!-- HERO (Was planted here) -->
+    <section class="panel hero-panel" id="hero">
+        <div class="content reveal-item">
+            <h1 class="glitch" data-text="QUÍMICA DE ALTURA">QUÍMICA DE ALTURA</h1>
+            <p>Descubre el poder de las plantas con nuestra nueva plataforma interactiva.</p>
+            <div class="scroll-indicator">
+                <div class="mouse"></div>
+                <span>SCROLL</span>
+            </div>
+        </div>
+    </section>
 
-<app-footer></app-footer>
-<app-scroll-plant></app-scroll-plant>
+    <!-- 2. La App -->
+    <section class="panel feature-panel" id="app">
+        <div class="content right glass-card glow-hover reveal-item">
+            <h2 class="section-title text-gradient">¿Qué hace especial a nuestra app?</h2>
+            <p class="section-subtitle">Usamos lo mejor de la tecnología actual para rescatar los secretos de las
+                plantas y convertirlos en bienestar para ti y tu familia.</p>
 
-<router-outlet></router-outlet>
+            <ul class="feature-list interactive-list">
+                <li tabindex="0">
+                    <div class="icon-wrap">🧠</div>
+                    <div>
+                        <strong>Inteligencia que ayuda:</strong> Nuestra tecnología analiza miles de plantas medicinales
+                        para encontrar exactamente cuáles te pueden ayudar.
+                    </div>
+                </li>
+                <li tabindex="0">
+                    <div class="icon-wrap">❤️</div>
+                    <div>
+                        <strong>Ciencia con corazón:</strong> Combinamos estudios científicos con el saber de nuestra
+                        gente para entregarte soluciones naturales.
+                    </div>
+                </li>
+                <li tabindex="0">
+                    <div class="icon-wrap">🛡️</div>
+                    <div>
+                        <strong>Cuidamos tu historia:</strong> Guardamos digitalmente todos los secretos de nuestras
+                        montañas para que sigan vivos.
+                    </div>
+                </li>
+            </ul>
+
+            <div class="benefits-box">
+                <h3>Tus Beneficios</h3>
+                <p><strong>🌱 Salud de nuestra tierra:</strong> Aprende a usar las plantas cerca de ti para sentirte
+                    mejor y cuidar el planeta.</p>
+                <p><strong>📱 Plantas de Veracruz:</strong> Ten acceso rápido a información detallada desde tu celular.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Problema y Misión -->
+    <section class="panel" id="mision">
+        <div class="content left glass-card glow-hover reveal-item">
+            <h2 class="section-title">Problema y Misión</h2>
+            <p class="section-subtitle emphasize">Falta de acceso a medicamentos y preservación del conocimiento
+                etnobotánico.</p>
+
+            <div class="mission-points">
+                <div class="m-point hover-float">
+                    <div class="point-icon">🔍</div>
+                    <div class="point-text">
+                        <strong>Búsqueda de Alternativas:</strong> Cada vez más personas buscan soluciones naturales
+                        accesibles.
+                    </div>
+                </div>
+                <div class="m-point hover-float">
+                    <div class="point-icon">⚠️</div>
+                    <div class="point-text">
+                        <strong>Riesgo Local:</strong> En Córdoba y Altas Montañas el conocimiento está en peligro de
+                        perderse.
+                    </div>
+                </div>
+                <div class="m-point hover-float">
+                    <div class="point-icon">💡</div>
+                    <div class="point-text">
+                        <strong>La Necesidad:</strong> Urge una herramienta que proteja este patrimonio.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Como Funciona -->
+    <section class="panel steps-panel" id="funciona">
+        <div class="content center reveal-item w-large">
+            <h2 class="section-title text-gradient">Cómo Funciona</h2>
+            <p class="section-desc">Tres simples pasos para descubrir el poder de las plantas medicinales.</p>
+
+            <div class="steps-container">
+                <div class="step-card glass-morph magnetic">
+                    <div class="step-number glitch-text" data-text="01">01</div>
+                    <div class="card-inner">
+                        <h3>Descarga la App</h3>
+                        <p>Disponible gratis en Google Play y App Store. Instálala en segundos y comienza la aventura.
+                        </p>
+                    </div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-card glass-morph magnetic">
+                    <div class="step-number glitch-text" data-text="02">02</div>
+                    <div class="card-inner">
+                        <h3>Escanea una Planta</h3>
+                        <p>Usa la cámara de tu teléfono para identificar plantas al instante con nuestra IA avanzada.
+                        </p>
+                    </div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-card glass-morph magnetic">
+                    <div class="step-number glitch-text" data-text="03">03</div>
+                    <div class="card-inner">
+                        <h3>Descubre Beneficios</h3>
+                        <p>Recibe información detallada sobre propiedades, usos tradicionales y ciencia real.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Showcase -->
+    <section class="panel showcase-panel" id="showcase">
+        <div class="content right glass-card reveal-item expanded">
+            <h2 class="section-title hover-explode">La sabiduría de las montañas en tu mano</h2>
+            <p class="section-subtitle">Diseñamos una experiencia sencilla y poderosa.</p>
+
+            <div class="showcase-interactive">
+                <div class="showcase-item" tabindex="0">
+                    <div class="s-ring"></div>
+                    <h3>Tu Biblioteca de Plantas</h3>
+                    <p>Accede al catálogo más completo de plantas medicinales de Veracruz.</p>
+                </div>
+                <div class="showcase-item" tabindex="0">
+                    <div class="s-ring"></div>
+                    <h3>Identificador Inteligente</h3>
+                    <p>Toma foto a cualquier planta y descubre propiedades al instante.</p>
+                </div>
+                <div class="showcase-item" tabindex="0">
+                    <div class="s-ring"></div>
+                    <h3>Asistente Yolotl</h3>
+                    <p>Resuelve tus dudas conversando con nuestro experto IA.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Impacto -->
+    <section class="panel stats-panel" id="impacto">
+        <div class="content center reveal-item">
+            <h2 class="section-title text-gradient">Nuestro Impacto</h2>
+            <p class="section-desc">Números que reflejan nuestro profundo compromiso.</p>
+
+            <div class="stats-grid">
+                <div class="stat-box magnetic">
+                    <div class="counter-wrap"><span class="stat-number" data-target="500">0</span><span
+                            class="plus">+</span></div>
+                    <p>Plantas Catalogadas</p>
+                </div>
+                <div class="stat-box magnetic">
+                    <div class="counter-wrap"><span class="stat-number" data-target="95">0</span><span
+                            class="plus">%</span></div>
+                    <p>Precisión de IA</p>
+                </div>
+                <div class="stat-box magnetic">
+                    <div class="counter-wrap"><span class="stat-number" data-target="10000">0</span><span
+                            class="plus">+</span></div>
+                    <p>Usuarios Activos</p>
+                </div>
+                <div class="stat-box magnetic">
+                    <div class="counter-wrap"><span class="stat-number" data-target="15">0</span></div>
+                    <p>Comunidades</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Testimonios -->
+    <section class="panel testimonials-panel" id="testimonios">
+        <div class="content center w-xlarge reveal-item">
+            <h2 class="section-title">Lo que dicen nuestros usuarios</h2>
+            <p class="section-desc">Historias reales de comunidades en Altas Montañas</p>
+
+            <div class="cards-deck">
+                <div class="testi-card t-3d">
+                    <div class="quotes">"</div>
+                    <p>"Esta aplicación es una herramienta invaluable para mi investigación. La precisión en el análisis
+                        de compuestos me permite identificar moléculas con gran potencial."</p>
+                    <div class="author-block">
+                        <div class="a-img" style="background: #4ade80;">AC</div>
+                        <div class="a-info">
+                            <strong>Dr. Alan Carrasco</strong>
+                            <span>Investigador, Puebla</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testi-card t-3d">
+                    <div class="quotes">"</div>
+                    <p>"Uso esta app en clases de microbiología para mostrar propiedades validadas científicamente.
+                        Excelente herramienta para conectar saber tradicional y ciencia."</p>
+                    <div class="author-block">
+                        <div class="a-img" style="background: #ef4444;">DF</div>
+                        <div class="a-info">
+                            <strong>M en C Diana Flores</strong>
+                            <span>Microbióloga, Puebla</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testi-card t-3d">
+                    <div class="quotes">"</div>
+                    <p>"La biotecnología y medicina tradicional se complementan perfectamente. Es fascinante cómo la
+                        tecnología puede preservar este conocimiento ancestral."</p>
+                    <div class="author-block">
+                        <div class="a-img" style="background: #3b82f6;">SS</div>
+                        <div class="a-info">
+                            <strong>Saraluz Soto Ortiz</strong>
+                            <span>Biotecnología, Veracruz</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. FAQ -->
+    <section class="panel faq-panel" id="faq">
+        <div class="content left glass-card glow-hover reveal-item expanded">
+            <h2 class="section-title text-gradient">Preguntas Frecuentes</h2>
+
+            <div class="faq-acc-container">
+                <div class="faq-item">
+                    <button class="faq-question">¿Cómo analiza la IA las plantas? <span class="icon">+</span></button>
+                    <div class="faq-answer">
+                        <p>Nuestra inteligencia artificial utiliza modelos de aprendizaje profundo entrenados con bases
+                            de datos etnobotánicas y estudios fitoquímicos. Analiza imágenes, cruza información y ofrece
+                            recomendaciones basadas en evidencia.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿La información está validada? <span class="icon">+</span></button>
+                    <div class="faq-answer">
+                        <p>Sí. Toda la información se respalda con investigaciones publicadas en revistas científicas y
+                            conocimiento de comunidades indígenas de Veracruz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿La aplicación es gratuita? <span class="icon">+</span></button>
+                    <div class="faq-answer">
+                        <p>Completamente gratuita. Tienes acceso total a la información y análisis. También conectamos
+                            con pequeños productores si deseas adquirir plantas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Qué región geográfica cubre? <span class="icon">+</span></button>
+                    <div class="faq-answer">
+                        <p>Actualmente nos enfocamos en Altas Montañas de Veracruz, especialmente las zonas de Córdoba y
+                            Orizaba. Planeamos expandirnos a todo México.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Cómo se preserva el conocimiento? <span class="icon">+</span></button>
+                    <div class="faq-answer">
+                        <p>Trabajamos directamente con las comunidades preservando su sabiduría, con su consentimiento
+                            formal y dándoles el reconocimiento necesario.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. CTA & 10. Newsletter -->
+    <section class="panel cta-panel" id="download">
+        <div class="content center glass-card cta-box glow-hover reveal-item">
+            <h2 class="section-title glitch" data-text="DESCUBRE EL PODER">DESCUBRE EL PODER</h2>
+            <p class="section-desc highlight">Descarga la app gratuita y descubre el poder medicinal de las plantas de
+                Veracruz con inteligencia artificial.</p>
+
+            <div class="app-buttons">
+                <button class="app-store-btn m-google">
+                    <span class="store-icon">▶</span> Google Play
+                </button>
+                <button class="app-store-btn m-apple">
+                    <span class="store-icon">🍎</span> App Store
+                </button>
+            </div>
+
+            <hr class="divider">
+
+            <div class="newsletter-zone">
+                <h3>Mantente al día</h3>
+                <p>Recibe novedades sobre plantas medicinales y avances IA en tu correo.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Tu correo electrónico..." required>
+                    <button type="submit" class="submit-btn" (click)="$event.preventDefault()">Suscribirse <span
+                            class="arrow">→</span></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. Footer inside Scroll -->
+    <footer class="glass-footer reveal-item">
+        <div class="footer-grid">
+            <div class="f-col">
+                <h4 class="text-gradient">Química de Altura</h4>
+                <p>Innovación etnobotánica para el descubrimiento terapéutico en las Altas Montañas de Veracruz.</p>
+            </div>
+            <div class="f-col">
+                <h4>Contacto</h4>
+                <a href="mailto:contacto@quimicadealtura.com"
+                    class="hover-underline">contacto&#64;quimicadealtura.com</a>
+                <p>Tel: +52 WhatsApp</p>
+                <p>Altas Montañas, Veracruz, México</p>
+            </div>
+            <div class="f-col">
+                <h4>Nosotros</h4>
+                <a href="#mision" class="hover-underline">Misión</a>
+                <a href="#funciona" class="hover-underline">Proyecto</a>
+                <a href="#testimonios" class="hover-underline">Equipo</a>
+            </div>
+            <div class="f-col">
+                <h4>Políticas</h4>
+                <a href="#" class="hover-underline">Privacidad</a>
+                <a href="#" class="hover-underline">Términos</a>
+                <a href="#" class="hover-underline">Cookies</a>
+            </div>
+        </div>
+        <div class="f-bottom">
+            <p>© 2026 Química de Altura. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</div>
+
+<div class="custom-cursor"></div>

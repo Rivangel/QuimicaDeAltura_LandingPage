@@ -1,156 +1,54 @@
-/* Skip to content link */
-.skip-to-content {
-    position: absolute;
-    top: -100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #5E794B;
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border-radius: 0 0 8px 8px;
-    z-index: 10000;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: top 0.2s ease;
-
-    &:focus {
-        top: 0;
-    }
-}
-
-/* Global Styles */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;800;900&display=swap');
 
 :root {
-    --primary-color: #5E794B;
-    --accent-color: #C4964A;
-    --accent-hover: #B58A3E;
-    --text-color: #333;
-    --bg-color: #fff;
+  --primary-color: #4ade80;
+  --bg-color: #040905;
 }
 
-html {
-    font-size: 22px;
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px;
-}
-
+html,
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Outfit', sans-serif;
-    box-sizing: border-box;
-    background-color: #f8faf7;
-    /* Set a default light background */
-    animation: fadeIn 1s ease-out;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  /* Custom scrollbar to match dark theme */
+  scrollbar-width: thin;
+  scrollbar-color: #4ade80 #040905;
 }
 
-*,
-*::before,
-*::after {
-    box-sizing: inherit;
+/* Hide real cursor for custom cursor experience */
+body,
+button,
+a {
+  cursor: none !important;
 }
 
-/* Keyframes */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Global Button Styles Enhancement */
-button.cta-button,
-.cta-button {
-    transition: all 0.3s ease;
-    cursor: pointer;
-
-    &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(94, 121, 75, 0.3);
-    }
-
-    &:active {
-        transform: translateY(-1px);
-    }
-
-    &:active {
-        transform: translateY(-1px);
-    }
-}
-
-/* Text Selection Highlight — Dark Amber */
-::selection {
-    background: #9a7535;
-    color: #fff;
-}
-
-::-moz-selection {
-    background: #9a7535;
-    color: #fff;
-}
-
-/* Custom Scrollbar — Amber/Gold */
 ::-webkit-scrollbar {
-    width: 14px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f5e6c8;
+  background: var(--bg-color);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #C4964A, #B58A3E);
-    border-radius: 7px;
-    border: 2px solid #f5e6c8;
+  background: #4ade80;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #d4a654, #C4964A);
+  background: #22c55e;
 }
 
-/* Firefox scrollbar */
-html {
-    scrollbar-width: auto;
-    scrollbar-color: #C4964A #f5e6c8;
+* {
+  box-sizing: border-box;
 }
 
-/* Global Layout Restriction */
-body,
-html {
-    overflow-x: hidden;
-    /* Prevent horizontal scroll */
-}
-
-main {
-    max-width: 1280px;
-    /* Restrict max width globally */
-    width: 100%;
-    margin: 30px auto 0;
-    /* Center content and account for fixed header */
-    padding: 0;
-    position: relative;
-    z-index: 1;
-
-    /* Ensure child sections don't burst out */
-    section {
-        max-width: 100%;
-        width: 100%;
-    }
+::selection {
+  background: rgba(74, 222, 128, 0.4);
+  color: #fff;
 }

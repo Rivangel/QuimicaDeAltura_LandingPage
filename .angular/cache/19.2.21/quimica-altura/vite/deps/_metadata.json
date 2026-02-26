@@ -1,0 +1,49 @@
+{
+  "hash": "1d2490d6",
+  "configHash": "0a27748a",
+  "lockfileHash": "f30a1238",
+  "browserHash": "1e480248",
+  "optimized": {
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "45a53bd4",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "572e7b99",
+      "needsInterop": false
+    },
+    "gsap": {
+      "src": "../../../../../../node_modules/gsap/index.js",
+      "file": "gsap.js",
+      "fileHash": "54b45009",
+      "needsInterop": false
+    },
+    "gsap/all": {
+      "src": "../../../../../../node_modules/gsap/all.js",
+      "file": "gsap_all.js",
+      "fileHash": "3a37492e",
+      "needsInterop": false
+    },
+    "three": {
+      "src": "../../../../../../node_modules/three/build/three.module.js",
+      "file": "three.js",
+      "fileHash": "f8a96775",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-Z4YCRCO7": {
+      "file": "chunk-Z4YCRCO7.js"
+    },
+    "chunk-CWCPQCKS": {
+      "file": "chunk-CWCPQCKS.js"
+    },
+    "chunk-WDMUDEB6": {
+      "file": "chunk-WDMUDEB6.js"
+    }
+  }
+}
