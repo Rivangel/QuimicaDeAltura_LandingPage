@@ -280,7 +280,7 @@ html {
 /* Radial Menu Section with Content Card */
 .radial-menu-section {
     width: 100%;
-    height: 100dvh; // Constrain to exactly one viewport — prevents over-tall section that mis-centers flex content
+    height: 100%;
     font-family: 'Outfit', sans-serif;
     padding: 0 2rem;
     padding-top: 80px; // Fixed header height — keeps content from sliding under it
@@ -291,11 +291,6 @@ html {
     box-sizing: border-box;
     overflow: hidden;
     position: relative;
-    will-change: transform, opacity, z-index;
-    // Initial state: small, behind hero section, positioned top-right (will be controlled by JS)
-    transform: scale(0.3) translate(800px, -1000px);
-    opacity: 0;
-    z-index: -1; // Start behind hero section
 
     // Tablets
     @media (min-width: 768px) and (max-width: 1023px) {
