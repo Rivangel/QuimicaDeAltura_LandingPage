@@ -6,7 +6,7 @@ import { AboutApp } from "./components/about-app/about-app";
 import { ProblemMission } from "./components/problem-mission/problem-mission";
 import { AppShowcase } from "./components/app-showcase/app-showcase";
 import { ScrollPlant } from "./components/scroll-plant/scroll-plant";
-import { ScrollVideoBackground } from "./components/scroll-video-background/scroll-video-background";
+import { WebglBackground } from "./components/webgl-background/webgl-background";
 import { Faq } from "./components/faq/faq";
 import { Newsletter } from "./components/newsletter/newsletter";
 import { OverallStatistics } from "./components/overall-statistics/overall-statistics";
@@ -23,7 +23,7 @@ import { ContentService } from "./services/content.service";
   selector: 'app-root',
   imports: [
     RouterOutlet, Header, Footer, AboutApp, ProblemMission,
-    AppShowcase, Phone3dComponent, ScrollPlant, ScrollVideoBackground,
+    AppShowcase, Phone3dComponent, ScrollPlant, WebglBackground,
     Faq, Newsletter, OverallStatistics,
     HowItWorks, Testimonials, CtaBanner,
     HeroSection, RadialMenuSection, LoadingFlowerComponent

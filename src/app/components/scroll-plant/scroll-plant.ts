@@ -1,4 +1,4 @@
-import { Component, HostListener, signal, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, HostListener, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,33 +8,17 @@ import { CommonModule } from '@angular/common';
     templateUrl: './scroll-plant.html',
     styleUrl: './scroll-plant.scss'
 })
-export class ScrollPlant implements OnInit, OnDestroy {
+export class ScrollPlant implements OnInit {
     scrollPercent = signal(0);
     growthHeight = signal(0);
     leaves: any[] = [];
-    private isVisible = false;
-    private visibilityObserver?: IntersectionObserver;
-
-    constructor(private hostRef: ElementRef<HTMLElement>) {}
 
     ngOnInit() {
         this.leaves = this.generateLeaves();
-
-        this.visibilityObserver = new IntersectionObserver(
-            ([entry]) => { this.isVisible = entry.isIntersecting; },
-            { rootMargin: '100px' }
-        );
-        this.visibilityObserver.observe(this.hostRef.nativeElement);
-    }
-
-    ngOnDestroy() {
-        this.visibilityObserver?.disconnect();
     }
 
     @HostListener('window:scroll', [])
     onWindowScroll() {
-        if (!this.isVisible) return;
-
         const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
