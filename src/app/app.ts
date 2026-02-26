@@ -103,7 +103,8 @@ export class App implements AfterViewInit, OnDestroy {
       'main > app-hero-section, main > app-radial-menu-section, ' +
       'main > app-how-it-works, main > app-about-app, main > section, ' +
       'main > app-showcase, main > app-overall-statistics, main > app-problem-mission, ' +
-      'main > app-testimonials, main > app-faq, main > app-newsletter, main > app-cta-banner'
+      'main > app-testimonials, main > app-faq, main > app-newsletter, main > app-cta-banner, ' +
+      'app-footer'
     ));
 
     const radialIdx = this.snapSections.findIndex(
