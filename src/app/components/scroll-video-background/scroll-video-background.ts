@@ -587,8 +587,8 @@ export class ScrollVideoBackground implements OnInit, AfterViewInit, OnDestroy {
             if (!shouldHideThisWord && (a.isFading || (a.fadedChars.size > 0 && a.buildStartTime === undefined))) {
                 a.isFading = false;
                 if (a.buildStartTime === undefined) {
-                    a.buildStartTime = ts;
-                    a.builtChars.clear();
+                a.buildStartTime = ts;
+                a.builtChars.clear();
                 }
             }
 
@@ -678,8 +678,8 @@ export class ScrollVideoBackground implements OnInit, AfterViewInit, OnDestroy {
             if (!shouldHideThisWord && (b.isFading || (b.fadedChars.size > 0 && b.buildStartTime === undefined))) {
                 b.isFading = false;
                 if (b.buildStartTime === undefined) {
-                    b.buildStartTime = ts;
-                    b.builtChars.clear();
+                b.buildStartTime = ts;
+                b.builtChars.clear();
                 }
             }
 
