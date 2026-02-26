@@ -48,10 +48,18 @@
         animation: fadeInUp 1s ease-out 0.5s forwards;
         margin-top: 2rem;
 
+        .scroll-text-box {
+            display: inline-block;
+            background: #D4A84B; // Amber
+            padding: 0.5rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(212, 168, 75, 0.35);
+        }
+
         .scroll-text {
             font-size: 0.9rem;
             font-weight: 500;
-            color: rgba(196, 150, 74, 0.8);
+            color: #fff;
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
