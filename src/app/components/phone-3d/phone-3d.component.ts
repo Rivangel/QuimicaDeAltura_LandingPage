@@ -34,10 +34,27 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
    * Scale of the image on the screen. 1 = default size, > 1 = zoom in, < 1 = zoom out.
    */
   @Input() imageScale = 1;
-  /** Which app screen to show: 'home' | 'scan' | 'chat'. */
-  @Input() activeScreenId: 'home' | 'scan' | 'chat' = 'home';
+  /**
+   * Which app screen to show: 'home' | 'scan' | 'chat'.
+   * When null (default), the component auto-cycles through all screens every 5 s.
+   * When set, that screen is displayed immediately and auto-cycling stops.
+   */
+  @Input() activeScreenId: 'home' | 'scan' | 'chat' | null = null;
+
+  /**
+   * Scale of the 3D phone model in the viewport. 1 = default size, > 1 = larger, < 1 = smaller.
+   */
+  @Input() modelScale = 1;
+
+  /**
+   * Optional real PNG/JPG images to display per screen.
+   * When provided, the programmatic canvas drawing is replaced by ctx.drawImage.
+   * Images should be 390 × 844 px (portrait).
+   */
+  @Input() screenImages: Partial<Record<'home' | 'scan' | 'chat', string>> = {};
 
   private initTime = Date.now();
+  private loadedImages: Partial<Record<'home' | 'scan' | 'chat', HTMLImageElement>> = {};
 
   private scene: THREE.Scene | null = null;
   private camera: THREE.PerspectiveCamera | null = null;
@@ -65,6 +82,7 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
     const appCanvas = this.appCanvasRef?.nativeElement;
     if (!container || !appCanvas) return;
 
+    this.preloadImages();
     this.initAppCanvas(appCanvas);
     // Two nested RAFs: first lets Angular finish DOM patching, second waits for CSS layout
     requestAnimationFrame(() => {
@@ -96,6 +114,18 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
     // Fix: landscape canvas (w/h swapped) + 90° CW draw.
   }
 
+  private preloadImages(): void {
+    const ids = ['home', 'scan', 'chat'] as const;
+    for (const id of ids) {
+      const src = this.screenImages[id];
+      if (src && !this.loadedImages[id]) {
+        const img = new Image();
+        img.src = src;
+        this.loadedImages[id] = img;
+      }
+    }
+  }
+
   private initAppCanvas(canvas: HTMLCanvasElement): void {
     // Landscape canvas: portrait content is drawn with a 90°CW axis rotation inside
     // drawCurrentScreen so the UV's inherent reflection renders everything upright.
@@ -104,13 +134,13 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
     this.drawCurrentScreen(canvas);
   }
 
-  /** Auto-cycles home → scan → chat every 5 s; called each animation frame. */
+  /** Shows the screen set by activeScreenId, or auto-cycles every 5 s when null. */
   private drawCurrentScreen(canvas: HTMLCanvasElement): void {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const elapsed = Date.now() - this.initTime;
     const ids: Array<'home' | 'scan' | 'chat'> = ['home', 'scan', 'chat'];
-    const screenId = ids[Math.floor(elapsed / 5000) % 3];
+    const screenId = this.activeScreenId ?? ids[Math.floor(elapsed / 5000) % 3];
 
     // Canvas is landscape (844×390). Apply a 90°CW ctx rotation so portrait drawing
     // code (dW=390, dH=844) fills the canvas correctly. The UV's inherent reflection
@@ -124,9 +154,16 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
     ctx.fillStyle = '#f5f0eb';
     ctx.fillRect(0, 0, dW, dH);
 
-    if (screenId === 'home') this.drawHomeScreen(ctx, dW, dH, elapsed);
-    else if (screenId === 'scan') this.drawScanScreen(ctx, dW, dH, elapsed);
-    else this.drawChatScreen(ctx, dW, dH, elapsed);
+    const img = this.loadedImages[screenId];
+    if (img?.complete && img.naturalWidth > 0) {
+      ctx.drawImage(img, 0, 0, dW, dH);
+    } else if (screenId === 'home') {
+      this.drawHomeScreen(ctx, dW, dH, elapsed);
+    } else if (screenId === 'scan') {
+      this.drawScanScreen(ctx, dW, dH, elapsed);
+    } else {
+      this.drawChatScreen(ctx, dW, dH, elapsed);
+    }
 
     ctx.restore();
   }
@@ -606,8 +643,8 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
       const rect = container.getBoundingClientRect();
       const nx = ((e.clientX - rect.left)  / rect.width)  * 2 - 1; // -1 → +1
       const ny = ((e.clientY - rect.top)   / rect.height) * 2 - 1;
-      this.tiltTarget.x = -ny * 0.25; // vertical   mouse → X rotation (forward/back tilt)
-      this.tiltTarget.y =  nx * 0.30; // horizontal mouse → Y rotation (left/right turn)
+      this.tiltTarget.x = -ny * 0.45; // vertical   mouse → X rotation (forward/back tilt)
+      this.tiltTarget.y =  nx * 0.55; // horizontal mouse → Y rotation (left/right turn)
     };
     this.tiltLeaveHandler = () => {
       this.tiltTarget.x = 0;
@@ -619,9 +656,9 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
     const animate = (): void => {
       this.animationId = requestAnimationFrame(animate);
 
-      // Smoothly interpolate tilt toward target (lerp factor ~6% per frame at 60 fps)
-      this.tiltCurrent.x += (this.tiltTarget.x - this.tiltCurrent.x) * 0.06;
-      this.tiltCurrent.y += (this.tiltTarget.y - this.tiltCurrent.y) * 0.06;
+      // Smoothly interpolate tilt toward target (lerp factor ~10% per frame at 60 fps)
+      this.tiltCurrent.x += (this.tiltTarget.x - this.tiltCurrent.x) * 0.10;
+      this.tiltCurrent.y += (this.tiltTarget.y - this.tiltCurrent.y) * 0.10;
       if (this.phoneGroup) {
         this.phoneGroup.rotation.x = this.tiltCurrent.x;
         this.phoneGroup.rotation.y = Phone3dComponent.DEFAULT_ROTATION_Y + this.tiltCurrent.y;
@@ -647,6 +684,7 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
         if (name === this.screenMeshName) {
           this.screenMesh = child;
           this.applyScreenTexture(child, texture);
+          this.calibrateTextureToMeshUVs(child, texture);
         } else if (
           !fallbackScreenMesh &&
           /screen|pantalla|display|display_0|glass/i.test(name)
@@ -659,6 +697,7 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
       const mesh = fallbackScreenMesh as THREE.Mesh;
       this.screenMesh = mesh;
       this.applyScreenTexture(mesh, texture);
+      this.calibrateTextureToMeshUVs(mesh, texture);
       console.log('Phone3d: using mesh "' + mesh.name + '" as screen (name match)');
     }
     if (!this.screenMesh && meshNames.length) {
@@ -684,50 +723,96 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
 
     // Scale wrapper to fit view (target 2.5 units ≈ 85% of view height at FOV 40°, z=4)
     if (maxDim > 0) {
-      wrapper.scale.setScalar(2.5 / maxDim);
+      const baseScale = 2.5 / maxDim;
+      wrapper.scale.setScalar(baseScale * Math.max(0.2, this.modelScale));
     }
 
     // Default: screen facing the camera. Animations should start from this orientation.
     wrapper.rotation.y = Phone3dComponent.DEFAULT_ROTATION_Y;
 
+    const appliedScale = maxDim > 0 ? (2.5 / maxDim) * Math.max(0.2, this.modelScale) : 0;
     console.log(
       'Phone3d: model loaded OK.',
       '| Meshes:', meshNames,
       '| Raw size:', size.x.toFixed(3), '×', size.y.toFixed(3), '×', size.z.toFixed(3),
-      '| Scale applied:', maxDim > 0 ? (2.5 / maxDim).toFixed(4) : 'n/a',
+      '| Scale applied:', maxDim > 0 ? appliedScale.toFixed(4) : 'n/a',
     );
   }
 
   /**
-   * Set texture repeat and offset so the canvas fits the 3D screen quad without stretch.
-   * Uses content aspect: canvas is landscape but the drawn mockup is portrait (rotated), so we use height/width.
+   * Set texture repeat and offset so the canvas covers the 3D screen quad (object-fit: cover).
+   * Canvas is landscape (844×390) but content is portrait (390×844 effective, drawn with 90°CW rotation).
+   * Content portrait aspect: Rc = canvasH / canvasW ≈ 0.462.
    */
   private applyTextureFit(texture: THREE.CanvasTexture, canvasWidth: number, canvasHeight: number): void {
     const Q = this.screenAspectRatio;
     const scale = Math.max(0.25, this.imageScale);
+
+    // Content portrait aspect (canvas is landscape with 90°CW rotated portrait content)
+    const Rc = canvasHeight / canvasWidth; // = 390/844 ≈ 0.462
+
     if (Q == null || Q <= 0) {
-      texture.repeat.set(1 / scale, 1 / scale);
-      texture.offset.set(0.5 * (1 - 1 / scale), 0.5 * (1 - 1 / scale));
+      // No screen aspect provided → map full canvas (works when screen UV matches Rc)
+      const rx = 1 / scale;
+      const ry = 1 / scale;
+      texture.repeat.set(rx, ry);
+      texture.offset.set((1 - rx) / 2, (1 - ry) / 2);
       return;
     }
-    const T = canvasWidth / canvasHeight;
-    let rx: number;
-    let ry: number;
-    let ox: number;
-    let oy: number;
-    if (T >= Q) {
-      rx = Q / T;
+
+    // object-fit: cover for rotated canvas
+    let rx: number, ry: number;
+    if (Rc <= Q) {
+      // Content portrait narrower than screen → fill width, clip portrait height (canvas U)
+      rx = Rc / Q;
       ry = 1;
-      ox = (1 - Q / T) / 2;
-      oy = 0;
     } else {
+      // Content portrait wider than screen → fill height, clip portrait width (canvas V)
       rx = 1;
-      ry = T / Q;
-      ox = 0;
-      oy = (1 - T / Q) / 2;
+      ry = Q / Rc;
     }
-    texture.repeat.set(rx / scale, ry / scale);
-    texture.offset.set(ox + 0.5 * rx * (1 - 1 / scale), oy + 0.5 * ry * (1 - 1 / scale));
+
+    // Apply zoom scale
+    rx /= scale;
+    ry /= scale;
+
+    // Center (clamp to avoid out-of-range sampling)
+    texture.repeat.set(rx, ry);
+    texture.offset.set(Math.max(0, (1 - rx) / 2), Math.max(0, (1 - ry) / 2));
+  }
+
+  /**
+   * Reads the actual UV bounding box of the screen mesh and sets texture.repeat / offset
+   * so the canvas content (UV [0,1]×[0,1]) covers exactly that range.
+   * This corrects for phone GLBs where the screen mesh UVs don't span [0,1]×[0,1].
+   */
+  private calibrateTextureToMeshUVs(mesh: THREE.Mesh, texture: THREE.CanvasTexture): void {
+    const uvAttr = mesh.geometry.getAttribute('uv') as THREE.BufferAttribute | undefined;
+    if (!uvAttr || uvAttr.count === 0) return;
+
+    let uMin = Infinity, uMax = -Infinity, vMin = Infinity, vMax = -Infinity;
+    for (let i = 0; i < uvAttr.count; i++) {
+      const u = uvAttr.getX(i), v = uvAttr.getY(i);
+      if (u < uMin) uMin = u; if (u > uMax) uMax = u;
+      if (v < vMin) vMin = v; if (v > vMax) vMax = v;
+    }
+
+    const uvW = uMax - uMin;
+    const uvH = vMax - vMin;
+    if (uvW <= 0 || uvH <= 0) return;
+
+    const rx = 1 / uvW;
+    const ry = 1 / uvH;
+    texture.repeat.set(rx, ry);
+    texture.offset.set(-uMin * rx, -vMin * ry);
+    texture.needsUpdate = true;
+
+    console.log(
+      `Phone3d: screen UV bounds U[${uMin.toFixed(3)}, ${uMax.toFixed(3)}]`,
+      `V[${vMin.toFixed(3)}, ${vMax.toFixed(3)}]`,
+      `→ repeat(${rx.toFixed(3)}, ${ry.toFixed(3)})`,
+      `offset(${(-uMin * rx).toFixed(3)}, ${(-vMin * ry).toFixed(3)})`,
+    );
   }
 
   private applyScreenTexture(mesh: THREE.Mesh, texture: THREE.CanvasTexture): void {
