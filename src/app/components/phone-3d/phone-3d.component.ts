@@ -65,6 +65,8 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
   private phoneGroup: THREE.Group | null = null;
   private resizeHandler: (() => void) | null = null;
   private containerElement: HTMLDivElement | null = null;
+  private isVisible = false;
+  private visibilityObserver?: IntersectionObserver;
 
   // Hover-tilt state
   private tiltTarget  = { x: 0, y: 0 };
@@ -75,7 +77,7 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
   /** Default Y rotation so the screen faces the camera. Use as base for animations. */
   private static readonly DEFAULT_ROTATION_Y = Math.PI - Math.PI / 4;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private hostRef: ElementRef<HTMLElement>) {}
 
   ngAfterViewInit(): void {
     const container = this.threeContainerRef?.nativeElement;
@@ -84,7 +86,19 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
 
     this.preloadImages();
     this.initAppCanvas(appCanvas);
-    // Two nested RAFs: first lets Angular finish DOM patching, second waits for CSS layout
+
+    this.visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        const wasVisible = this.isVisible;
+        this.isVisible = entry.isIntersecting;
+        if (this.isVisible && !wasVisible && this.renderer && this.animationId === null) {
+          this.ngZone.runOutsideAngular(() => this.startAnimationLoop());
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    this.visibilityObserver.observe(this.hostRef.nativeElement);
+
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         this.ngZone.runOutsideAngular(() => this.initThree(container, appCanvas));
@@ -94,6 +108,8 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.animationId !== null) cancelAnimationFrame(this.animationId);
+    this.animationId = null;
+    this.visibilityObserver?.disconnect();
     if (this.resizeHandler) window.removeEventListener('resize', this.resizeHandler);
     if (this.tiltMoveHandler  && this.containerElement) this.containerElement.removeEventListener('mousemove',  this.tiltMoveHandler);
     if (this.tiltLeaveHandler && this.containerElement) this.containerElement.removeEventListener('mouseleave', this.tiltLeaveHandler);
@@ -653,10 +669,21 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
     container.addEventListener('mousemove',  this.tiltMoveHandler);
     container.addEventListener('mouseleave', this.tiltLeaveHandler);
 
+    this.startAnimationLoop();
+  }
+
+  private startAnimationLoop(): void {
+    const scene = this.scene;
+    const camera = this.camera;
+    if (!scene || !camera) return;
+
     const animate = (): void => {
+      if (!this.isVisible) {
+        this.animationId = null;
+        return;
+      }
       this.animationId = requestAnimationFrame(animate);
 
-      // Smoothly interpolate tilt toward target (lerp factor ~10% per frame at 60 fps)
       this.tiltCurrent.x += (this.tiltTarget.x - this.tiltCurrent.x) * 0.10;
       this.tiltCurrent.y += (this.tiltTarget.y - this.tiltCurrent.y) * 0.10;
       if (this.phoneGroup) {
