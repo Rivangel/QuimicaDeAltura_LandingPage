@@ -1,9 +1,4 @@
-@if (showLoading()) {
-  <div class="app-loading-screen">
-    <app-loading-flower></app-loading-flower>
-    <p class="app-loading-text">Cargando<span class="dot dot1">.</span><span class="dot dot2">.</span><span class="dot dot3">.</span></p>
-  </div>
-}
+<app-loader [loading]="showLoading()"></app-loader>
 
 <app-webgl-background></app-webgl-background>
 

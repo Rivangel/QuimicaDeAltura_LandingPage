@@ -16,7 +16,7 @@ import { CtaBanner } from "./components/cta-banner/cta-banner";
 import { Phone3dComponent } from "./components/phone-3d/phone-3d.component";
 import { HeroSection } from "./components/hero-section/hero-section";
 import { RadialMenuSection } from "./components/radial-menu-section/radial-menu-section";
-import { LoadingFlowerComponent } from "./components/loading-flower/loading-flower.component";
+import { LoaderComponent } from "./components/loader/loader.component";
 import { ContentService } from "./services/content.service";
 
 @Component({
@@ -26,7 +26,7 @@ import { ContentService } from "./services/content.service";
     AppShowcase, Phone3dComponent, ScrollPlant, WebglBackground,
     Faq, Newsletter, OverallStatistics,
     HowItWorks, Testimonials, CtaBanner,
-    HeroSection, RadialMenuSection, LoadingFlowerComponent
+    HeroSection, RadialMenuSection, LoaderComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
