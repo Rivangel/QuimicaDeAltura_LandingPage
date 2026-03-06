@@ -21,21 +21,16 @@
             </div>
 
             <!-- Center: 3D Phone -->
-            <div class="phone-center">
-                <app-phone-3d
-                    [activeScreenId]="activeTab"
-                    [screenAspectRatio]="0.462"
-                    [screenImages]="{ home: tabs[0].image, scan: tabs[1].image, chat: tabs[2].image }">
+            <div class="phone-center" [class.scan-active]="activeTab === 'scan'">
+                <app-phone-3d #phone3d [activeScreenId]="activeTab" [screenAspectRatio]="0.462"
+                    [screenImages]="{ home: tabs[0].image, chat: tabs[2].image }">
                 </app-phone-3d>
 
-                <!-- Scan overlay — visible only when scan tab is active -->
-                <div class="scan-overlay" [class.active]="activeTab === 'scan'">
-                    <div class="scan-frame">
-                        <div class="corner tl"></div>
-                        <div class="corner tr"></div>
-                        <div class="corner bl"></div>
-                        <div class="corner br"></div>
-                        <div class="scan-line"></div>
+                <!-- Scan click-to-restart hint — visible only when scan tab is active -->
+                <div class="scan-hint" [class.active]="activeTab === 'scan'" (click)="restartScan()">
+                    <div class="scan-hint-pill">
+                        <span class="scan-hint-icon">🔄</span>
+                        <span>Reiniciar escaneo</span>
                     </div>
                 </div>
             </div>

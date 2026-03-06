@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit, OnDestroy, signal } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, OnDestroy, ViewChild, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Phone3dComponent } from '../phone-3d/phone-3d.component';
 
@@ -12,6 +12,8 @@ import { Phone3dComponent } from '../phone-3d/phone-3d.component';
 export class AppShowcase implements AfterViewInit, OnDestroy {
     visible = signal(false);
     private observer: IntersectionObserver | null = null;
+
+    @ViewChild('phone3d') phone3d!: Phone3dComponent;
 
     constructor(private el: ElementRef) { }
 
@@ -30,7 +32,7 @@ export class AppShowcase implements AfterViewInit, OnDestroy {
             title: 'Identificador Inteligente',
             description: 'Toma una foto a cualquier planta y descubre al instante su nombre y propiedades curativas.',
             icon: '📸',
-            image: '/resources/images/app_mockup_scan.png'
+            image: ''  // No static image — simulation drawn via canvas
         },
         {
             id: 'chat',
@@ -47,6 +49,11 @@ export class AppShowcase implements AfterViewInit, OnDestroy {
 
     setTab(tabId: 'home' | 'scan' | 'chat') {
         this.activeTab = tabId;
+    }
+
+    /** Restart the scan simulation from phase 0 (camera viewfinder). */
+    restartScan(): void {
+        this.phone3d?.resetScanSim();
     }
 
     ngAfterViewInit() {

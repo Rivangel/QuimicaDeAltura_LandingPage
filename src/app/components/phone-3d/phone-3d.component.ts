@@ -3,9 +3,11 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  OnChanges,
   OnDestroy,
   Input,
   NgZone,
+  SimpleChanges,
 } from '@angular/core';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -17,7 +19,7 @@ import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
   templateUrl: './phone-3d.component.html',
   styleUrl: './phone-3d.component.scss',
 })
-export class Phone3dComponent implements AfterViewInit, OnDestroy {
+export class Phone3dComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('threeContainer') threeContainerRef!: ElementRef<HTMLDivElement>;
   @ViewChild('appCanvas') appCanvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -54,6 +56,9 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
   @Input() screenImages: Partial<Record<'home' | 'scan' | 'chat', string>> = {};
 
   private initTime = Date.now();
+  /** Timestamp when the scan simulation last reset (used for phase timing).
+   *  Reset whenever the scan tab becomes active again for a fresh run. */
+  private scanSimStart = Date.now();
   private loadedImages: Partial<Record<'home' | 'scan' | 'chat', HTMLImageElement>> = {};
 
   private scene: THREE.Scene | null = null;
@@ -69,15 +74,31 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
   private visibilityObserver?: IntersectionObserver;
 
   // Hover-tilt state
-  private tiltTarget  = { x: 0, y: 0 };
+  private tiltTarget = { x: 0, y: 0 };
   private tiltCurrent = { x: 0, y: 0 };
-  private tiltMoveHandler:  ((e: MouseEvent) => void) | null = null;
-  private tiltLeaveHandler: (() => void)              | null = null;
+  private tiltMoveHandler: ((e: MouseEvent) => void) | null = null;
+  private tiltLeaveHandler: (() => void) | null = null;
 
   /** Default Y rotation so the screen faces the camera. Use as base for animations. */
   private static readonly DEFAULT_ROTATION_Y = Math.PI - Math.PI / 4;
 
-  constructor(private ngZone: NgZone, private hostRef: ElementRef<HTMLElement>) {}
+  constructor(private ngZone: NgZone, private hostRef: ElementRef<HTMLElement>) { }
+
+  /** Resets the scan simulation to phase 0 (camera viewfinder). */
+  resetScanSim(): void {
+    this.scanSimStart = Date.now();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['activeScreenId']) {
+      const current = changes['activeScreenId'].currentValue;
+      const previous = changes['activeScreenId'].previousValue;
+      // Reset simulation when switching TO the scan tab
+      if (current === 'scan' && previous !== 'scan') {
+        this.scanSimStart = Date.now();
+      }
+    }
+  }
 
   ngAfterViewInit(): void {
     const container = this.threeContainerRef?.nativeElement;
@@ -111,7 +132,7 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
     this.animationId = null;
     this.visibilityObserver?.disconnect();
     if (this.resizeHandler) window.removeEventListener('resize', this.resizeHandler);
-    if (this.tiltMoveHandler  && this.containerElement) this.containerElement.removeEventListener('mousemove',  this.tiltMoveHandler);
+    if (this.tiltMoveHandler && this.containerElement) this.containerElement.removeEventListener('mousemove', this.tiltMoveHandler);
     if (this.tiltLeaveHandler && this.containerElement) this.containerElement.removeEventListener('mouseleave', this.tiltLeaveHandler);
     if (this.renderer?.domElement && this.containerElement) {
       this.containerElement.removeChild(this.renderer.domElement);
@@ -145,7 +166,7 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
   private initAppCanvas(canvas: HTMLCanvasElement): void {
     // Landscape canvas: portrait content is drawn with a 90°CW axis rotation inside
     // drawCurrentScreen so the UV's inherent reflection renders everything upright.
-    canvas.width  = 844;
+    canvas.width = 844;
     canvas.height = 390;
     this.drawCurrentScreen(canvas);
   }
@@ -360,113 +381,232 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
   }
 
   private drawScanScreen(ctx: CanvasRenderingContext2D, w: number, h: number, elapsed: number): void {
-    // Camera background
-    ctx.fillStyle = '#0a0f0a';
+    // ── Simulation phases (loop every 10 s) ──────────────────────────────────
+    // Phase 0 (0-3.5s):  Camera viewfinder — corner brackets, leaf glow, active shutter button
+    // Phase 1 (3.5-5.5s): Flash → "Analizando..." spinner, disabled button
+    // Phase 2 (5.5-10s):  Results panel slides up from bottom
+    const CYCLE = 10000;
+    const simElapsed = (Date.now() - this.scanSimStart) % CYCLE;
+    const phase = simElapsed < 3500 ? 0 : simElapsed < 5500 ? 1 : 2;
+    const phaseT = phase === 0 ? simElapsed / 3500
+      : phase === 1 ? (simElapsed - 3500) / 2000
+        : (simElapsed - 5500) / 4500;
+
+    // ── Background ───────────────────────────────────────────────────────────
+    ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, w, h);
 
     // Simulated plant glow in viewfinder
-    const vfTop = 80, vfH = h - 80 - 170;
-    const glow = ctx.createRadialGradient(w / 2, vfTop + vfH / 2, 10, w / 2, vfTop + vfH / 2, 150);
-    glow.addColorStop(0, 'rgba(50,120,40,0.55)');
-    glow.addColorStop(0.6, 'rgba(30,80,20,0.25)');
-    glow.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = glow;
-    ctx.fillRect(0, vfTop, w, vfH);
+    const vfTop = 80;
+    const vfH = h - 80 - 170;
+    const leafAlpha = phase === 0 ? 1 : phase === 1 ? Math.max(0, 1 - phaseT * 3) : 0;
 
-    // Leaf shapes
-    const leaf = (x: number, y: number, rx: number, ry: number, rot: number, a: number) => {
-      ctx.fillStyle = `rgba(60,130,40,${a})`;
-      ctx.beginPath(); ctx.ellipse(x, y, rx, ry, rot, 0, Math.PI * 2); ctx.fill();
-    };
-    leaf(w / 2, vfTop + vfH / 2, 55, 88, -0.3, 0.5);
-    leaf(w / 2 - 35, vfTop + vfH / 2 + 25, 38, 64, 0.4, 0.35);
-    leaf(w / 2 + 28, vfTop + vfH / 2 - 15, 46, 70, -0.2, 0.42);
+    if (leafAlpha > 0) {
+      const glow = ctx.createRadialGradient(w / 2, vfTop + vfH / 2, 10, w / 2, vfTop + vfH / 2, 140);
+      glow.addColorStop(0, `rgba(50,120,40,${0.55 * leafAlpha})`);
+      glow.addColorStop(0.6, `rgba(30,80,20,${0.25 * leafAlpha})`);
+      glow.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, vfTop, w, vfH);
+
+      // Leaf shapes
+      const leaf = (lx: number, ly: number, lrx: number, lry: number, rot: number, a: number) => {
+        ctx.fillStyle = `rgba(60,130,40,${a * leafAlpha})`;
+        ctx.beginPath(); ctx.ellipse(lx, ly, lrx, lry, rot, 0, Math.PI * 2); ctx.fill();
+      };
+      leaf(w / 2, vfTop + vfH / 2, 55, 88, -0.3, 0.5);
+      leaf(w / 2 - 35, vfTop + vfH / 2 + 25, 38, 64, 0.4, 0.35);
+      leaf(w / 2 + 28, vfTop + vfH / 2 - 15, 46, 70, -0.2, 0.42);
+    }
 
     // Top & bottom dark fades
     const tg = ctx.createLinearGradient(0, 0, 0, vfTop + 50);
     tg.addColorStop(0, 'rgba(0,0,0,0.85)'); tg.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = tg; ctx.fillRect(0, 0, w, vfTop + 50);
-    const bg = ctx.createLinearGradient(0, h - 220, 0, h);
-    bg.addColorStop(0, 'rgba(0,0,0,0)'); bg.addColorStop(1, 'rgba(0,0,0,0.92)');
-    ctx.fillStyle = bg; ctx.fillRect(0, h - 220, w, 220);
+    const bfg = ctx.createLinearGradient(0, h - 220, 0, h);
+    bfg.addColorStop(0, 'rgba(0,0,0,0)'); bfg.addColorStop(1, 'rgba(0,0,0,0.92)');
+    ctx.fillStyle = bfg; ctx.fillRect(0, h - 220, w, 220);
 
-    // Status bar + header
+    // ── Phase 1 flash overlay ─────────────────────────────────────────────────
+    if (phase === 1 && phaseT < 0.15) {
+      const flashA = 1 - phaseT / 0.15;
+      ctx.fillStyle = `rgba(255,255,255,${flashA * 0.85})`;
+      ctx.fillRect(0, 0, w, h);
+    }
+
+    // ── Status bar + header ───────────────────────────────────────────────────
     this.drawStatusBar(ctx, w, true);
     ctx.fillStyle = '#fff';
     ctx.font = 'bold 18px system-ui, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('Identificar planta', w / 2, 74);
-    ctx.font = '20px system-ui, sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText('←', 16, 74);
+    ctx.fillText('Detectar Planta', w / 2, 74);
+    // Back arrow (circle)
+    ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(32, 68, 18, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.font = '16px system-ui, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('←', 32, 74);
 
-    // Scanning frame corners
-    const fx = 55, fy = vfTop + 28, fw = w - 110, fh = vfH - 56, cs = 30;
-    ctx.strokeStyle = '#4CAF50'; ctx.lineWidth = 3;
-    [ [fx, fy + cs, fx, fy, fx + cs, fy],
-      [fx + fw - cs, fy, fx + fw, fy, fx + fw, fy + cs],
-      [fx, fy + fh - cs, fx, fy + fh, fx + cs, fy + fh],
-      [fx + fw - cs, fy + fh, fx + fw, fy + fh, fx + fw, fy + fh - cs],
-    ].forEach(([x1, y1, x2, y2, x3, y3]) => {
-      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x3, y3); ctx.stroke();
-    });
-
-    // Animated scan line
-    const scanP = (elapsed % 2400) / 2400;
-    const scanY = fy + scanP * fh;
-    const sg = ctx.createLinearGradient(fx, scanY - 10, fx, scanY + 6);
-    sg.addColorStop(0, 'rgba(76,175,80,0)');
-    sg.addColorStop(0.5, 'rgba(76,175,80,0.85)');
-    sg.addColorStop(1, 'rgba(76,175,80,0)');
-    ctx.fillStyle = sg; ctx.fillRect(fx, scanY - 10, fw, 16);
-
-    // Center crosshair
-    const tcx = w / 2, tcy = fy + fh / 2;
-    ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.arc(tcx, tcy, 38, 0, Math.PI * 2); ctx.stroke();
-    [[tcx - 52, tcy, tcx - 42, tcy], [tcx + 42, tcy, tcx + 52, tcy],
-     [tcx, tcy - 52, tcx, tcy - 42], [tcx, tcy + 42, tcx, tcy + 52]].forEach(([x1, y1, x2, y2]) => {
-      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-    });
-    ctx.fillStyle = 'rgba(76,175,80,0.9)';
-    ctx.beginPath(); ctx.arc(tcx, tcy, 5, 0, Math.PI * 2); ctx.fill();
-
-    // Hint text
-    ctx.fillStyle = 'rgba(255,255,255,0.65)';
-    ctx.font = '13px system-ui, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('Apunta la cámara a la planta', w / 2, fy + fh + 22);
-
-    // Detection result — fades in at 70 % of each scan cycle
-    if (scanP > 0.68) {
-      const a = Math.min(1, (scanP - 0.68) / 0.08);
-      ctx.fillStyle = `rgba(30,75,25,${a * 0.94})`;
-      ctx.beginPath(); ctx.roundRect(18, h - 230, w - 36, 58, 14); ctx.fill();
-      ctx.fillStyle = `rgba(255,255,255,${a})`;
-      ctx.font = 'bold 15px system-ui, sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText('✓  Árnica mexicana', 34, h - 206);
-      ctx.fillStyle = `rgba(190,240,170,${a})`;
-      ctx.font = '12px system-ui, sans-serif';
-      ctx.fillText('Confianza: 94 %  ·  Familia Asteraceae', 34, h - 188);
+    // ── Scan corner brackets ──────────────────────────────────────────────────
+    const fx = 48, fy = vfTop + 30, fw = w - 96, fh = vfH - 60, cs = 28;
+    const cornerAlpha = phase === 2 ? Math.max(0, 1 - phaseT * 2) : 1;
+    if (cornerAlpha > 0) {
+      ctx.strokeStyle = `rgba(255,255,255,${cornerAlpha})`; ctx.lineWidth = 3;
+      [
+        [fx, fy + cs, fx, fy, fx + cs, fy],
+        [fx + fw - cs, fy, fx + fw, fy, fx + fw, fy + cs],
+        [fx, fy + fh - cs, fx, fy + fh, fx + cs, fy + fh],
+        [fx + fw - cs, fy + fh, fx + fw, fy + fh, fx + fw, fy + fh - cs],
+      ].forEach(([x1, y1, x2, y2, x3, y3]) => {
+        ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x3, y3); ctx.stroke();
+      });
     }
 
-    // Camera controls
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.arc(w / 2, h - 80, 34, 0, Math.PI * 2); ctx.stroke();
-    ctx.fillStyle = 'rgba(255,255,255,0.88)';
-    ctx.beginPath(); ctx.arc(w / 2, h - 80, 26, 0, Math.PI * 2); ctx.fill();
-    // Gallery
-    ctx.fillStyle = 'rgba(60,120,40,0.6)';
-    ctx.beginPath(); ctx.roundRect(w / 2 - 100, h - 96, 40, 32, 6); ctx.fill();
-    ctx.font = '16px system-ui, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('🌿', w / 2 - 80, h - 74);
-    // Flash
-    ctx.fillStyle = '#fff';
-    ctx.font = '26px system-ui, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('⚡', w / 2 + 90, h - 72);
+    // ── Phase 0: animated scan line ───────────────────────────────────────────
+    if (phase === 0) {
+      const scanP = (elapsed % 2400) / 2400;
+      const scanY = fy + scanP * fh;
+      const sg = ctx.createLinearGradient(fx, scanY - 8, fx, scanY + 8);
+      sg.addColorStop(0, 'rgba(76,175,80,0)');
+      sg.addColorStop(0.5, 'rgba(76,175,80,0.9)');
+      sg.addColorStop(1, 'rgba(76,175,80,0)');
+      ctx.fillStyle = sg; ctx.fillRect(fx, scanY - 8, fw, 16);
+    }
+
+    // ── Phase 1: "Analizando..." spinner ──────────────────────────────────────
+    if (phase === 1) {
+      const spinnerA = Math.min(1, phaseT * 3);
+      const angle = (elapsed / 400) % (Math.PI * 2);
+      ctx.strokeStyle = `rgba(255,255,255,${spinnerA})`; ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(w / 2, fy + fh / 2, 28, angle, angle + Math.PI * 1.3);
+      ctx.stroke();
+      ctx.fillStyle = `rgba(255,255,255,${spinnerA})`;
+      ctx.font = 'bold 15px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Analizando...', w / 2, fy + fh / 2 + 52);
+    }
+
+    // ── Phase 2: results panel slides up ─────────────────────────────────────
+    if (phase === 2) {
+      const panelSlide = Math.min(1, phaseT * 1.8); // 0→1 over first ~56% of phase
+      const eased = 1 - Math.pow(1 - panelSlide, 3); // ease-out cubic
+      const panelH = h * 0.62;
+      const panelY = h - panelH * eased;
+
+      // White rounded panel
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.roundRect(0, panelY, w, panelH + 20, [20, 20, 0, 0]);
+      ctx.fill();
+
+      // Drag handle
+      ctx.fillStyle = 'rgba(0,0,0,0.15)';
+      ctx.beginPath(); ctx.roundRect(w / 2 - 18, panelY + 10, 36, 4, 2); ctx.fill();
+
+      const ty = panelY + 30; // top of panel content
+      const contentA = Math.min(1, Math.max(0, (eased - 0.4) / 0.4));
+
+      if (contentA > 0) {
+        // Plant icon (rounded green box)
+        ctx.fillStyle = `rgba(240,247,237,${contentA})`;
+        ctx.beginPath(); ctx.roundRect(16, ty, 52, 52, 12); ctx.fill();
+        ctx.font = '26px system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = `rgba(94,121,75,${contentA})`;
+        ctx.fillText('🌼', 42, ty + 36);
+
+        // Plant name
+        ctx.fillStyle = `rgba(30,50,30,${contentA})`;
+        ctx.font = 'bold 17px system-ui, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('Árnica mexicana', 78, ty + 22);
+        ctx.fillStyle = `rgba(94,121,75,${contentA})`;
+        ctx.font = '12px system-ui, sans-serif';
+        ctx.fillText('Heterotheca inuloides Cass.', 78, ty + 42);
+
+        // Divider
+        ctx.strokeStyle = `rgba(0,0,0,0.08)`; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(16, ty + 64); ctx.lineTo(w - 16, ty + 64); ctx.stroke();
+
+        // Descripción section
+        const dy = ty + 80;
+        ctx.fillStyle = `rgba(30,50,30,${contentA})`;
+        // Info icon
+        ctx.strokeStyle = `rgba(94,121,75,${contentA})`; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(24, dy, 8, 0, Math.PI * 2); ctx.stroke();
+        ctx.font = 'bold 10px system-ui, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillStyle = `rgba(94,121,75,${contentA})`;
+        ctx.fillText('i', 24, dy + 4);
+        ctx.font = 'bold 14px system-ui, sans-serif'; ctx.textAlign = 'left';
+        ctx.fillText('Descripción', 38, dy + 5);
+
+        const descLines = [
+          'La árnica mexicana es una planta perenne',
+          'que crece en regiones montañosas de México,',
+          'especialmente en Puebla, Veracruz y Oaxaca.',
+          'Alcanza 30-60 cm con flores amarillas.',
+        ];
+        ctx.font = '11px system-ui, sans-serif';
+        ctx.fillStyle = `rgba(80,80,80,${contentA})`;
+        descLines.forEach((l, i) => {
+          ctx.fillText(l, 16, dy + 26 + i * 16);
+        });
+
+        // Propiedades terapéuticas
+        const pTop = dy + 98;
+        ctx.font = 'bold 14px system-ui, sans-serif';
+        ctx.fillStyle = `rgba(94,121,75,${contentA})`;
+        ctx.fillText('Propiedades terapéuticas', 16, pTop);
+
+        const props = [
+          { label: 'Antinflamatoria', icon: '🩹', pct: 95 },
+          { label: 'Analgésica', icon: '💧', pct: 90 },
+          { label: 'Antibacterial', icon: '🌡', pct: 85 },
+        ];
+        const colW = (w - 32) / 3;
+        props.forEach((p, i) => {
+          const cx = 16 + colW * i + colW / 2;
+          const cy = pTop + 54;
+          const r = 26;
+          // Background circle
+          ctx.strokeStyle = `rgba(94,121,75,0.15)`; ctx.lineWidth = 5;
+          ctx.beginPath(); ctx.arc(cx, cy, r, -Math.PI / 2, Math.PI * 2 - Math.PI / 2); ctx.stroke();
+          // Progress arc
+          const arcEnd = -Math.PI / 2 + (p.pct / 100) * Math.PI * 2 * Math.min(1, contentA * 2);
+          ctx.strokeStyle = `rgba(94,121,75,${contentA})`; ctx.lineWidth = 4;
+          ctx.beginPath(); ctx.arc(cx, cy, r, -Math.PI / 2, arcEnd); ctx.stroke();
+          // Icon inside
+          ctx.font = '16px system-ui, sans-serif'; ctx.textAlign = 'center';
+          ctx.fillText(p.icon, cx, cy + 6);
+          // Label
+          ctx.fillStyle = `rgba(94,121,75,${contentA})`;
+          ctx.font = '9px system-ui, sans-serif';
+          ctx.fillText(p.label, cx, cy + r + 14);
+          // Percentage
+          ctx.fillStyle = `rgba(60,60,60,${contentA})`;
+          ctx.font = 'bold 11px system-ui, sans-serif';
+          ctx.fillText(`${p.pct}%`, cx, cy + r + 26);
+        });
+      }
+    }
+
+    // ── Bottom camera button ──────────────────────────────────────────────────
+    const btnDisabled = phase !== 0;
+    const btnColor = btnDisabled ? 'rgba(100,100,100,0.8)' : 'rgba(255,255,255,0.95)';
+    const btnInner = btnDisabled ? 'rgba(80,80,80,0.9)' : '#fff';
+    ctx.strokeStyle = btnColor; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(w / 2, h - 68, 30, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = btnInner;
+    ctx.beginPath(); ctx.arc(w / 2, h - 68, 22, 0, Math.PI * 2); ctx.fill();
+    // Camera icon inside button
+    if (!btnDisabled) {
+      ctx.strokeStyle = '#666'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.roundRect(w / 2 - 9, h - 77, 18, 14, 3); ctx.stroke();
+      ctx.beginPath(); ctx.arc(w / 2, h - 70, 4, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.fillStyle = btnDisabled ? 'rgba(160,160,160,0.7)' : 'rgba(60,60,60,0.9)';
+    ctx.font = '11px system-ui, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Tomar foto', w / 2, h - 30);
   }
 
   private drawChatScreen(ctx: CanvasRenderingContext2D, w: number, h: number, elapsed: number): void {
@@ -657,16 +797,16 @@ export class Phone3dComponent implements AfterViewInit, OnDestroy {
     // Hover-tilt listeners (registered outside Angular zone — no CD needed)
     this.tiltMoveHandler = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
-      const nx = ((e.clientX - rect.left)  / rect.width)  * 2 - 1; // -1 → +1
-      const ny = ((e.clientY - rect.top)   / rect.height) * 2 - 1;
+      const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1; // -1 → +1
+      const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
       this.tiltTarget.x = -ny * 0.45; // vertical   mouse → X rotation (forward/back tilt)
-      this.tiltTarget.y =  nx * 0.55; // horizontal mouse → Y rotation (left/right turn)
+      this.tiltTarget.y = nx * 0.55; // horizontal mouse → Y rotation (left/right turn)
     };
     this.tiltLeaveHandler = () => {
       this.tiltTarget.x = 0;
       this.tiltTarget.y = 0;
     };
-    container.addEventListener('mousemove',  this.tiltMoveHandler);
+    container.addEventListener('mousemove', this.tiltMoveHandler);
     container.addEventListener('mouseleave', this.tiltLeaveHandler);
 
     this.startAnimationLoop();

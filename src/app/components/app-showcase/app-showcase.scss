@@ -160,11 +160,9 @@
         .connector-line {
             width: 50px;
             height: 3px;
-            background: linear-gradient(
-                90deg,
-                #5E794B,
-                rgba(255, 255, 255, 0.9)
-            );
+            background: linear-gradient(90deg,
+                    #5E794B,
+                    rgba(255, 255, 255, 0.9));
             position: relative;
             flex-shrink: 0;
             transition: all 0.4s ease;
@@ -217,11 +215,9 @@
             .connector-line {
                 width: 65px;
                 height: 4px;
-                background: linear-gradient(
-                    90deg,
-                    #C4964A,
-                    #5E794B
-                );
+                background: linear-gradient(90deg,
+                        #C4964A,
+                        #5E794B);
 
                 &::after {
                     width: 12px;
@@ -236,11 +232,9 @@
 
     // Right features: flip the gradient and dot to the left end
     .features-right .feature-card .connector-line {
-        background: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.9),
-            #5E794B
-        );
+        background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0.9),
+                #5E794B);
 
         &::after {
             right: auto;
@@ -250,11 +244,9 @@
 
     .features-right .feature-card:hover .connector-line,
     .features-right .feature-card.active .connector-line {
-        background: linear-gradient(
-            90deg,
-            #5E794B,
-            #C4964A
-        );
+        background: linear-gradient(90deg,
+                #5E794B,
+                #C4964A);
 
         &::after {
             right: auto;
@@ -265,8 +257,8 @@
     // ── Center phone ──
     .phone-center {
         position: relative; // anchor for scan-overlay
-        width: 380px;   // increase to make phone larger (was 300px)
-        height: 660px;  // keep ~1.74 aspect for phone (was 520px)
+        width: 380px; // increase to make phone larger (was 300px)
+        height: 660px; // keep ~1.74 aspect for phone (was 520px)
         flex-shrink: 0;
 
         opacity: 0;
@@ -281,64 +273,65 @@
         }
 
         @media (max-width: 1023px) {
-            width: 280px;   // larger on mobile (was 220px)
-            height: 500px;  // (was 390px)
+            width: 280px; // larger on mobile (was 220px)
+            height: 500px; // (was 390px)
             order: 1;
         }
 
-        // ── Scan animation overlay ──
-        .scan-overlay {
+        // ── Scan restart hint ──
+        .scan-hint {
             position: absolute;
-            inset: 0;
-            pointer-events: none;
+            bottom: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
             opacity: 0;
+            pointer-events: none;
             transition: opacity 0.4s ease;
-            z-index: 5;
+            white-space: nowrap;
 
             &.active {
                 opacity: 1;
+                pointer-events: auto;
             }
 
-            // Frame with corner brackets
-            .scan-frame {
-                position: absolute;
-                top: 16%;
-                left: 18%;
-                right: 18%;
-                bottom: 50%;
+            .scan-hint-pill {
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                background: rgba(94, 121, 75, 0.12);
+                border: 1.5px solid rgba(94, 121, 75, 0.35);
+                border-radius: 999px;
+                padding: 0.35rem 0.85rem;
+                font-size: 0.78rem;
+                font-weight: 600;
+                color: #5E794B;
+                cursor: pointer;
+                transition: background 0.25s ease, transform 0.2s ease;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
 
-                .corner {
-                    position: absolute;
-                    width: 22px;
-                    height: 22px;
-                    border-color: #4CAF50;
-                    border-style: solid;
-
-                    &.tl { top: 0; left: 0;     border-width: 3px 0 0 3px; }
-                    &.tr { top: 0; right: 0;    border-width: 3px 3px 0 0; }
-                    &.bl { bottom: 0; left: 0;  border-width: 0 0 3px 3px; }
-                    &.br { bottom: 0; right: 0; border-width: 0 3px 3px 0; }
+                &:hover {
+                    background: rgba(94, 121, 75, 0.22);
+                    transform: scale(1.05);
                 }
 
-                // Sweeping scan line
-                .scan-line {
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    height: 3px;
-                    background: linear-gradient(90deg, transparent, #4CAF50 25%, #4CAF50 75%, transparent);
-                    box-shadow: 0 0 10px #4CAF50, 0 0 22px rgba(76, 175, 80, 0.45);
-                    animation: scan-sweep 2.4s linear infinite;
+                .scan-hint-icon {
+                    font-size: 0.9rem;
+                    animation: spin-hint 3s linear infinite;
                 }
             }
-
         }
     }
 
     // ── Keyframes ──
-    @keyframes scan-sweep {
-        0%   { top: 0%; }
-        100% { top: 100%; }
+    @keyframes spin-hint {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
     }
 
     // ── Animate in when visible ──
@@ -375,6 +368,7 @@
 
         // Allow hover transforms after animation
         .feature-card {
+
             &:hover,
             &.active {
                 transform: translateY(0) !important;
@@ -382,4 +376,3 @@
         }
     }
 }
-
