@@ -1,6 +1,6 @@
 # Química de Altura — Landing Page
 
-Sitio web institucional desarrollado para el proyecto universitario **Química de Altura**, una iniciativa escolar enfocada en la divulgación y comercialización de productos químicos de uso cotidiano. La landing page presenta el proyecto, sus productos y el equipo detrás de él.
+Sitio web institucional desarrollado para el proyecto universitario **Química de Altura**, una iniciativa escolar enfocada en la divulgación de plantas medicinales. La landing page presenta el proyecto, sus productos y el equipo detrás de él.
 
 ---
 
