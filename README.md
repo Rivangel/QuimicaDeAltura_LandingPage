@@ -1,60 +1,104 @@
-# LandingPage
+# Química de Altura — Landing Page
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.14.
+Sitio web institucional desarrollado para el proyecto universitario **Química de Altura**, una iniciativa escolar enfocada en la divulgación y comercialización de productos químicos de uso cotidiano. La landing page presenta el proyecto, sus productos y el equipo detrás de él.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Tech Stack
+
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat-square&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=flat-square&logo=sass&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white)
+
+---
+
+## ✨ Características
+
+- Diseño responsivo adaptado a móvil, tablet y escritorio
+- Arquitectura basada en componentes con Angular
+- Estilos personalizados con SCSS
+- Optimización de imágenes incluida (`optimize_images.ps1`)
+- Contenerización con Docker y servido mediante Nginx
+
+---
+
+## 📦 Instalación y uso local
+
+### Prerrequisitos
+
+- [Node.js](https://nodejs.org/) v18 o superior
+- [Angular CLI](https://angular.dev/tools/cli) v20+
+- [Docker](https://www.docker.com/) (opcional, para correr con contenedor)
+
+### Opción 1 — Servidor de desarrollo
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/Rivangel/QuimicaDeAltura_LandingPage.git
+cd QuimicaDeAltura_LandingPage
+
+# Instalar dependencias
+npm install
+
+# Iniciar servidor de desarrollo
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abrir en el navegador: `http://localhost:4200`
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Opción 2 — Docker
 
 ```bash
-ng generate --help
+# Construir la imagen
+docker build -t quimica-de-altura .
+
+# Correr el contenedor
+docker run -p 8080:80 quimica-de-altura
 ```
 
-## Building
+Abrir en el navegador: `http://localhost:8080`
 
-To build the project run:
+---
 
-```bash
-ng build
+## 🗂️ Estructura del proyecto
+
+```
+QuimicaDeAltura_LandingPage/
+├── src/
+│   ├── app/          # Componentes y módulos de Angular
+│   ├── assets/       # Imágenes y recursos estáticos
+│   └── styles/       # Estilos globales SCSS
+├── public/           # Archivos públicos estáticos
+├── Dockerfile        # Configuración de contenedor
+├── nginx.conf        # Configuración del servidor Nginx
+└── angular.json      # Configuración del proyecto Angular
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🔧 Scripts disponibles
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+| Comando | Descripción |
+|---|---|
+| `ng serve` | Inicia el servidor de desarrollo |
+| `ng build` | Genera el build de producción en `/dist` |
+| `ng test` | Ejecuta las pruebas unitarias |
+| `./optimize_images.ps1` | Optimiza las imágenes del proyecto |
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+## 👥 Equipo de desarrollo
 
-For end-to-end (e2e) testing, run:
+Proyecto desarrollado en equipo como parte de un proyecto universitario en la **Universidad Tecnológica del Centro de Veracruz**.
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-"# QuimicaDeAltura_LandingPage" 
+| Nombre | GitHub | Email |
+|---|---|---|
+| **José Ángel López Rivera** | [![GitHub](https://img.shields.io/badge/Rivangel-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Rivangel) | 20233l001142@utcv.edu.mx |
+| **Jose Manuel Lara Villalobos** | [![GitHub](https://img.shields.io/badge/JoseVillalobos21-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/JoseVillalobos21) | 20233l001152@utcv.edu.mx |
+| **Christian Barragán Páez** | [![GitHub](https://img.shields.io/badge/Christba03-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Christba03) | 20233l001009@utcv.edu.mx |
+| **Angel Geovanny Alvarez Ordinola** | [![GitHub](https://img.shields.io/badge/xSE7EN06-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/xSE7EN06) | 20233l001141@utcv.edu.mx |
