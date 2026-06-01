@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $plant-green: #2ecc71;
 $plant-dark-green: #27ae60;
 $vine-color: #386641;
@@ -561,7 +563,7 @@ $aura: rgba(255, 71, 87, 0.4);
 .pot-rim {
     width: 100px;
     height: 16px;
-    background: linear-gradient(180deg, lighten($pot-color, 10%), $pot-rim);
+    background: linear-gradient(180deg, color.adjust($pot-color, $lightness: 10%), $pot-rim);
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     z-index: 4;
@@ -674,7 +676,7 @@ $aura: rgba(255, 71, 87, 0.4);
     top: 6px;
     width: 82px;
     height: 18px;
-    background: radial-gradient(ellipse at center, lighten($soil, 10%) 0%, $soil 100%);
+    background: radial-gradient(ellipse at center, color.adjust($soil, $lightness: 10%) 0%, $soil 100%);
     border-radius: 50%;
     z-index: 2;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);

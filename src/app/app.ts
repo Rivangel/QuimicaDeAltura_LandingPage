@@ -13,7 +13,6 @@ import { OverallStatistics } from "./components/overall-statistics/overall-stati
 import { HowItWorks } from "./components/how-it-works/how-it-works";
 import { Testimonials } from "./components/testimonials/testimonials";
 import { CtaBanner } from "./components/cta-banner/cta-banner";
-import { Phone3dComponent } from "./components/phone-3d/phone-3d.component";
 import { HeroSection } from "./components/hero-section/hero-section";
 import { RadialMenuSection } from "./components/radial-menu-section/radial-menu-section";
 import { LoaderComponent } from "./components/loader/loader.component";
@@ -23,7 +22,7 @@ import { ContentService } from "./services/content.service";
   selector: 'app-root',
   imports: [
     RouterOutlet, Header, Footer, AboutApp, ProblemMission,
-    AppShowcase, Phone3dComponent, ScrollPlant, WebglBackground,
+    AppShowcase, ScrollPlant, WebglBackground,
     Faq, Newsletter, OverallStatistics,
     HowItWorks, Testimonials, CtaBanner,
     HeroSection, RadialMenuSection, LoaderComponent
@@ -134,28 +133,43 @@ export class App implements AfterViewInit, OnDestroy {
 
     const findCurrentIndex = (): number => {
       const headerH = getHeaderHeight();
-      const scrollTop = window.scrollY + headerH;
+      const viewportHeight = window.innerHeight;
 
-      // Containment check: section that contains the current scroll position
-      for (let i = 0; i < this.snapSections.length; i++) {
-        const el = this.snapSections[i];
-        const top = getDocumentTop(el);
-        const bottom = top + (el as HTMLElement).offsetHeight;
-        if (scrollTop >= top && scrollTop < bottom) return i;
+      let maxVisibleHeight = -1;
+      let activeIdx = 0;
+
+      this.snapSections.forEach((el, i) => {
+        const rect = el.getBoundingClientRect();
+        // Calculate the range of the element that is visible in the viewport,
+        // excluding the fixed header area.
+        const visibleTop = Math.max(rect.top, headerH);
+        const visibleBottom = Math.min(rect.bottom, viewportHeight);
+        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+        if (visibleHeight > maxVisibleHeight) {
+          maxVisibleHeight = visibleHeight;
+          activeIdx = i;
+        }
+      });
+
+      // Fallback if no section is visible (e.g. out of bounds)
+      if (maxVisibleHeight <= 0) {
+        let minDistance = Infinity;
+        this.snapSections.forEach((el, i) => {
+          const rect = el.getBoundingClientRect();
+          const dist = Math.abs((rect.top + rect.bottom) / 2 - viewportHeight / 2);
+          if (dist < minDistance) {
+            minDistance = dist;
+            activeIdx = i;
+          }
+        });
       }
 
-      // Fallback: nearest top
-      let best = 0;
-      let bestDist = Infinity;
-      this.snapSections.forEach((el, i) => {
-        const dist = Math.abs(getDocumentTop(el) - scrollTop);
-        if (dist < bestDist) { bestDist = dist; best = i; }
-      });
-      return best;
+      return activeIdx;
     };
 
     const isTallSection = (el: Element): boolean =>
-      (el as HTMLElement).offsetHeight > window.innerHeight;
+      (el as HTMLElement).offsetHeight > window.innerHeight + 120;
 
     const isAtSectionTop = (el: Element): boolean => {
       const sectionTop = getDocumentTop(el) - getHeaderHeight();
